@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DATABASE_PASSWORD}"
+      MYSQL_DATABASE: "studiesdb"
+    ports:
+      - "3306:3306"
+    volumes:
+      - /backend/mysql:/var/lib/mysql
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+networks:
+  db:
+    driver: bridge
