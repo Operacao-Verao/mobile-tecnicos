@@ -1,6 +1,9 @@
-import { Tecnico } from "./tecnico"
+import { makeTecnico } from "@test/factories/tecnicos-factory";
 
-describe('Technician content', () => {
-  it('should be able to create a technician', () => {
+describe('Conteúdo do técnico', () => {
+  it('deve ser capaz de criar uma instância da classe técnico', () => {
+    const tecnico = makeTecnico();
+
+    expect(tecnico).toBeTruthy();
   }) 
 })

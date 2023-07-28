@@ -1,4 +1,6 @@
-import { randomUUID } from "crypto"
+import { randomUUID } from "node:crypto"
+import { Afetados } from "./afetados"
+import { Animais } from "./animais"
 
 interface RelatorioProps {
   enfermos: number,
@@ -17,6 +19,8 @@ interface RelatorioProps {
   danosMateriais: boolean,
   dataGeracao: Date,
   dataAtendimento: Date
+  afetados: Afetados
+  animais: Animais
 }
 
 export class Relatorio {
