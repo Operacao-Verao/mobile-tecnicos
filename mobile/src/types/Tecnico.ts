@@ -1,4 +1,4 @@
-export type tecnicoTS = {
+export type TecnicoTS = {
   nome: string;
   email: string;
 };

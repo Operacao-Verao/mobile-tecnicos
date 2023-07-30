@@ -1,5 +1,5 @@
-import { AfetadosTS } from './afetados';
-import { AnimaisTS } from './animais';
+import { AfetadosTS } from './Afetados';
+import { AnimaisTS } from './Animais';
 
 export type RelatorioTS = {
   enfermos: number;

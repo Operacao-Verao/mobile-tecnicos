@@ -1,4 +1,4 @@
-import { RelatorioTS } from './relatorio';
+import { RelatorioTS } from './Relatorio';
 
 export type OcorrenciaTS = {
   acionamento: string;
