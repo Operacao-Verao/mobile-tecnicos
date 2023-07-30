@@ -1,12 +1,15 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, Request, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { LoginBody } from "../dtos/LoginBody";
 import { loginResponse } from "../responses/LoginResponse";
 import { tecnicoResponse } from "../responses/TecnicoResponse";
+import { AuthService } from "@infra/auth/auth-service";
+import { JwtAuthGuard } from "@infra/auth/jwt-auth.guard";
 
 @ApiTags('tecnicos')
 @Controller('tecnicos')
 export class TecnicosController {
+  constructor(private readonly authService: AuthService) {}
   @Post('login')
   @ApiOperation({ summary: "Autentica um técnico" })
   @ApiResponse({
@@ -20,8 +23,8 @@ export class TecnicosController {
       properties: loginResponse
     }
   })
-  async login(@Body() body: LoginBody) {
-    
+  async login(@Body() body: LoginBody, @Request() req) {
+    return this.authService.login(req.user)
   }
 
   @Get('verDados')
@@ -38,6 +41,7 @@ export class TecnicosController {
     }
   })
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   async verDados() {
 
   }

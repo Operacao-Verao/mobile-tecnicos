@@ -9,5 +9,5 @@ export function makeAfetados() {
         feridos: 1,
         idosos: 1,
         mortos: 0
-    });
+    }, 1);
 }

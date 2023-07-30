@@ -22,5 +22,7 @@ export function makeRelatorios() {
         animais: makeAnimais(),
         dataGeracao: new Date(),
         dataAtendimento: new Date()
-    })
+    },
+    1
+    )
 }

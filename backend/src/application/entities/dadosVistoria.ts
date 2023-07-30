@@ -1,23 +1,23 @@
-import { randomUUID } from "crypto"
-
 interface DadosVistoriaProps {
     tipoVistoria: string
 }
 
 export class DadosVistoria {
-    private _id: string
+    private _id: number
     private props: DadosVistoriaProps
 
-    constructor(props: DadosVistoriaProps, id?: string) {
-        this._id = id ?? randomUUID();
+    constructor(props: DadosVistoriaProps, id?: number) {
+        if(id) {
+            this._id = id;
+        }
         this.props = props;
     }
 
-    public set id(id: string) {
+    public set id(id: number) {
         this._id = id;
     }
-
-    public get id(): string {
+    
+    public get id(): number {
         return this._id;
     }
 

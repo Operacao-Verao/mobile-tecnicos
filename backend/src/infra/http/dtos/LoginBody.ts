@@ -12,7 +12,7 @@ export class LoginBody {
     minLength: 1,
     maxLength: 70
   })
-  email: string
+  username: string
 
   @IsNotEmpty()
   @MinLength(1)
@@ -23,5 +23,5 @@ export class LoginBody {
     minLength: 1,
     maxLength: 70
   })
-  senha: string
+  password: string
 }

@@ -6,5 +6,5 @@ export function makeAnimais() {
         caes: 1,
         gatos: 3,
         equinos: 0
-    });
+    }, 1);
 }

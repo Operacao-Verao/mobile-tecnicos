@@ -3,7 +3,7 @@ services:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: "${DATABASE_PASSWORD}"
-      MYSQL_DATABASE: "studiesdb"
+      MYSQL_DATABASE: "BDDEFESACIVIL"
     ports:
       - "3306:3306"
     volumes:

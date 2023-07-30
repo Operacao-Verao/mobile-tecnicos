@@ -11,19 +11,21 @@ interface AfetadosProps {
 }
 
 export class Afetados {
-    private _id: string
+    private _id: number
     private props: AfetadosProps
 
-    constructor(props: AfetadosProps, id?: string) {
-        this._id = id ?? randomUUID();
+    constructor(props: AfetadosProps, id?: number) {
+        if(id) {
+            this._id = id
+        }
         this.props = props;
     }
 
-    public set id(id: string) {
+    public set id(id: number) {
         this._id = id;
     }
-
-    public get id(): string {
+    
+    public get id(): number {
         return this._id;
     }
 

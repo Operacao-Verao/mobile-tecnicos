@@ -5,5 +5,5 @@ export function makeTecnico() {
         nome: "Técnico 1",
         email: "tecnico@email.com",
         senha: "senha123"
-    })
+    }, 1)
 }

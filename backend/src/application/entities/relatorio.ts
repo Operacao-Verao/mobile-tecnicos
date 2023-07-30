@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto"
 import { Afetados } from "./afetados"
 import { Animais } from "./animais"
 
@@ -24,12 +23,22 @@ interface RelatorioProps {
 }
 
 export class Relatorio {
-  private _id: string
+  private _id: number
   private props: RelatorioProps
 
-  constructor(props: RelatorioProps, id?: string) {
-    this._id = id ?? randomUUID();
+  constructor(props: RelatorioProps, id?: number) {
+    if(id) {
+      this._id = id;
+    }
     this.props = props;
+  }
+
+  public set id(id: number) {
+    this._id = id;
+  }
+
+  public get id(): number {
+    return this._id;
   }
 
   public set enfermos(enfermos: number) {

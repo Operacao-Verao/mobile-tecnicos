@@ -1,6 +1,6 @@
 import { Tecnico } from "@application/entities/tecnico";
 
 export abstract class TecnicosRepository {
-  abstract login(email: string, senha: string): Promise<string>
+  abstract findByEmail(email: string): Promise<Tecnico>
   abstract verDados(id: string): Promise<Tecnico>
 }

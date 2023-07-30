@@ -8,19 +8,21 @@ interface AnimaisProps {
 }
 
 export class Animais {
-    private _id: string
+    private _id: number
     private props: AnimaisProps
 
-    constructor(props: AnimaisProps, id?: string) {
-        this._id = id ?? randomUUID();
+    constructor(props: AnimaisProps, id?: number) {
+        if(id) {
+            this._id = id;
+        }
         this.props = props;
     }
 
-    public set id(id: string) {
+    public set id(id: number) {
         this._id = id;
     }
-
-    public get id(): string {
+    
+    public get id(): number {
         return this._id;
     }
 
