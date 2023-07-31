@@ -1,10 +1,12 @@
+import { TecnicosRepository } from "@application/repositories/tecnicos-repository";
+import { TecnicoNotFound } from "@application/use-cases/errors/TecnicoNotFound";
 import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(private readonly tecnicosRepository: TecnicosRepository) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -13,10 +15,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    // const user = await this.tecnicosRepository.findById();
-    return {
-      id: payload.sub,
-      nome: payload.nome
+    const tecnico = await this.tecnicosRepository.findById(payload.sub);
+    
+    if(!tecnico) {
+      throw new TecnicoNotFound();
     }
+
+    return tecnico;
   }
 }

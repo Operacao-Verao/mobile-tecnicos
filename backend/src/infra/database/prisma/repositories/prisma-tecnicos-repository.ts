@@ -8,6 +8,20 @@ import { PrismaTecnicoMapper } from "../mappers/prisma-tecnico-mapper";
 export class PrismaTecnicosRepository implements TecnicosRepository {
   constructor(private prisma: PrismaService) {}
   
+  async findById(id: number): Promise<Tecnico | null> {
+    const tecnico = await this.prisma.funcionario.findUnique({
+      where: {
+        id: id
+      }
+    });
+
+    if(!tecnico) {
+      return null;
+    }
+
+    return PrismaTecnicoMapper.toDomain(tecnico);
+  }
+
   async findByEmail(email: string): Promise<Tecnico | null> {
     const tecnico = await this.prisma.funcionario.findUnique({
       where: {
@@ -20,9 +34,5 @@ export class PrismaTecnicosRepository implements TecnicosRepository {
     }
 
     return PrismaTecnicoMapper.toDomain(tecnico);
-  }
-  
-  async verDados(id: string): Promise<Tecnico> {
-    throw new Error("Method not implemented.");
   }
 }

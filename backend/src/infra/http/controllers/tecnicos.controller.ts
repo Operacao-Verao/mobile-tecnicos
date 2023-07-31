@@ -5,6 +5,7 @@ import { loginResponse } from "../responses/LoginResponse";
 import { tecnicoResponse } from "../responses/TecnicoResponse";
 import { AuthService } from "@infra/auth/auth-service";
 import { JwtAuthGuard } from "@infra/auth/jwt-auth.guard";
+import { TecnicoViewModel } from "../view-models/tecnico-view-model";
 
 @ApiTags('tecnicos')
 @Controller('tecnicos')
@@ -42,7 +43,7 @@ export class TecnicosController {
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  async verDados() {
-
-  }
+  async verDados(@Request() req) {
+    return TecnicoViewModel.toHTTP(req.user)
+  } 
 }
