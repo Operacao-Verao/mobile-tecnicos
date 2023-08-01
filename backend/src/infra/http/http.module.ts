@@ -6,6 +6,7 @@ import { DatabaseModule } from "@infra/database/database.module";
 import { AuthService } from "@infra/auth/auth-service";
 import { JwtService } from "@nestjs/jwt";
 import { VerOcorrencias } from "@application/use-cases/ver-ocorrencias";
+import { VerOcorrencia } from "@application/use-cases/ver-ocorrencia";
 
 @Module({
   imports: [DatabaseModule],
@@ -13,7 +14,8 @@ import { VerOcorrencias } from "@application/use-cases/ver-ocorrencias";
   providers: [
     AuthService, 
     JwtService,
-    VerOcorrencias
+    VerOcorrencias,
+    VerOcorrencia
   ]
 })
 export class HttpModule {}

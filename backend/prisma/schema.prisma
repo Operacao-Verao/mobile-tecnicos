@@ -9,7 +9,7 @@ datasource db {
 
 model Afetados {
   id          Int        @id @default(autoincrement())
-  idRelatorio Int?
+  idRelatorio Int?       @unique(map: "idRelatorio")
   adultos     Int?
   Criancas    Int?
   idosos      Int?
@@ -18,8 +18,6 @@ model Afetados {
   feridos     Int?
   enfermos    Int?
   Relatorio   Relatorio? @relation(fields: [idRelatorio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Afetados_ibfk_1")
-
-  @@index([idRelatorio], map: "idRelatorio")
 }
 
 model Alerta_Chuva {
@@ -44,20 +42,17 @@ model Alerta_Rio {
 
 model Animal {
   id          Int        @id @default(autoincrement())
-  idRelatorio Int?
+  idRelatorio Int?       @unique(map: "idRelatorio")
   caes        Int?
   gatos       Int?
   aves        Int?
   esquinos    Int?
   Relatorio   Relatorio? @relation(fields: [idRelatorio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Animal_ibfk_1")
-
-  @@index([idRelatorio], map: "idRelatorio")
 }
 
 model Cargo {
   id         Int          @id @default(autoincrement())
   nomeCargo  String       @db.VarChar(100)
-  Memo       Memo[]
   Secretario Secretario[]
 }
 
@@ -138,7 +133,7 @@ model Foto {
 model Funcionario {
   id          Int      @id @default(autoincrement())
   nome        String   @db.VarChar(100)
-  email       String?  @unique @db.VarChar(100)
+  email       String?  @unique(map: "email") @db.VarChar(100)
   senha       String?  @db.VarChar(70)
   tipoUsuario String?  @db.VarChar(100)
   Gestor      Gestor?
@@ -165,18 +160,16 @@ model Local_Ajuda {
 model Memo {
   id           Int         @id @default(autoincrement())
   idRelatorio  Int?
-  idSecretaria Int?
+  idSecretario Int?
   idCargo      Int?
   dataMemo     DateTime    @db.Date
   statusMemo   String      @db.VarChar(355)
   processo     String?     @db.Char(10)
   Relatorio    Relatorio?  @relation(fields: [idRelatorio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Memo_ibfk_1")
-  Secretaria   Secretaria? @relation(fields: [idSecretaria], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Memo_ibfk_2")
-  Cargo        Cargo?      @relation(fields: [idCargo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Memo_ibfk_3")
+  Secretario   Secretario? @relation(fields: [idSecretario], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Memo_ibfk_2")
 
-  @@index([idCargo], map: "idCargo")
   @@index([idRelatorio], map: "idRelatorio")
-  @@index([idSecretaria], map: "idSecretaria")
+  @@index([idSecretario], map: "idSecretario")
 }
 
 model Nivel_Chuva {
@@ -245,8 +238,8 @@ model Relatorio {
   danos_materiais Boolean
   dataGeracao     DateTime          @db.Date
   dataAtendimento DateTime          @db.Date
-  Afetados        Afetados[]
-  Animal          Animal[]
+  Afetados        Afetados?
+  Animal          Animal?
   DadosDaVistoria DadosDaVistoria[]
   Foto            Foto[]
   Memo            Memo[]
@@ -260,7 +253,6 @@ model Relatorio {
 model Secretaria {
   id             Int          @id @default(autoincrement())
   nomeSecretaria String       @db.VarChar(100)
-  Memo           Memo[]
   Secretario     Secretario[]
 }
 
@@ -269,6 +261,7 @@ model Secretario {
   idSecretaria   Int?
   idCargo        Int?
   nomeSecretario String      @db.VarChar(100)
+  Memo           Memo[]
   Secretaria     Secretaria? @relation(fields: [idSecretaria], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Secretario_ibfk_1")
   Cargo          Cargo?      @relation(fields: [idCargo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Secretario_ibfk_2")
 

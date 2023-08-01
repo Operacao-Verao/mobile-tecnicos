@@ -19,7 +19,8 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                     include: {
                         Funcionario: true
                     }
-                }
+                },
+                Relatorio: true
             }
         });
 
@@ -30,8 +31,39 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
         return ocorrencias.map(PrismaOcorrenciaMapper.toDomain);
     }
 
-    async verUmaOcorrencia(id: number): Promise<Ocorrencia> {
-        throw new Error("Method not implemented.");
+    async verUmaOcorrencia(id: number, tecnicoId: number): Promise<Ocorrencia> {
+        const ocorrencia = await this.prisma.ocorrencia.findFirst({
+            where: {
+                AND: [
+                    {
+                        id
+                    },
+                    {
+                        idTecnico: tecnicoId
+                    }
+                ]
+
+            },
+            include: {
+                Tecnico: {
+                    include: {
+                        Funcionario: true
+                    }
+                },
+                Relatorio:  {
+                    include: {
+                        Afetados: true,
+                        Animal: true
+                    }
+                }
+            }
+        });
+
+        if(!ocorrencia) {
+            throw new OcorrenciasNotFound();
+        }
+        
+        return PrismaOcorrenciaMapper.toDomain(ocorrencia);
     }
 
     async filtrarPorStatus(status: string): Promise<Ocorrencia[]> {

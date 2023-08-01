@@ -7,7 +7,7 @@ interface OcorrenciaProps {
   num_casas: number,
   status: boolean,
   data: Date,
-  relatorio?: Relatorio,
+  relatorios?: Relatorio[],
   tecnico?: Tecnico
 }
 
@@ -54,12 +54,12 @@ export class Ocorrencia {
     return this.props.status;
   }
 
-  public set relatorio(relatorio: Relatorio) {
-    this.props.relatorio = relatorio;
+  public set relatorios(relatorio: Relatorio[]) {
+    this.props.relatorios = relatorio;
   }
 
-  public get relatorio(): Relatorio {
-    return this.props.relatorio;
+  public get relatorios(): Relatorio[] {
+    return this.props.relatorios;
   }
 
   public set tecnico(tecnico: Tecnico) {

@@ -11,7 +11,7 @@ export function makeOcorrencias() {
         num_casas: 2,
         data: new Date(),
         relato: "Minha casa teve um deslizamento.",
-        relatorio,
+        relatorios: [relatorio],
         tecnico,
         status: true
     })

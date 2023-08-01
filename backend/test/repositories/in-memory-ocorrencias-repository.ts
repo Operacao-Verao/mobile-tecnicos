@@ -6,10 +6,11 @@ import { makeOcorrencias } from "@test/factories/ocorrencias-factory";
 export class InMemoryOcorrenciaRepository implements OcorrenciaRepository {
     private ocorrencias: Ocorrencia[] = [];
 
-    async criarOcorrencia(): Promise<void> {
+    async criarOcorrencia(): Promise<Ocorrencia> {
         const novaOcorrencia = makeOcorrencias();
 
         this.ocorrencias.push(novaOcorrencia);
+        return novaOcorrencia
     }
 
     async verOcorrencias(tecnicoId: number): Promise<Ocorrencia[]> {
@@ -23,8 +24,14 @@ export class InMemoryOcorrenciaRepository implements OcorrenciaRepository {
 
     }
 
-    async verUmaOcorrencia(id: number): Promise<Ocorrencia> {
-        throw new Error("Method not implemented.");
+    async verUmaOcorrencia(id: number, tecnicoId: number): Promise<Ocorrencia> {
+        let ocorrenciaExist = this.ocorrencias.find((item) => item.tecnico.id === tecnicoId && item.id === id); 
+
+        if(!ocorrenciaExist) {
+            throw new OcorrenciasNotFound();
+        }
+
+        return ocorrenciaExist;
     }
     
     async filtrarPorStatus(status: string): Promise<Ocorrencia[]> {
