@@ -12,6 +12,9 @@ export class PrismaTecnicosRepository implements TecnicosRepository {
     const tecnico = await this.prisma.funcionario.findUnique({
       where: {
         id: id
+      },
+      include: {
+        Tecnico: true
       }
     });
 
@@ -23,16 +26,19 @@ export class PrismaTecnicosRepository implements TecnicosRepository {
   }
 
   async findByEmail(email: string): Promise<Tecnico | null> {
-    const tecnico = await this.prisma.funcionario.findUnique({
+    const funcionario = await this.prisma.funcionario.findUnique({
       where: {
         email: email
+      },
+      include: {
+        Tecnico: true
       }
     });
 
-    if(!tecnico) {
+    if(!funcionario.Tecnico) {
       return null;
     }
 
-    return PrismaTecnicoMapper.toDomain(tecnico);
+    return PrismaTecnicoMapper.toDomain(funcionario);
   }
 }

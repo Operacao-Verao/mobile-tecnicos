@@ -1,12 +1,14 @@
 import { Relatorio } from "./relatorio";
+import { Tecnico } from "./tecnico";
 
 interface OcorrenciaProps {
   acionamento: string,
   relato: string,
   num_casas: number,
-  status: string,
+  status: boolean,
   data: Date,
-  relatorio: Relatorio
+  relatorio?: Relatorio,
+  tecnico?: Tecnico
 }
 
 export class Ocorrencia {
@@ -44,12 +46,28 @@ export class Ocorrencia {
     return this.props.num_casas;
   }
 
-  public set status(status: string) {
+  public set status(status: boolean) {
     this.props.status = status;
   }
 
-  public get status(): string {
+  public get status(): boolean {
     return this.props.status;
+  }
+
+  public set relatorio(relatorio: Relatorio) {
+    this.props.relatorio = relatorio;
+  }
+
+  public get relatorio(): Relatorio {
+    return this.props.relatorio;
+  }
+
+  public set tecnico(tecnico: Tecnico) {
+    this.props.tecnico = tecnico;
+  }
+
+  public get tecnico(): Tecnico {
+    return this.props.tecnico;
   }
 
   public set data(data: Date) {
