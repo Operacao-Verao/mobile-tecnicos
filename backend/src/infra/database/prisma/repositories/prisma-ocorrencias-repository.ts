@@ -21,6 +21,9 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                     }
                 },
                 Relatorio: true
+            },
+            orderBy: {
+                dataOcorrencia: 'desc'
             }
         });
 
@@ -56,6 +59,9 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                         Animal: true
                     }
                 }
+            },
+            orderBy: {
+                dataOcorrencia: 'desc'
             }
         });
 
@@ -66,7 +72,37 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
         return PrismaOcorrenciaMapper.toDomain(ocorrencia);
     }
 
-    async filtrarPorStatus(status: string): Promise<Ocorrencia[]> {
-        throw new Error("Method not implemented.");
+    async filtrarPorStatus(dataHora: Date, tecnicoId: number): Promise<Ocorrencia[]> {
+        const andStatement = PrismaOcorrenciaMapper.toPrismaSearch(dataHora, tecnicoId);
+
+        const ocorrencias = await this.prisma.ocorrencia.findMany({
+            where: {
+                AND: [
+                    andStatement
+                ]
+            },
+            include: {
+                Tecnico: {
+                    include: {
+                        Funcionario: true
+                    }
+                },
+                Relatorio:  {
+                    include: {
+                        Afetados: true,
+                        Animal: true
+                    }
+                }
+            },
+            orderBy: {
+                dataOcorrencia: 'desc'
+            }
+        });
+
+        if(!ocorrencias) {
+            throw new OcorrenciasNotFound();
+        }
+        
+        return ocorrencias.map(PrismaOcorrenciaMapper.toDomain);
     }
 }

@@ -34,8 +34,17 @@ export class InMemoryOcorrenciaRepository implements OcorrenciaRepository {
         return ocorrenciaExist;
     }
     
-    async filtrarPorStatus(status: string): Promise<Ocorrencia[]> {
-        throw new Error("Method not implemented.");
+    async filtrarPorStatus(dataHora: Date, tecnicoId: number): Promise<Ocorrencia[]> {
+        const ocorrencias = this.ocorrencias.filter(
+            (item) => item.tecnico.id === tecnicoId &&
+            item.data <= dataHora
+        );
+
+        if(!ocorrencias) {
+            throw new OcorrenciasNotFound();
+        }
+
+        return ocorrencias;
     }
     
 }

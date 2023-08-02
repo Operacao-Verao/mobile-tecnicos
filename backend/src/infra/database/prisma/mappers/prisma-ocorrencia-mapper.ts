@@ -81,4 +81,28 @@ export class PrismaOcorrenciaMapper {
       relatorios
     })
   }
+
+  static toPrismaSearch(dataHora: Date, tecnicoId: number) {
+    const andStatement: any = [];
+
+    if(tecnicoId) {
+      andStatement.push(
+        {
+          idTecnico: tecnicoId
+        },
+      );
+    }
+
+    if(dataHora) {
+      andStatement.push(
+        {
+          dataOcorrencia: {
+              lte: dataHora
+          }
+        }
+      );
+    }
+
+    return andStatement;
+  }
 }
