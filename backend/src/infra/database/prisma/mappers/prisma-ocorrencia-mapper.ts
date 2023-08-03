@@ -1,9 +1,14 @@
 import { Afetados } from '@application/entities/afetados'
 import { Animais } from '@application/entities/animais'
+import { Endereco } from '@application/entities/endereco'
 import { Ocorrencia } from '@application/entities/ocorrencia'
 import { Relatorio } from '@application/entities/relatorio'
 import { Tecnico } from '@application/entities/tecnico'
-import { Ocorrencia as RawOcorrencia, Relatorio as RawRelatorio, Tecnico as RawTecnico, Funcionario as RawFuncionario, Animal as RawAnimal, Afetados as RawAfetados } from '@prisma/client'
+import { Ocorrencia as RawOcorrencia, Relatorio as RawRelatorio, Tecnico as RawTecnico, Funcionario as RawFuncionario, Animal as RawAnimal, Afetados as RawAfetados, Civil as RawCivil, Endereco as RawEndereco } from '@prisma/client'
+
+interface RawCivilWithJoins extends RawCivil {
+  Endereco: RawEndereco
+}
 
 interface RawTecnicoWithJoins extends RawTecnico {
   Funcionario: RawFuncionario
@@ -11,18 +16,19 @@ interface RawTecnicoWithJoins extends RawTecnico {
 
 interface RawRelatorioWithJoins extends RawRelatorio {
   Animal: RawAnimal,
-  Afetados: RawAfetados
+  Afetados: RawAfetados, 
 }
 
 interface RawOcorrenciasWithJoins extends RawOcorrencia {
   Tecnico: RawTecnicoWithJoins,
-  Relatorio: RawRelatorioWithJoins[]
+  Relatorio: RawRelatorioWithJoins[],
+  Civil: RawCivilWithJoins
 }
 
 export class PrismaOcorrenciaMapper {
   static toDomain(rawOcorrencia: RawOcorrenciasWithJoins) {
     let relatorios: Relatorio[] = [];
-    
+
     rawOcorrencia.Relatorio.map((item) => {
       const animais = new Animais({
         aves: item.Animal.aves,
@@ -30,7 +36,7 @@ export class PrismaOcorrenciaMapper {
         equinos: item.Animal.esquinos,
         gatos: item.Animal.gatos
       }, item.Animal.id);
-
+      
       const afetados = new Afetados({
         adultos: item.Afetados.adultos,
         criancas: item.Afetados.Criancas,
@@ -71,6 +77,13 @@ export class PrismaOcorrenciaMapper {
       senha: rawOcorrencia.Tecnico.Funcionario.senha
     }, rawOcorrencia.Tecnico.id);
 
+    const endereco = new Endereco({
+      cep: rawOcorrencia.Civil.Endereco.cep,
+      bairro: rawOcorrencia.Civil.Endereco.bairro,
+      cidade: rawOcorrencia.Civil.Endereco.cidade,
+      rua: rawOcorrencia.Civil.Endereco.rua
+    });
+
     return new Ocorrencia({
       acionamento: rawOcorrencia.acionamento,
       data: rawOcorrencia.dataOcorrencia,
@@ -78,6 +91,7 @@ export class PrismaOcorrenciaMapper {
       relato: rawOcorrencia.relato_Civil,
       status: rawOcorrencia.aprovado,
       tecnico,
+      endereco,
       relatorios
     })
   }

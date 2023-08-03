@@ -1,3 +1,4 @@
+import { enderecoResponse } from "./EnderecoResponse";
 import { relatorioResponse } from "./RelatorioResponse";
 
 export const ocorrenciaResponse = {
@@ -29,7 +30,8 @@ export const ocorrenciaResponse = {
         example: '2023-08-25 14:00:00',
         format: 'yyyy-mm-dd hh:ss:mm'
       },
-      relatorio: relatorioResponse
+      relatorio: relatorioResponse,
+      endereco: enderecoResponse
     }  
   }
 }

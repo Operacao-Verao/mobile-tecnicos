@@ -58,6 +58,11 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                         Afetados: true,
                         Animal: true
                     }
+                },
+                Civil: {
+                    include: {
+                        Endereco: true
+                    }
                 }
             },
             orderBy: {
@@ -91,6 +96,11 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                     include: {
                         Afetados: true,
                         Animal: true
+                    }
+                },
+                Civil: {
+                    include: {
+                        Endereco: true
                     }
                 }
             },

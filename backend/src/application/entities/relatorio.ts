@@ -18,8 +18,8 @@ interface RelatorioProps {
   danosMateriais: boolean,
   dataGeracao: Date,
   dataAtendimento: Date
-  afetados: Afetados
-  animais: Animais
+  afetados?: Afetados
+  animais?: Animais
 }
 
 export class Relatorio {
@@ -151,6 +151,22 @@ export class Relatorio {
 
   public get danosMateriais(): boolean {
     return this.props.danosMateriais;
+  }
+
+  public set afetados(afetados: Afetados) {
+    this.props.afetados = afetados;
+  }
+
+  public get afetados(): Afetados {
+    return this.props.afetados;
+  }
+
+  public set animais(animais: Animais) {
+    this.props.animais = animais;
+  }
+
+  public get animais(): Animais {
+    return this.props.animais;
   }
 
   public set dataGeracao(dataGeracao: Date) {

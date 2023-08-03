@@ -1,3 +1,4 @@
+import { Endereco } from "./endereco";
 import { Relatorio } from "./relatorio";
 import { Tecnico } from "./tecnico";
 
@@ -8,7 +9,8 @@ interface OcorrenciaProps {
   status: boolean,
   data: Date,
   relatorios?: Relatorio[],
-  tecnico?: Tecnico
+  tecnico?: Tecnico,
+  endereco: Endereco
 }
 
 export class Ocorrencia {
@@ -68,6 +70,14 @@ export class Ocorrencia {
 
   public get tecnico(): Tecnico {
     return this.props.tecnico;
+  }
+
+  public set endereco(endereco: Endereco) {
+    this.props.endereco = endereco;
+  }
+
+  public get endereco(): Endereco {
+    return this.props.endereco;
   }
 
   public set data(data: Date) {
