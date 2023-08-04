@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import {
 	View,
@@ -14,7 +14,7 @@ import * as yup from 'yup';
 
 import { RootStackParams } from '../Routes/tab.routes';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/useAppSelector';
-import { signinResponsible } from '../redux/reducers/responsibleReducer';
+import { signinResponsible } from '../redux/reducers/userReducer';
 import { LoginTS } from '../types/Login';
 import { getAuthDataFromStorage } from '../utils/useStorage';
 
@@ -33,7 +33,7 @@ const schema = yup.object({
 
 const Login = () => {
 	const dispatch = useAppDispatch();
-	const state = useAppSelector((state) => state.responsible);
+	const state = useAppSelector((state) => state.user);
 	const navigation =
 		useNavigation<NativeStackNavigationProp<RootStackParams, 'home'>>();
 	const {

@@ -1,11 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import responsibleReducer from './reducers/responsibleReducer';
+import userReducer from './reducers/userReducer';
+import ocorrenciaReducer from './reducers/ocorrenciaReducer';
+import relatorioReducer from './reducers/relatorioReducer';
 
 export const store = configureStore({
-  reducer: {
-    responsible: responsibleReducer,
-  },
+	reducer: {
+		user: userReducer,
+		ocorrencia: ocorrenciaReducer,
+		relatorio: relatorioReducer,
+	},
 });
 
 export type RootState = ReturnType<typeof store.getState>;
