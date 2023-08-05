@@ -10,7 +10,7 @@ export class InMemoryOcorrenciaRepository implements OcorrenciaRepository {
         const novaOcorrencia = makeOcorrencias();
 
         this.ocorrencias.push(novaOcorrencia);
-        return novaOcorrencia
+        return novaOcorrencia;
     }
 
     async verOcorrencias(tecnicoId: number): Promise<Ocorrencia[]> {

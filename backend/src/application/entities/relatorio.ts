@@ -3,7 +3,7 @@ import { Animais } from "./animais"
 
 interface RelatorioProps {
   enfermos: number,
-  gravidade: string,
+  gravidade: number,
   relatorio: string,
   encaminhamento: string,
   memorando: string,
@@ -11,13 +11,18 @@ interface RelatorioProps {
   processo: string,
   assunto: string,
   observacoes: string,
-  areaAfetada: string,
-  tipoConstrucao: string,
-  tipoTalude: string,
-  vegetacao: string,
+  areaAfetada: number,
+  tipoConstrucao: number,
+  tipoTalude: number,
+  vegetacao: number,
+  interdicao: number,
   danosMateriais: boolean,
+  situacaoVitimas: number,
   dataGeracao: Date,
   dataAtendimento: Date
+  fotos: {
+    url: string
+  }[],
   afetados?: Afetados
   animais?: Animais
 }
@@ -49,11 +54,27 @@ export class Relatorio {
     return this.props.enfermos;
   }
 
-  public set gravidade(gravidade: string) {
+  public set interdicao(interdicao: number) {
+    this.props.interdicao = interdicao;
+  }
+
+  public get interdicao(): number {
+    return this.props.interdicao;
+  }
+
+  public set situacaoVitimas(situacaoVitimas: number) {
+    this.props.situacaoVitimas = situacaoVitimas;
+  }
+
+  public get situacaoVitimas(): number {
+    return this.props.situacaoVitimas;
+  }
+
+  public set gravidade(gravidade: number) {
     this.props.gravidade = gravidade;
   }
 
-  public get gravidade(): string {
+  public get gravidade(): number {
     return this.props.gravidade;
   }
 
@@ -113,35 +134,35 @@ export class Relatorio {
     return this.props.observacoes;
   }
 
-  public set areaAfetada(areaAfetada: string) {
+  public set areaAfetada(areaAfetada: number) {
     this.props.areaAfetada = areaAfetada;
   }
 
-  public get areaAfetada(): string {
+  public get areaAfetada(): number {
     return this.props.areaAfetada;
   }
 
-  public set tipoConstrucao(tipoConstrucao: string) {
+  public set tipoConstrucao(tipoConstrucao: number) {
     this.props.tipoConstrucao = tipoConstrucao;
   }
 
-  public get tipoConstrucao(): string {
+  public get tipoConstrucao(): number {
     return this.props.tipoConstrucao;
   }
 
-  public set tipoTalude(tipoTalude: string) {
+  public set tipoTalude(tipoTalude: number) {
     this.props.tipoTalude = tipoTalude;
   }
 
-  public get tipoTalude(): string {
+  public get tipoTalude(): number {
     return this.props.tipoTalude;
   }
 
-  public set vegetacao(vegetacao: string) {
+  public set vegetacao(vegetacao: number) {
     this.props.vegetacao = vegetacao;
   }
 
-  public get vegetacao(): string {
+  public get vegetacao(): number {
     return this.props.vegetacao;
   }
 
@@ -167,6 +188,14 @@ export class Relatorio {
 
   public get animais(): Animais {
     return this.props.animais;
+  }
+
+  public set fotos(fotos: {url: string}[]) {
+    this.props.fotos = fotos;
+  }
+
+  public get fotos(): {url: string}[] {
+    return this.props.fotos;
   }
 
   public set dataGeracao(dataGeracao: Date) {

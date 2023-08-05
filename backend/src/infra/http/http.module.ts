@@ -7,6 +7,7 @@ import { AuthService } from "@infra/auth/auth-service";
 import { JwtService } from "@nestjs/jwt";
 import { VerOcorrencias } from "@application/use-cases/ver-ocorrencias";
 import { VerOcorrencia } from "@application/use-cases/ver-ocorrencia";
+import { CriarRelatorio } from "@application/use-cases/criar-relatorio";
 
 @Module({
   imports: [DatabaseModule],
@@ -15,7 +16,8 @@ import { VerOcorrencia } from "@application/use-cases/ver-ocorrencia";
     AuthService, 
     JwtService,
     VerOcorrencias,
-    VerOcorrencia
+    VerOcorrencia,
+    CriarRelatorio
   ]
 })
 export class HttpModule {}

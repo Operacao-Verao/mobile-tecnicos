@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { relatorioResponse } from "../responses/RelatorioResponse";
 import { RelatorioBody } from "../dtos/RelatorioBody";
@@ -26,14 +26,15 @@ export class RelatoriosController {
     }
   })
   @ApiBearerAuth()
-  async criar(@Body() body: RelatorioBody) {
+  async criar(@Body() body: RelatorioBody, @Param('ocorrenciaId') ocorrenciaId: string) {
     try {
-      const { afetados, animais, ...rest } = body;
+      const { afetados, animais, fotos, ...rest } = body;
 
       const afetadosToNumber = AfetadosHelper.toNumber(afetados);
       const animaisToNumber = AnimaisHelper.toNumber(animais);
+      const ocorrenciaIdToNumber = Number(ocorrenciaId);
 
-      const { relatorio } = await this.criarRelatorio.execute({...rest, afetados: afetadosToNumber, animais: animaisToNumber});
+      const { relatorio } = await this.criarRelatorio.execute({...rest, afetados: afetadosToNumber, animais: animaisToNumber, ocorrenciaId: ocorrenciaIdToNumber, fotos});
 
       return {
         relatorio

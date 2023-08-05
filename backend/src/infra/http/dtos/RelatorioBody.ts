@@ -1,7 +1,9 @@
+import { base64example } from "@helpers/base64"
 import { ApiProperty } from "@nestjs/swagger"
 import { IsDateString, IsNotEmpty, IsNumber, IsString, MaxLength, MinLength } from "class-validator"
 import { AfetadosBody } from "./AfetadosBody"
 import { AnimaisBody } from "./AnimaisBody"
+import { FotosBody } from "./FotosBody"
 
 export class RelatorioBody {
   @IsNotEmpty()
@@ -13,14 +15,30 @@ export class RelatorioBody {
   enfermos: number
 
   @IsNotEmpty()
+  @IsNumber()
+  @ApiProperty({
+    description: "Interdição ou não",
+    example: 1,
+  })
+  interdicao: number
+
+  @IsNotEmpty()
+  @IsNumber()
+  @ApiProperty({
+    description: "Desabrigados ou desalojados",
+    example: 2,
+  })
+  situacaoVitimas: number
+
+  @IsNotEmpty()
   @IsString()
   @MinLength(1)
   @MaxLength(9)
   @ApiProperty({
     description: "Gravidade do ocorrido",
-    example: "Moderado"
+    example: 2
   })
-  gravidade: string
+  gravidade: number
 
   @IsNotEmpty()
   @IsString()
@@ -98,9 +116,9 @@ export class RelatorioBody {
   @MaxLength(10)
   @ApiProperty({
     description: "areaAfetada do ocorrido",
-    example: "Pública"
+    example: 1
   })
-  areaAfetada: string
+  areaAfetada: number
 
   @IsNotEmpty()
   @IsString()
@@ -108,9 +126,9 @@ export class RelatorioBody {
   @MaxLength(9)
   @ApiProperty({
     description: "Tipo de construção do ocorrido",
-    example: "Alvenaria"
+    example: 1
   })
-  tipoConstrucao: string
+  tipoConstrucao: number
 
   @IsNotEmpty()
   @IsString()
@@ -118,9 +136,9 @@ export class RelatorioBody {
   @MaxLength(8)
   @ApiProperty({
     description: "Tipo do talude do ocorrido",
-    example: "Alvenaria"
+    example: 1
   })
-  tipoTalude: string
+  tipoTalude: number
 
   @IsNotEmpty()
   @IsString()
@@ -128,9 +146,9 @@ export class RelatorioBody {
   @MaxLength(20)
   @ApiProperty({
     description: "Tipo de vegetação do ocorrido",
-    example: "Rasteira"
+    example: 1
   })
-  vegetacao: string
+  vegetacao: number
 
   @IsNotEmpty()
   @ApiProperty({
@@ -181,4 +199,14 @@ export class RelatorioBody {
     }
   })
   animais: AnimaisBody
+
+  @ApiProperty({
+    description: "Fotos do relatório",
+    example: [
+      {
+        url: base64example
+      }
+    ]
+  })
+  fotos: FotosBody[]
 }

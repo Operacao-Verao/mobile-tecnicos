@@ -21,25 +21,33 @@ interface AnimaisBody {
   equinos: number
 }
 
+interface FotosBody {
+  url: string
+}
+
 interface CriarRelatorioRequest {
+  ocorrenciaId: number,
   enfermos: number
   assunto: string
-  gravidade: string
+  gravidade: number
   relatorio: string
   encaminhamento: string
   memorando: string
   oficio: string
   processo: string
   observacoes: string
-  areaAfetada: string
-  tipoConstrucao: string
-  tipoTalude: string
-  vegetacao: string
+  areaAfetada: number
+  tipoConstrucao: number
+  tipoTalude: number
+  vegetacao: number
   danosMateriais: boolean
+  situacaoVitimas: number,
+  interdicao: number,
   dataGeracao: Date
   dataAtendimento: Date
   afetados: AfetadosBody
   animais: AnimaisBody
+  fotos: FotosBody[]
 }
 
 interface CriarRelatorioResponse {
@@ -54,7 +62,7 @@ export class CriarRelatorio {
   ) {}
 
   async execute(request: CriarRelatorioRequest): Promise<CriarRelatorioResponse> {
-    const { animais, afetados, ...rest  } = request;
+    const { animais, afetados, ocorrenciaId, ...rest  } = request;
     
     const classAnimais = new Animais(animais);
     
@@ -64,7 +72,7 @@ export class CriarRelatorio {
 
     const relatorio = new Relatorio(classRelatorio);
 
-    await this.relatoriosRepository.criarRelatorio(relatorio);
+    await this.relatoriosRepository.criarRelatorio(relatorio, ocorrenciaId);
 
     return {
       relatorio
