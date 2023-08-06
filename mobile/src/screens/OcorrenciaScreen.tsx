@@ -1,8 +1,9 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import Status from '../components/Status';
-import { useAppSelector } from '../redux/hooks/useAppSelector';
+import { useAppSelector } from '../redux/hooks/useApp';
 import { Loading } from '../components/Loading';
+import { GravidadeStatus, OpenStatus } from '../components/Status';
+import RelatorioComponent from '../components/RelatorioComponent';
 
 const OcorrenciaScreen = () => {
 	const loading = useAppSelector((state) => state.ocorrencia.loading);
@@ -14,25 +15,31 @@ const OcorrenciaScreen = () => {
 
 	return (
 		<ScrollView className="flex-1 bg-white p-5">
-			<View>
+			<View className="space-y-4">
 				<View className="flex-row justify-between items-center">
-					<Text className="text-base text-slate-500 border border-slate-400 rounded-full px-2 py-1">
+					<Text className="text-base text-slate-500 border-[1.5px] border-slate-400 rounded-full px-3 py-1">
 						20/05/2023
 					</Text>
-					<Status />
+					<OpenStatus status={state.status} />
 				</View>
-				<Text className="text-lg">Civil: Samantha Zduniak</Text>
-				<Text className="text-base">
-					Endereço: Av. Sete de Setembro, 38 Centro, Franco da Rocha - SP
-				</Text>
-				<Text className="text-base">Relato: </Text>
-				<Text className="text-sm">{state.relato}</Text>
+				<View className="space-y-4 border-[1.5px] border-slate-400 rounded-2xl p-3">
+					<View>
+						<Text className="text-base font-semibold">Civil: </Text>
+						<Text className="text-sm">Samantha Zduniak</Text>
+					</View>
+					<View>
+						<Text className="text-base font-semibold">Endereço:</Text>
+						<Text className="text-sm">
+							Av. Sete de Setembro, 38 Centro, Franco da Rocha - SP
+						</Text>
+					</View>
+					<View>
+						<Text className="text-base font-semibold">Relato: </Text>
+						<Text className="text-sm">{state.relato}</Text>
+					</View>
+				</View>
 			</View>
-			{state.relatorio && (
-				<View>
-					<Text className="text-2xl font-semibold">Relatório</Text>
-				</View>
-			)}
+			{state.relatorio && <RelatorioComponent />}
 		</ScrollView>
 	);
 };

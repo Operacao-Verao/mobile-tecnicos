@@ -27,6 +27,7 @@ const TabRoutes = () => {
 					height: 60,
 					paddingTop: 5,
 					paddingBottom: 10,
+					borderTopWidth: 0,
 				},
 			}}
 		>

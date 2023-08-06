@@ -1,9 +1,11 @@
 import { AfetadosTS } from './Afetados';
 import { AnimaisTS } from './Animais';
+import { dadoVistoriaTS } from './DadoVistoria';
 
 export type RelatorioTS = {
 	enfermos: number;
 	gravidade: 'Risco' | 'Desastre' | null;
+	dadoVistoria: dadoVistoriaTS;
 	relatorio: string;
 	encaminhamento: string;
 	memorando: string;
@@ -18,6 +20,9 @@ export type RelatorioTS = {
 	danosMateriais: boolean;
 	dataGeracao: Date | null;
 	dataAtendimento: Date | null;
-	afetados: AfetadosTS;
-	animais: AnimaisTS;
+	interdicao: 'Sim' | 'Não';
+	situacao: 'Desabrigados' | 'Desalojados' | null;
+	foto: string | null;
+	afetados?: AfetadosTS;
+	animais?: AnimaisTS;
 };

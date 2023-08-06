@@ -13,7 +13,7 @@ import {
 import * as yup from 'yup';
 
 import { RootStackParams } from '../Routes/tab.routes';
-import { useAppDispatch, useAppSelector } from '../redux/hooks/useAppSelector';
+import { useAppDispatch, useAppSelector } from '../redux/hooks/useApp';
 import { signinResponsible } from '../redux/reducers/userReducer';
 import { LoginTS } from '../types/Login';
 import { getAuthDataFromStorage } from '../utils/useStorage';
