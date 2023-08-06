@@ -12,7 +12,7 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
     async verOcorrencias(tecnicoId: number): Promise<Ocorrencia[]> {
         const ocorrencias = await this.prisma.ocorrencia.findMany({
             where: {
-                idTecnico: tecnicoId
+                id_tecnico: tecnicoId
             },
             include: {
                 Tecnico: {
@@ -20,17 +20,28 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                         Funcionario: true
                     }
                 },
-                Relatorio: true
+                Relatorio:  {
+                    include: {
+                        Afetados: true,
+                        Animal: true,
+                        Foto: true
+                    }
+                },
+                Civil: {
+                    include: {
+                        Endereco: true
+                    }
+                }
             },
             orderBy: {
-                dataOcorrencia: 'desc'
+                data_ocorrencia: 'desc'
             }
         });
 
         if(!ocorrencias) {
             throw new OcorrenciasNotFound();
         }
-
+        
         return ocorrencias.map(PrismaOcorrenciaMapper.toDomain);
     }
 
@@ -42,7 +53,7 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                         id
                     },
                     {
-                        idTecnico: tecnicoId
+                        id_tecnico: tecnicoId
                     }
                 ]
 
@@ -56,7 +67,8 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                 Relatorio:  {
                     include: {
                         Afetados: true,
-                        Animal: true
+                        Animal: true,
+                        Foto: true
                     }
                 },
                 Civil: {
@@ -66,7 +78,7 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                 }
             },
             orderBy: {
-                dataOcorrencia: 'desc'
+                data_ocorrencia: 'desc'
             }
         });
 
@@ -95,7 +107,8 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                 Relatorio:  {
                     include: {
                         Afetados: true,
-                        Animal: true
+                        Animal: true,
+                        Foto: true
                     }
                 },
                 Civil: {
@@ -105,7 +118,7 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                 }
             },
             orderBy: {
-                dataOcorrencia: 'desc'
+                data_ocorrencia: 'desc'
             }
         });
 

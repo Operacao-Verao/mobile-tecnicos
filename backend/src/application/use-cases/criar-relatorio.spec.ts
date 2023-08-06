@@ -20,7 +20,6 @@ describe('Criar relatório', () => {
             assunto: "",
             danosMateriais: false,
             ocorrenciaId: ocorrencia.id,
-            enfermos: 0,
             gravidade: 1,
             relatorio: "",
             encaminhamento: "",

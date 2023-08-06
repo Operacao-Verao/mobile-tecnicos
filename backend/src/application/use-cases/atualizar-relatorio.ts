@@ -25,8 +25,10 @@ interface FotosBody {
   url: string
 }
 
-interface CriarRelatorioRequest {
-  ocorrenciaId: number
+interface AtualizarRelatorioRequest {
+  id: number,
+  ocorrenciaId: number,
+  enfermos: number
   assunto: string
   gravidade: number
   relatorio: string
@@ -49,27 +51,27 @@ interface CriarRelatorioRequest {
   fotos: FotosBody[]
 }
 
-interface CriarRelatorioResponse {
+interface AtualizarRelatorioResponse {
   relatorio: Relatorio
 }
 
 
 @Injectable()
-export class CriarRelatorio {
+export class AtualizarRelatorio {
   constructor(
     private relatoriosRepository: RelatoriosRepository
   ) {}
 
-  async execute(request: CriarRelatorioRequest): Promise<CriarRelatorioResponse> {
-    const { animais, afetados, ocorrenciaId, ...rest  } = request;
+  async execute(request: AtualizarRelatorioRequest): Promise<AtualizarRelatorioResponse> {
+    const { animais, afetados, ocorrenciaId, id, ...rest  } = request;
     
     const classAnimais = new Animais(animais);
     
     const classAfetados = new Afetados(afetados);
 
-    const relatorio = new Relatorio({...rest, animais: classAnimais, afetados: classAfetados});
+    const relatorio = new Relatorio({...rest, animais: classAnimais, afetados: classAfetados}, id);
 
-    await this.relatoriosRepository.criarRelatorio(relatorio, ocorrenciaId);
+    await this.relatoriosRepository.alterarRelatorio(relatorio, ocorrenciaId);
 
     return {
       relatorio

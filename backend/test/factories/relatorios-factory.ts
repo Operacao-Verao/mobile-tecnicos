@@ -9,7 +9,6 @@ export function makeRelatorios() {
         assunto: "Assunto desse relatório",
         danosMateriais: true,
         encaminhamento: "Foi para alguma secretaria",
-        enfermos: 1,
         gravidade: 1,
         memorando: "56489",
         oficio: "Ofício de teste",

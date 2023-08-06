@@ -4,7 +4,7 @@ import { Endereco } from '@application/entities/endereco'
 import { Ocorrencia } from '@application/entities/ocorrencia'
 import { Relatorio } from '@application/entities/relatorio'
 import { Tecnico } from '@application/entities/tecnico'
-import { Ocorrencia as RawOcorrencia, Relatorio as RawRelatorio, Tecnico as RawTecnico, Funcionario as RawFuncionario, Animal as RawAnimal, Afetados as RawAfetados, Civil as RawCivil, Endereco as RawEndereco } from '@prisma/client'
+import { Ocorrencia as RawOcorrencia, Relatorio as RawRelatorio, Tecnico as RawTecnico, Funcionario as RawFuncionario, Animal as RawAnimal, Afetados as RawAfetados, Civil as RawCivil, Endereco as RawEndereco, Foto as RawFoto } from '@prisma/client'
 
 interface RawCivilWithJoins extends RawCivil {
   Endereco: RawEndereco
@@ -17,6 +17,7 @@ interface RawTecnicoWithJoins extends RawTecnico {
 interface RawRelatorioWithJoins extends RawRelatorio {
   Animal: RawAnimal,
   Afetados: RawAfetados, 
+  Foto: RawFoto[]
 }
 
 interface RawOcorrenciasWithJoins extends RawOcorrencia {
@@ -30,40 +31,50 @@ export class PrismaOcorrenciaMapper {
     let relatorios: Relatorio[] = [];
 
     rawOcorrencia.Relatorio.map((item) => {
+      const fotos: {url: string}[] = [];
+
       const animais = new Animais({
         aves: item.Animal.aves,
         caes: item.Animal.caes,
-        equinos: item.Animal.esquinos,
+        equinos: item.Animal.equinos,
         gatos: item.Animal.gatos
       }, item.Animal.id);
       
       const afetados = new Afetados({
         adultos: item.Afetados.adultos,
-        criancas: item.Afetados.Criancas,
+        criancas: item.Afetados.criancas,
         enfermos: item.Afetados.enfermos,
         especiais: item.Afetados.especiais,
         feridos: item.Afetados.feridos,
         idosos: item.Afetados.idosos,
         mortos: item.Afetados.mortos
       }, item.Afetados.id);
+      
+      item.Foto.map((item) => {
+        fotos.push({
+          url: item.codificado
+        });
+      });
 
       const relatorio = new Relatorio({
-        areaAfetada: item.areaAfetada,
+        areaAfetada: item.area_afetada,
         assunto: item.assunto,
+        interdicao: item.interdicao,
+        situacaoVitimas: item.situacao_vitimas,
         danosMateriais: item.danos_materiais,
-        dataAtendimento: item.dataAtendimento,
-        dataGeracao: item.dataGeracao,
+        dataAtendimento: item.data_atendimento,
+        dataGeracao: item.data_geracao,
         encaminhamento: item.encaminhamento,
-        enfermos: item.enfermos,
         gravidade: item.gravidade,
         memorando: item.memorando,
         observacoes: item.observacoes,
         oficio: item.oficio,
         processo: item.processo,
         relatorio: item.relatorio,
-        tipoConstrucao: item.tipoConstrucao,
-        tipoTalude: item.tipoTalude,
+        tipoConstrucao: item.tipo_construcao,
+        tipoTalude: item.tipo_talude,
         vegetacao: item.vegetacao,
+        fotos,
         animais,
         afetados
       }, item.id);
@@ -86,9 +97,9 @@ export class PrismaOcorrenciaMapper {
 
     return new Ocorrencia({
       acionamento: rawOcorrencia.acionamento,
-      data: rawOcorrencia.dataOcorrencia,
-      num_casas: rawOcorrencia.num_Casas,
-      relato: rawOcorrencia.relato_Civil,
+      data: rawOcorrencia.data_ocorrencia,
+      num_casas: rawOcorrencia.num_casas,
+      relato: rawOcorrencia.relato_civil,
       status: rawOcorrencia.aprovado,
       tecnico,
       endereco,

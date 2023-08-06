@@ -5,12 +5,15 @@ import { RelatorioBody } from "../dtos/RelatorioBody";
 import { CriarRelatorio } from "@application/use-cases/criar-relatorio";
 import { AfetadosHelper } from "@helpers/afetadosHelper";
 import { AnimaisHelper } from "@helpers/animaisHelper";
+import { AtualizarRelatorio } from "@application/use-cases/atualizar-relatorio";
+import { AtualizarRelatorioBody } from "../dtos/AtualizarRelatorioBody";
 
 @ApiTags('relatorios')
 @Controller('relatorios')
 export class RelatoriosController {
   constructor( 
-    private criarRelatorio: CriarRelatorio
+    private criarRelatorio: CriarRelatorio,
+    private atualizarRelatorio: AtualizarRelatorio
   ) {}
   @Post('criar/:ocorrenciaId')
   @ApiOperation({ summary: "Cria um relatório para uma ocorrência" })
@@ -63,11 +66,30 @@ export class RelatoriosController {
     }
   })
   @ApiBearerAuth()
-  async atualizar(@Body() body: RelatorioBody) {
-    
+  async atualizar(@Body() body: AtualizarRelatorioBody, @Param('ocorrenciaId') ocorrenciaId: string) {
+    try {
+      const { afetados, animais, fotos, ...rest } = body;
+
+      const afetadosToNumber = AfetadosHelper.toNumber(afetados);
+      const animaisToNumber = AnimaisHelper.toNumber(animais);
+      const ocorrenciaIdToNumber = Number(ocorrenciaId);
+
+      const { relatorio } = await this.atualizarRelatorio.execute({...rest, afetados: afetadosToNumber, animais: animaisToNumber, ocorrenciaId: ocorrenciaIdToNumber, fotos});
+
+      return {
+        relatorio
+      };
+    } catch (error) {
+      throw new HttpException({
+        status: HttpStatus.PRECONDITION_FAILED,
+        error: error.message,
+      }, HttpStatus.PRECONDITION_FAILED, {
+        cause: error
+      });
+    }
   }
 
-  @Delete('delete/:ocorrenciaId')
+  /*@Delete('delete/:ocorrenciaId')
   @ApiOperation({ summary: "Apaga um relatório de uma ocorrência" })
   @ApiResponse({
     status: 401,
@@ -80,7 +102,7 @@ export class RelatoriosController {
   @ApiBearerAuth()
   async excluir() {
 
-  }
+  }*/
 
   @Get('ver/:ocorrenciaId')
   @ApiOperation({ summary: "Mostra os dados de vários relatórios de uma ocorrência" })

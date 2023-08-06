@@ -2,7 +2,6 @@ import { Afetados } from "./afetados"
 import { Animais } from "./animais"
 
 interface RelatorioProps {
-  enfermos: number,
   gravidade: number,
   relatorio: string,
   encaminhamento: string,
@@ -44,14 +43,6 @@ export class Relatorio {
 
   public get id(): number {
     return this._id;
-  }
-
-  public set enfermos(enfermos: number) {
-    this.props.enfermos = enfermos;
-  }
-
-  public get enfermos(): number {
-    return this.props.enfermos;
   }
 
   public set interdicao(interdicao: number) {

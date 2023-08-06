@@ -87,7 +87,7 @@ export class OcorrenciasController {
   }}
 
   @Get('filtrar')
-  @ApiOperation({ summary: "Mostra os dados de várias ocorrências filtradas por stauts" })
+  @ApiOperation({ summary: "Mostra os dados de várias ocorrências filtradas por status" })
   @ApiResponse({
     status: 401,
     description: "Unauthorized",

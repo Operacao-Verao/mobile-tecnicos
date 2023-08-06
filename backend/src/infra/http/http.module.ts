@@ -8,6 +8,8 @@ import { JwtService } from "@nestjs/jwt";
 import { VerOcorrencias } from "@application/use-cases/ver-ocorrencias";
 import { VerOcorrencia } from "@application/use-cases/ver-ocorrencia";
 import { CriarRelatorio } from "@application/use-cases/criar-relatorio";
+import { AtualizarRelatorio } from "@application/use-cases/atualizar-relatorio";
+import { FiltrarOcorrencia } from "@application/use-cases/filtrar-ocorrencia";
 
 @Module({
   imports: [DatabaseModule],
@@ -17,7 +19,9 @@ import { CriarRelatorio } from "@application/use-cases/criar-relatorio";
     JwtService,
     VerOcorrencias,
     VerOcorrencia,
-    CriarRelatorio
+    CriarRelatorio,
+    AtualizarRelatorio,
+    FiltrarOcorrencia
   ]
 })
 export class HttpModule {}
