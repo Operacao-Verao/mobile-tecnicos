@@ -26,7 +26,7 @@ const initialState: State = {
 
 export const signinResponsible = createAsyncThunk(
 	'/login',
-	async ({ email, password }: LoginTS) => {
+	async ({ email, password }: LoginTS, thunkAPI) => {
 		try {
 			const data = { email, password };
 			const response = await api.post('login', data);
@@ -34,11 +34,9 @@ export const signinResponsible = createAsyncThunk(
 
 			if (response.status === 200) {
 				saveAuthDataToStorage(token);
-			} else {
-				return 'Erro';
 			}
-		} catch (error) {
-			console.log('Erro na autenticação: ', error);
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response.data);
 		}
 	}
 );
@@ -58,9 +56,10 @@ export const slice = createSlice({
 				state.error = null;
 				state.loading = true;
 			})
-			.addCase(signinResponsible.fulfilled, (state) => {
+			.addCase(signinResponsible.fulfilled, (state, action: any) => {
 				state.error = null;
 				state.loading = false;
+				state.token = action.payload?.token;
 			})
 			.addCase(signinResponsible.rejected, (state, action) => {
 				state.error = action.error;

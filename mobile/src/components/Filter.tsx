@@ -7,20 +7,8 @@ import { getAuthDataFromStorage } from '../utils/useStorage';
 
 const Filter = () => {
 	const [selected, setSelected] = useState<number>();
-	const [token, setToken] = useState<string>();
 
 	const options = ['Interditado', 'Não Interditado'];
-
-	useEffect(() => {
-		const fetchAuthData = async () => {
-			const authData = await getAuthDataFromStorage();
-			if (authData?.token) {
-				setToken(authData.token);
-			}
-		};
-
-		fetchAuthData();
-	}, []);
 
 	return (
 		<SelectDropdown

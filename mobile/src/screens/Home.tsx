@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 
 import { getAuthDataFromStorage } from '../utils/useStorage';
@@ -25,9 +25,9 @@ const Home = () => {
 	}, []);
 
 	return (
-		<ScrollView className="flex-1 bg-white">
-			<View className="p-6">
-				<Text className="font-bold text-2xl text-center">
+		<ScrollView className="flex-1 bg-darkBackground">
+			<View className="p-5">
+				<Text className="font-bold text-2xl text-center text-white">
 					Ocorrências Recentes
 				</Text>
 				<View className="items-end mt-6">

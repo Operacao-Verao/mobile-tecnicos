@@ -1,12 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Input } from '../components/Input';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import {
 	View,
 	Text,
-	TextInput,
 	TouchableOpacity,
 	KeyboardAvoidingView,
 } from 'react-native';
@@ -19,7 +19,10 @@ import { LoginTS } from '../types/Login';
 import { getAuthDataFromStorage } from '../utils/useStorage';
 
 const schema = yup.object({
-	email: yup.string().required('Informe o email.').email(),
+	email: yup
+		.string()
+		.required('Informe o email.')
+		.email('O email não é válido.'),
 	password: yup.string().required('Informe a senha'),
 	//   .min(8, {
 	//     message: 'Senha inválida. A senha deve ter pelo menos 8 caracteres.',
@@ -32,6 +35,7 @@ const schema = yup.object({
 });
 
 const Login = () => {
+	const [authError, setAuthError] = useState(false);
 	const dispatch = useAppDispatch();
 	const state = useAppSelector((state) => state.user);
 	const navigation =
@@ -47,18 +51,17 @@ const Login = () => {
 			await dispatch(
 				signinResponsible({ email: data.email, password: data.password })
 			).unwrap();
-
 			navigation.navigate('bottomBar', { screen: 'home' });
 		} catch (error) {
+			setAuthError(!!error);
 			console.log('Erro na autenticação.', error);
-		} finally {
 		}
 	};
 
 	useEffect(() => {
 		const fetchAuthData = async () => {
 			const authData = await getAuthDataFromStorage();
-			if (authData?.token) {
+			if (!authData?.token) {
 				navigation.navigate('bottomBar', { screen: 'home' });
 			}
 		};
@@ -66,48 +69,57 @@ const Login = () => {
 	}, []);
 
 	return (
-		<KeyboardAvoidingView className="flex-1 bg-white">
+		<KeyboardAvoidingView className="flex-1 bg-darkBackground">
 			<View className="flex-1 justify-between px-5 py-10">
 				<View className="space-y-6">
-					<Text className="font-bold text-3xl text-center">Fazer Login</Text>
-					<Text className="text-slate-600 ml-1 mb-1">Email</Text>
+					<Text className="font-bold text-3xl text-center text-darkTextColor mb-4">
+						Login
+					</Text>
+					{authError && (
+						<View className="bg-red-200 p-5 rounded-md">
+							<Text className="text-red-400 text-center">
+								Usuário não encontrado.
+							</Text>
+						</View>
+					)}
+					<Text className="text-darkTextColor ml-1 mb-1">Email</Text>
 					<Controller
 						control={control}
 						name="email"
 						render={({ field: { onChange } }) => (
-							<TextInput
-								className="border-[1.25px] border-slate-400 rounded-lg p-4 w-full"
-								onChangeText={onChange}
-								placeholder="email@email.com"
-							/>
+							<Input.Root>
+								<Input.Input
+									placeholderText="eve.holt@reqres.in"
+									placeholderColor="white"
+									onChange={onChange}
+								/>
+								<Input.ErrorText ErrorText={errors.email?.message} />
+							</Input.Root>
 						)}
 					/>
-					{errors.email && (
-						<Text className="text-red-500">{errors.email.message}</Text>
-					)}
-					<Text className="text-slate-600 ml-1 mb-1">Senha</Text>
+					<Text className="text-darkTextColor ml-1 mb-1">Senha</Text>
 					<Controller
 						control={control}
 						name="password"
 						render={({ field: { onChange } }) => (
-							<TextInput
-								className="border-[1.25px] border-slate-400 rounded-lg p-4 w-full"
-								placeholder="********"
-								secureTextEntry
-								onChangeText={onChange}
-							/>
+							<Input.Root>
+								<Input.Input
+									placeholderText="cityliscka"
+									placeholderColor="white"
+									hasSecureTextEntry
+									onChange={onChange}
+								/>
+								<Input.ErrorText ErrorText={errors.password?.message} />
+							</Input.Root>
 						)}
 					/>
-					{errors.password && (
-						<Text className="text-red-500">{errors.password.message}</Text>
-					)}
 				</View>
 				<TouchableOpacity
 					className="p-5 bg-sky-500 rounded-full"
 					onPress={handleSubmit(onSubmit)}
 					disabled={state.loading}
 				>
-					<Text className="font-semibold text-white text-center">
+					<Text className="font-semibold text-darkTextColor text-center">
 						{state.loading ? 'Carregando...' : 'Login'}
 					</Text>
 				</TouchableOpacity>

@@ -16,7 +16,7 @@ export function Ocorrencia(data: OcorrenciaTS) {
 	};
 
 	return (
-		<View className="h-52 border-2 border-slate-300 bg-zinc-50 rounded-lg justify-around space-y-7 p-4 mt-6">
+		<View className="h-52 bg-slate-50 rounded-lg justify-around space-y-7 p-4 mt-6">
 			<View className="flex-row justify-between items-center">
 				<Text className="font-semibold">Av. Sete de Setembro, 38 Centro</Text>
 				<OpenStatus status={data.status} />
