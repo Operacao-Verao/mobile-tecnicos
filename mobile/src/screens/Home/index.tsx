@@ -4,7 +4,7 @@ import { getAuthDataFromStorage } from '../../utils/useStorage';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../Routes/tab.routes';
-import { Ocorrencia } from '../../components/Ocorrencia';
+import { Ocorrencia } from '../../components/OcorrenciaComponent';
 import Filter from '../../components/Filter';
 import * as S from './styles';
 

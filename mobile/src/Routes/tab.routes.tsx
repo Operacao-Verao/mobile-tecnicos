@@ -8,6 +8,7 @@ import Login from '../screens/Login';
 import OcorrenciaScreen from '../screens/Ocorrencia';
 import RelatorioScreen from '../screens/Relatorio';
 import Config from '../screens/Config';
+import { useAppSelector } from '../redux/hooks/useApp';
 
 export type RootStackParams = {
 	bottomBar: any;
@@ -22,6 +23,8 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParams>();
 
 const TabRoutes = () => {
+	const theme = useAppSelector((state) => state.theme);
+
 	return (
 		<Tab.Navigator
 			screenOptions={{
@@ -33,7 +36,7 @@ const TabRoutes = () => {
 					paddingTop: 5,
 					paddingBottom: 10,
 					borderTopWidth: 0,
-					backgroundColor: '#202020',
+					backgroundColor: `${theme.status === 'dark' ? '#202020' : '#fff'}`,
 				},
 			}}
 		>

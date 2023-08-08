@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, TextInput, TextInputProps, View } from 'react-native';
 import { styled } from 'styled-components/native';
+import { useAppSelector } from '../../redux/hooks/useApp';
 
 interface InputTextProps extends TextInputProps {
 	placeholderText?: string;
-	placeholderColor: string;
 
 	onChange: (...event: any[]) => void;
 	hasSecureTextEntry?: boolean;
@@ -12,11 +12,17 @@ interface InputTextProps extends TextInputProps {
 
 const InputContent = ({
 	placeholderText,
-	placeholderColor,
 	hasSecureTextEntry,
 	onChange,
 	...rest
 }: InputTextProps) => {
+	const theme = useAppSelector((state) => state.theme);
+	let placeholderColor = '';
+
+	theme.status === 'light'
+		? (placeholderColor = '#000')
+		: (placeholderColor = '#fff');
+
 	return (
 		<View>
 			<Input
@@ -30,11 +36,11 @@ const InputContent = ({
 };
 
 const Input = styled.TextInput`
-	border: 1.25px solid #f8fafc;
+	border: ${(props) => props.theme.border};
 	border-radius: 8px;
 	padding: 16px;
 	width: 100%;
-	color: #fff;
+	color: ${(props) => props.theme.color};
 `;
 
 export default InputContent;

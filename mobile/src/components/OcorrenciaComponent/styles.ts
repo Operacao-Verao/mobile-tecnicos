@@ -5,6 +5,7 @@ export const Container = styled.View`
 	height: 208px;
 	color: #f8fafc;
 	border-radius: 8px;
+	border: ${(props) => props.theme.border};
 	justify-content: space-around;
 	gap: 28px;
 	padding: 16px;

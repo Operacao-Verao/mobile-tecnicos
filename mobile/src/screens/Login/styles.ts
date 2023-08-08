@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.KeyboardAvoidingView`
 	flex: 1;
-	background-color: #202020;
+	background-color: ${(props) => props.theme.background};
 `;
 
 export const Wrapper = styled.View`
@@ -19,7 +19,7 @@ export const Title = styled.Text`
 	font-weight: bold;
 	font-size: 30px;
 	text-align: center;
-	color: #fff;
+	color: ${(props) => props.theme.color};
 	margin-bottom: 16px;
 `;
 
@@ -35,7 +35,7 @@ export const TextError = styled.Text`
 `;
 
 export const Label = styled.Text`
-	color: #fff;
+	color: ${(props) => props.theme.color};
 	margin: 0 0 -8px 4px;
 `;
 

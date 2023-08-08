@@ -1,8 +1,8 @@
 import React from 'react';
-import { useAppSelector } from '../../redux/hooks/useApp';
 import { Loading } from '../../components/Loading';
-import { OpenStatus } from '../../components/Status';
 import RelatorioComponent from '../../components/RelatorioComponent';
+import { OpenStatus } from '../../components/Status';
+import { useAppSelector } from '../../redux/hooks/useApp';
 import * as S from './styles';
 
 const OcorrenciaScreen = () => {

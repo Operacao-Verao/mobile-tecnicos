@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.ScrollView`
 	flex: 1;
-	background-color: #202020;
+	background-color: ${(props) => props.theme.background};
 	padding: 20px;
 `;
 
@@ -17,7 +17,7 @@ export const TopBar = styled.View`
 `;
 
 export const Date = styled.Text`
-	color: #f1f5f9;
+	color: ${(props) => props.theme.colorGray};
 	font-size: 16px;
 	border: 1.5px solid #94a3b8;
 	border-radius: 9999px;
@@ -34,12 +34,12 @@ export const Ocorrencia = styled.View`
 export const Card = styled.View``;
 
 export const Label = styled.Text`
-	color: #f1f5f9;
+	color: ${(props) => props.theme.color};
 	font-size: 16px;
 	font-weight: 600;
 `;
 
 export const Info = styled.Text`
-	color: #f1f5f9;
+	color: ${(props) => props.theme.color};
 	font-size: 14px;
 `;

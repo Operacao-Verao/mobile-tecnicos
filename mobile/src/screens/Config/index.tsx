@@ -9,7 +9,6 @@ const Config = () => {
 	const dispatch = useAppDispatch();
 	const theme = useAppSelector((state) => state.theme);
 	const user = useAppSelector((state) => state.user);
-
 	const handleModeToggle = async () => {
 		dispatch(setThemeStatus(theme.status === 'dark' ? 'light' : 'dark'));
 	};
@@ -22,7 +21,7 @@ const Config = () => {
 					<Feather
 						name={theme.status === 'dark' ? 'moon' : 'sun'}
 						size={24}
-						color="white"
+						color={theme.status === 'dark' ? 'white' : 'black'}
 					/>
 				</S.ButtonMode>
 			</S.TopBar>
@@ -32,11 +31,13 @@ const Config = () => {
 					ItemIcon="logout"
 					ItemTitle="Sair"
 					ItemSubtitle="Desconectar da conta atual"
+					IconColor={theme.status === 'dark' ? 'white' : 'black'}
 				/>
 				<SettingsItem
 					ItemIcon="logout"
 					ItemTitle="Sair"
 					ItemSubtitle="Desconectar da conta atual"
+					IconColor={theme.status === 'dark' ? 'white' : 'black'}
 				/>
 			</S.Settings>
 		</S.Container>

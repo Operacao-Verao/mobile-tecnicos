@@ -22,12 +22,12 @@ export const Content = styled.View`
 export const TextContent = styled.View``;
 
 export const ItemTitle = styled.Text`
-	color: #fff;
+	color: ${(props) => props.theme.color};
 	font-weight: 600;
 	font-size: 16px;
 `;
 
 export const ItemSubtitle = styled.Text`
-	color: #cbd5e1;
+	color: ${(props) => props.theme.color};
 	font-size: 14px;
 `;

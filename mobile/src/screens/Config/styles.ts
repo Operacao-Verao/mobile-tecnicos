@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.ScrollView`
 	flex: 1;
-	background-color: #202020;
+	background-color: ${(props) => props.theme.background};
 	padding: 20px;
 `;
 
@@ -13,7 +13,7 @@ export const TopBar = styled.View`
 
 export const Title = styled.Text`
 	font-size: 24px;
-	color: #fff;
+	color: ${(props) => props.theme.color};
 `;
 
 export const ButtonMode = styled.TouchableOpacity`

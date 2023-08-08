@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.ScrollView`
 	flex: 1;
-	background-color: #202020;
+	background-color: ${(props) => props.theme.background};
 `;
 export const Wrapper = styled.View`
 	padding: 20px;
@@ -12,7 +12,7 @@ export const Title = styled.Text`
 	font-weight: bold;
 	font-size: 24px;
 	text-align: center;
-	color: #fff;
+	color: ${(props) => props.theme.color};
 `;
 
 export const ViewFilter = styled.View`

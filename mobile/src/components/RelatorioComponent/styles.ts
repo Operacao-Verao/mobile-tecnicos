@@ -30,19 +30,19 @@ export const Column = styled.View`
 `;
 
 export const Title = styled.Text`
-	color: #fff;
+	color: ${(props) => props.theme.color};
 	font-size: 18px;
 	font-weight: 600;
 `;
 
 export const Label = styled.Text`
-	color: #fff;
+	color: ${(props) => props.theme.color};
 	font-size: 16px;
 	font-weight: 600;
 `;
 
 export const Info = styled.Text`
-	color: #fff;
+	color: ${(props) => props.theme.color};
 	font-size: 14px;
 `;
 
@@ -63,13 +63,13 @@ export const ItemBadge = styled.Text`
 `;
 
 export const AfetadosItem = styled.Text`
-	color: #fff;
+	color: ${(props) => props.theme.color};
 	font-size: 14px;
 	width: 33%;
 `;
 
 export const AnimaisItem = styled.Text`
-	color: #fff;
+	color: ${(props) => props.theme.color};
 	font-size: 14px;
 	width: 25%;
 `;

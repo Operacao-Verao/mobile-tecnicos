@@ -1,5 +1,4 @@
 import { StatusBar } from 'expo-status-bar';
-import { Appearance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 
