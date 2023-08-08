@@ -34,7 +34,7 @@ export class RelatoriosController {
     try {
       const { fotos } = body;
       
-      const tecnicoId: number = req.user.sub;
+      const tecnicoId: number = req.user._id;
 
       const relatorioToNumber = RelatorioHelper.toNumber(body);
 
@@ -73,7 +73,7 @@ export class RelatoriosController {
     try {
       const { fotos } = body;
 
-      const tecnicoId: number = req.user.sub;
+      const tecnicoId: number = req.user._id;
 
       const relatorioToNumber = RelatorioHelper.toNumber(body);
 
@@ -112,7 +112,7 @@ export class RelatoriosController {
   @ApiBearerAuth()
   async verRelatorios(@Request() req, @Param('ocorrenciaId') ocorrenciaId: string) {
     try {
-      const tecnicoId: number = req.user.sub;
+      const tecnicoId: number = req.user._id;
       const ocorrenciaIdToNumber = Number(ocorrenciaId);
 
       const { relatorios } = await this.verRelatoriosOcorrencia.execute({

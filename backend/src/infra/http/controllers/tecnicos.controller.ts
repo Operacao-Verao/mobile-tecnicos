@@ -6,11 +6,13 @@ import { tecnicoResponse } from "../responses/TecnicoResponse";
 import { AuthService } from "@infra/auth/auth-service";
 import { JwtAuthGuard } from "@infra/auth/jwt-auth.guard";
 import { TecnicoViewModel } from "../view-models/tecnico-view-model";
+import { LocalAuthGuard } from "@infra/auth/local-auth.guard";
 
 @ApiTags('tecnicos')
 @Controller('tecnicos')
 export class TecnicosController {
   constructor(private readonly authService: AuthService) {}
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   @ApiOperation({ summary: "Autentica um técnico" })
   @ApiResponse({

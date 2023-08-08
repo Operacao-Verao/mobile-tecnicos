@@ -9,12 +9,14 @@ export class PrismaTecnicosRepository implements TecnicosRepository {
   constructor(private prisma: PrismaService) {}
   
   async findById(id: number): Promise<Tecnico | null> {
-    const tecnico = await this.prisma.funcionario.findUnique({
-      where: {
-        id: id
-      },
+    
+    const tecnico = await this.prisma.funcionario.findFirst({
       include: {
-        Tecnico: true
+        Tecnico: {
+          where: {
+            id
+          }
+        }
       }
     });
 

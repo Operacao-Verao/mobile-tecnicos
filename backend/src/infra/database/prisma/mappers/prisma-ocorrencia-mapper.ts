@@ -104,7 +104,7 @@ export class PrismaOcorrenciaMapper {
       tecnico,
       endereco,
       relatorios
-    })
+    }, rawOcorrencia.id)
   }
 
   static toPrismaSearch(dataHora: Date, tecnicoId: number) {
