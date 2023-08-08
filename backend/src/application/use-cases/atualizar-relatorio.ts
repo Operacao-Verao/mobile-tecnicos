@@ -1,5 +1,6 @@
 import { Afetados } from "@application/entities/afetados";
 import { Animais } from "@application/entities/animais";
+import { DadosVistoria } from "@application/entities/dadosVistoria";
 import { Relatorio } from "@application/entities/relatorio";
 import { RelatoriosRepository } from "@application/repositories/relatorios-repository";
 import { Injectable } from "@nestjs/common";
@@ -25,10 +26,25 @@ interface FotosBody {
   url: string
 }
 
+interface DadosVistoriaBody {
+  desmoronamento: boolean
+  deslizamento: boolean
+  esgoto_escoamento: boolean
+  erosao: boolean
+  inundacao: boolean
+  incendio: boolean
+  arvores: boolean
+  infiltracao_trinca: boolean
+  judicial: boolean
+  monitoramento: boolean
+  transito: boolean
+  outros?: string
+}
+
 interface AtualizarRelatorioRequest {
-  id: number,
-  ocorrenciaId: number,
-  tecnicoId: number,
+  id: number
+  ocorrenciaId: number
+  tecnicoId: number
   enfermos: number
   assunto: string
   gravidade: number
@@ -43,12 +59,13 @@ interface AtualizarRelatorioRequest {
   tipoTalude: number
   vegetacao: number
   danosMateriais: boolean
-  situacaoVitimas: number,
-  interdicao: number,
+  situacaoVitimas: number
+  interdicao: number
   dataGeracao: Date
   dataAtendimento: Date
   afetados: AfetadosBody
   animais: AnimaisBody
+  dadosVistoria: DadosVistoriaBody
   fotos: FotosBody[]
 }
 
@@ -64,13 +81,15 @@ export class AtualizarRelatorio {
   ) {}
 
   async execute(request: AtualizarRelatorioRequest): Promise<AtualizarRelatorioResponse> {
-    const { animais, afetados, ocorrenciaId, id, tecnicoId, ...rest  } = request;
+    const { animais, afetados, ocorrenciaId, dadosVistoria, id, tecnicoId, ...rest  } = request;
     
     const classAnimais = new Animais(animais);
     
     const classAfetados = new Afetados(afetados);
 
-    const relatorio = new Relatorio({...rest, animais: classAnimais, afetados: classAfetados}, id);
+    const classDadosVistoria = new DadosVistoria(dadosVistoria);
+
+    const relatorio = new Relatorio({...rest, animais: classAnimais, afetados: classAfetados, dadosVistoria: classDadosVistoria}, id);
 
     await this.relatoriosRepository.alterarRelatorio(relatorio, ocorrenciaId, tecnicoId);
 

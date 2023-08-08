@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put, Request } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put, Request, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { relatorioResponse } from "../responses/RelatorioResponse";
 import { RelatorioBody } from "../dtos/RelatorioBody";
@@ -7,6 +7,8 @@ import { AtualizarRelatorio } from "@application/use-cases/atualizar-relatorio";
 import { AtualizarRelatorioBody } from "../dtos/AtualizarRelatorioBody";
 import { VerRelatoriosOcorrencia } from "@application/use-cases/ver-relatorios-ocorrencia";
 import { RelatorioHelper } from "@helpers/relatorioHelper";
+import { RelatorioViewModel } from "../view-models/relatorio-view-model";
+import { JwtAuthGuard } from "@infra/auth/jwt-auth.guard";
 
 @ApiTags('relatorios')
 @Controller('relatorios')
@@ -17,6 +19,7 @@ export class RelatoriosController {
     private verRelatoriosOcorrencia: VerRelatoriosOcorrencia
   ) {}
   @Post('criar/:ocorrenciaId')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: "Cria um relatório para uma ocorrência" })
   @ApiResponse({
     status: 401,
@@ -42,9 +45,7 @@ export class RelatoriosController {
 
       const { relatorio } = await this.criarRelatorio.execute({...relatorioToNumber, ocorrenciaId: ocorrenciaIdToNumber, fotos, tecnicoId});
 
-      return {
-        relatorio
-      };
+      return RelatorioViewModel.toHTTP(relatorio);
     } catch (error) {
       throw new HttpException({
         status: HttpStatus.PRECONDITION_FAILED,
@@ -56,6 +57,7 @@ export class RelatoriosController {
   }
 
   @Put('alterar/:ocorrenciaId')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: "Atualiza um relatório de uma ocorrência" })
   @ApiResponse({
     status: 401,
@@ -83,9 +85,7 @@ export class RelatoriosController {
 
       const { relatorio } = await this.atualizarRelatorio.execute({...parametros, ocorrenciaId: ocorrenciaIdToNumber, fotos, tecnicoId});
 
-      return {
-        relatorio
-      };
+      return RelatorioViewModel.toHTTP(relatorio);
     } catch (error) {
       throw new HttpException({
         status: HttpStatus.PRECONDITION_FAILED,
@@ -97,6 +97,7 @@ export class RelatoriosController {
   }
 
   @Get('ver/:ocorrenciaId')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: "Mostra os dados de vários relatórios de uma ocorrência" })
   @ApiResponse({
     status: 401,
@@ -120,9 +121,7 @@ export class RelatoriosController {
         ocorrenciaId: ocorrenciaIdToNumber
       });
 
-      return {
-        relatorios
-      };
+      return relatorios.map(RelatorioViewModel.toHTTP);
     } catch (error) {
       throw new HttpException({
         status: HttpStatus.NOT_FOUND,

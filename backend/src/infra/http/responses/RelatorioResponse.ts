@@ -11,11 +11,23 @@ export const relatorioResponse = {
       },
       enfermos: {
         type: 'integer',
+        description: 'Quantidade de enfermos',
         example: 2
       },
       gravidade: {
-        type: 'string',
-        example: 'Grave'
+        type: 'integer',
+        description: 'Nenhum (0), risco (1) ou desastre (2)',
+        example: 1
+      },
+      interdicao: {
+        type: 'integer',
+        description: 'Não (0), parcial (1) ou total (1)',
+        example: 1
+      },
+      situacaoVitimas: {
+        type: 'integer',
+        description: 'Inespecificado (0), desabrigados (1) ou desalojados (2)',
+        example: 1
       },
       relatorio: {
         type: 'string',
@@ -46,20 +58,24 @@ export const relatorioResponse = {
         example: 'Caso tenha observações estarão aqui'
       },
       areaAfeta: {
-        type: 'string',
-        example: 'Vilinha'
+        type: 'integer',
+        description: 'Inespecificado (0), publica (1) ou particular (2)',
+        example: 1
       },
       tipoConstrucao: {
-        type: 'string',
-        example: 'Casas'
+        type: 'integer',
+        description: 'Inespecificado (0), alvenaria (1), madeira (2) ou mista (3)',
+        example: 0
       },
       tipoTalude: {
-        type: 'string',
-        example: 'Natural'
+        type: 'integer',
+        description: 'Inespecificado (0), natural (1), de corte (2) ou aterro (3)',
+        example: 3
       },
       vegetacao: {
-        type: 'string',
-        example: 'Pouca vegetação ao redor'
+        type: 'integer',
+        description: 'Nenhuma (0), rasteira (1) ou árvores (2)',
+        example: 1
       },
       danosMateriais: {
         type: 'boolean',

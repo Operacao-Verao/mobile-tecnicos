@@ -1,8 +1,10 @@
 import { Relatorio } from "@application/entities/relatorio";
 import { makeAfetados } from "./afetados-factory";
 import { makeAnimais } from "./animais-factory";
+import { makeDadosVistoria } from "./dados-vistoria-factory";
 
 export function makeRelatorios() {
+    const dadosVistoria = makeDadosVistoria();
     return new Relatorio({
         areaAfetada: 2,
         assunto: "Assunto desse relatório",
@@ -19,6 +21,7 @@ export function makeRelatorios() {
         relatorio: "Enchente na vilinha com queda e deslizamento",
         processo: "Dados do processo",
         interdicao: 1,
+        dadosVistoria,
         fotos: [
             {
                 url: 'base64'

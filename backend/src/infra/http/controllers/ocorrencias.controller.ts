@@ -6,6 +6,7 @@ import { VerOcorrencia } from "@application/use-cases/ver-ocorrencia";
 import { OptionalParams } from "../dtos/DateOptionalParam";
 import { FiltrarOcorrencia } from "@application/use-cases/filtrar-ocorrencia";
 import { JwtAuthGuard } from "@infra/auth/jwt-auth.guard";
+import { OcorrenciaViewModel } from "../view-models/ocorrencia-view-model";
 
 @ApiTags('ocorrencias')
 @Controller('ocorrencias')
@@ -39,9 +40,7 @@ export class OcorrenciasController {
         tecnicoId: tecnicoIdToNumber
       });
   
-      return {
-        ocorrencias
-      };
+      return ocorrencias.map(OcorrenciaViewModel.toHTTP);
     } catch (error) {
       throw new HttpException({
         status: HttpStatus.NOT_FOUND,
@@ -68,7 +67,6 @@ export class OcorrenciasController {
   })
   @ApiBearerAuth()
   async verUma(@Param('id') id: string, @Request() req) {
-    console.log(req)
     const tecnicoIdToNumber = Number(req.user._id);
     const ocorrenciaIdToNumber = Number(id);
 
@@ -78,9 +76,7 @@ export class OcorrenciasController {
         ocorrenciaId: ocorrenciaIdToNumber
       });
   
-      return {
-        ocorrencia
-      };
+      return OcorrenciaViewModel.toHTTP(ocorrencia);
     } catch (error) {
       throw new HttpException({
         status: HttpStatus.NOT_FOUND,
@@ -91,6 +87,7 @@ export class OcorrenciasController {
   }}
 
   @Get('filtrar')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: "Mostra os dados de várias ocorrências filtradas por status" })
   @ApiResponse({
     status: 401,
@@ -117,9 +114,7 @@ export class OcorrenciasController {
         tecnicoId: tecnicoIdToNumber
       });
 
-      return {
-        ocorrencias
-      };
+      return ocorrencias.map(OcorrenciaViewModel.toHTTP);
     } catch (error) {
       throw new HttpException({
         status: HttpStatus.NOT_FOUND,

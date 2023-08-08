@@ -14,6 +14,7 @@ describe('Criar relatório', () => {
 
         const { relatorio } = await criarRelatorio.execute({
             vegetacao: 1,
+            tecnicoId: ocorrencia.tecnico.id,
             interdicao: 1,
             situacaoVitimas: 1,
             areaAfetada: 1,
@@ -50,6 +51,20 @@ describe('Criar relatório', () => {
                 caes: 1,
                 equinos: 0,
                 gatos: 1
+            },
+            dadosVistoria: {
+                arvores: true,
+                deslizamento: true,
+                desmoronamento: true,
+                erosao: false,
+                esgoto_escoamento: true,
+                incendio: false,
+                infiltracao_trinca: true,
+                inundacao: true,
+                judicial: false,
+                monitoramento: false,
+                transito: false,
+                outros: ""
             }
         });
 

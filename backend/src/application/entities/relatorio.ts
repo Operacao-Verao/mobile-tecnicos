@@ -1,5 +1,6 @@
 import { Afetados } from "./afetados"
 import { Animais } from "./animais"
+import { DadosVistoria } from "./dadosVistoria"
 
 export enum GRAVIDADE {
   NENHUM = 0,
@@ -66,6 +67,7 @@ interface RelatorioProps {
   fotos: {
     url: string
   }[],
+  dadosVistoria: DadosVistoria
   afetados?: Afetados
   animais?: Animais
 }
@@ -223,6 +225,14 @@ export class Relatorio {
 
   public get animais(): Animais {
     return this.props.animais;
+  }
+
+  public set dadosVistoria(dadosVistoria: DadosVistoria) {
+    this.props.dadosVistoria = dadosVistoria;
+  }
+
+  public get dadosVistoria(): DadosVistoria {
+    return this.props.dadosVistoria;
   }
 
   public set fotos(fotos: {url: string}[]) {

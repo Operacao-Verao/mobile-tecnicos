@@ -1,12 +1,14 @@
 import { Afetados } from "@application/entities/afetados";
 import { Animais } from "@application/entities/animais";
+import { DadosVistoria } from "@application/entities/dadosVistoria";
 import { Relatorio } from "@application/entities/relatorio";
-import { Relatorio as RawRelatorio, Afetados as RawAfetados, Animal as RawAnimal, Casa as RawCasa, Foto as RawFoto } from "@prisma/client";
+import { Relatorio as RawRelatorio, Afetados as RawAfetados, Animal as RawAnimal, Casa as RawCasa, Foto as RawFoto, DadosDaVistoria as RawDadosVistoria } from "@prisma/client";
 
 interface RelatorioWithJoins extends RawRelatorio {
   Afetados: RawAfetados,
   Animal: RawAnimal,
   Casa: RawCasa,
+  DadosDaVistoria: RawDadosVistoria,
   Foto: RawFoto[]
 }
 
@@ -38,6 +40,22 @@ export class PrismaRelatorioMapper {
       tipo_talude: relatorio.tipoTalude,
       situacao_vitimas: relatorio.situacaoVitimas,
       vegetacao: relatorio.vegetacao,
+      DadosDaVistoria: {
+        create: {
+          desmoronamento: relatorio.dadosVistoria.desmoronamento,
+          deslizamento: relatorio.dadosVistoria.deslizamento,
+          esgoto_escoamento: relatorio.dadosVistoria.esgoto_escoamento,
+          erosao: relatorio.dadosVistoria.erosao,
+          inundacao: relatorio.dadosVistoria.inundacao,
+          incendio: relatorio.dadosVistoria.incendio,
+          arvores: relatorio.dadosVistoria.arvores,
+          infiltracao_trinca: relatorio.dadosVistoria.infiltracao_trinca,
+          judicial: relatorio.dadosVistoria.judicial,
+          monitoramento: relatorio.dadosVistoria.monitoramento,
+          transito: relatorio.dadosVistoria.transito,
+          outros: relatorio.dadosVistoria.outros
+        }
+      },
       Afetados: {
         create: {
           adultos: relatorio.afetados.adultos,
@@ -96,6 +114,22 @@ export class PrismaRelatorioMapper {
       tipo_talude: relatorio.tipoTalude,
       situacao_vitimas: relatorio.situacaoVitimas,
       vegetacao: relatorio.vegetacao,
+      DadosDaVistoria: {
+        update: {
+          desmoronamento: relatorio.dadosVistoria.desmoronamento,
+          deslizamento: relatorio.dadosVistoria.deslizamento,
+          esgoto_escoamento: relatorio.dadosVistoria.esgoto_escoamento,
+          erosao: relatorio.dadosVistoria.erosao,
+          inundacao: relatorio.dadosVistoria.inundacao,
+          incendio: relatorio.dadosVistoria.incendio,
+          arvores: relatorio.dadosVistoria.arvores,
+          infiltracao_trinca: relatorio.dadosVistoria.infiltracao_trinca,
+          judicial: relatorio.dadosVistoria.judicial,
+          monitoramento: relatorio.dadosVistoria.monitoramento,
+          transito: relatorio.dadosVistoria.transito,
+          outros: relatorio.dadosVistoria.outros
+        }
+      },
       Afetados: {
         update: {
           adultos: relatorio.afetados.adultos,
@@ -134,6 +168,7 @@ export class PrismaRelatorioMapper {
     const fotos = this.toHTTPFotos(rawRelatorio.Foto);
     const afetados = this.toHTTPAfetados(rawRelatorio.Afetados);
     const animais = this.toHTTPAnimais(rawRelatorio.Animal);
+    const dadosVistoria = this.toHTTPDadosVistoria(rawRelatorio.DadosDaVistoria);
 
     return new Relatorio({
       areaAfetada: rawRelatorio.area_afetada,
@@ -155,7 +190,8 @@ export class PrismaRelatorioMapper {
       vegetacao: rawRelatorio.vegetacao,
       fotos,
       afetados,
-      animais
+      animais,
+      dadosVistoria
     }, rawRelatorio.id);
   }
 
@@ -190,5 +226,22 @@ export class PrismaRelatorioMapper {
       gatos: rawAnimal.gatos,
       equinos: rawAnimal.equinos
     }, rawAnimal.id);
+  }
+
+  private static toHTTPDadosVistoria(rawDadosVistoria: RawDadosVistoria) {
+    return new DadosVistoria({
+      arvores: rawDadosVistoria.arvores,
+      deslizamento: rawDadosVistoria.deslizamento,
+      desmoronamento: rawDadosVistoria.desmoronamento,
+      erosao: rawDadosVistoria.erosao,
+      esgoto_escoamento: rawDadosVistoria.esgoto_escoamento,
+      incendio: rawDadosVistoria.incendio,
+      infiltracao_trinca: rawDadosVistoria.infiltracao_trinca,
+      inundacao: rawDadosVistoria.inundacao,
+      judicial: rawDadosVistoria.judicial,
+      monitoramento: rawDadosVistoria.monitoramento,
+      transito: rawDadosVistoria.transito,
+      outros: rawDadosVistoria.outros
+    })
   }
 }

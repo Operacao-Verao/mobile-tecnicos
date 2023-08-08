@@ -18,6 +18,7 @@ describe('Atualizar relatório', () => {
 
         const { relatorio } = await atualizarRelatorio.execute({
             id: novoRelatorio.id,
+            tecnicoId: ocorrencia.tecnico.id,
             vegetacao: 1,
             interdicao: 1,
             situacaoVitimas: 1,
@@ -56,6 +57,20 @@ describe('Atualizar relatório', () => {
                 caes: 1,
                 equinos: 0,
                 gatos: 1
+            },
+            dadosVistoria: {
+                arvores: true,
+                deslizamento: true,
+                desmoronamento: true,
+                erosao: false,
+                esgoto_escoamento: true,
+                incendio: false,
+                infiltracao_trinca: true,
+                inundacao: true,
+                judicial: false,
+                monitoramento: false,
+                transito: false,
+                outros: ""
             }
         });
 

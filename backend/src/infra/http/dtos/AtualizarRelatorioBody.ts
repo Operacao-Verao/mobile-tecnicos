@@ -4,6 +4,7 @@ import { IsDateString, IsNotEmpty, IsNumber, IsString, Max, MaxLength, Min, MinL
 import { AfetadosBody } from "./AfetadosBody"
 import { AnimaisBody } from "./AnimaisBody"
 import { FotosBody } from "./FotosBody"
+import { DadosVistoriaBody } from "./DadosVistoriaBody"
 
 export class AtualizarRelatorioBody {
   @IsNotEmpty()
@@ -212,6 +213,25 @@ export class AtualizarRelatorioBody {
     }
   })
   animais: AnimaisBody
+
+  @ApiProperty({
+    description: "Dados da vistoria",
+    example: {
+      desmoronamento: true,
+      deslizamento: true,
+      esgoto_escoamento: false,
+      erosao: false,
+      inundacao: true,
+      incendio: false,
+      arvores: false,
+      infiltracao_trinca: true,
+      judicial: true,
+      monitoramento: true,
+      transito: false,
+      outros: "Parâmetro opcional caso a opção desejada não esteja contemplada anteriormente"
+    }
+  })
+  dadosVistoria: DadosVistoriaBody
 
   @ApiProperty({
     description: "Fotos do relatório",

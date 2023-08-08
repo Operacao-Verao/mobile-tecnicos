@@ -1,4 +1,4 @@
-import { makeDadosVistoria } from "@test/factories/dadosVistoria-factory";
+import { makeDadosVistoria } from "@test/factories/dados-vistoria-factory";
 
 describe('Conteúdo dados vistoria', () => {
     it('deve ser capaz de criar uma instância da classe dados vistoria', () => {
