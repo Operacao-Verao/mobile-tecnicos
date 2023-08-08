@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { OcorrenciaTS } from '../types/Ocorrencia';
+import { OcorrenciaTS } from '../../types/Ocorrencia';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParams } from '../Routes/tab.routes';
-import { OpenStatus } from './Status';
+import { RootStackParams } from '../../Routes/tab.routes';
+import { OpenStatus } from '../Status';
 
 export function Ocorrencia(data: OcorrenciaTS) {
 	const formattedDate = data.data?.toLocaleString();

@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { View, Text, ScrollView } from 'react-native';
 
-import { getAuthDataFromStorage } from '../utils/useStorage';
+import { getAuthDataFromStorage } from '../../utils/useStorage';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParams } from '../Routes/tab.routes';
-import { Ocorrencia } from '../components/Ocorrencia';
-import Filter from '../components/Filter';
+import { RootStackParams } from '../../Routes/tab.routes';
+import { Ocorrencia } from '../../components/Ocorrencia';
+import Filter from '../../components/Filter';
+import * as S from './styles';
 
 const Home = () => {
 	const navigation =
@@ -25,14 +25,12 @@ const Home = () => {
 	}, []);
 
 	return (
-		<ScrollView className="flex-1 bg-darkBackground">
-			<View className="p-5">
-				<Text className="font-bold text-2xl text-center text-white">
-					Ocorrências Recentes
-				</Text>
-				<View className="items-end mt-6">
+		<S.Container>
+			<S.Wrapper>
+				<S.Title>Ocorrências Recentes</S.Title>
+				<S.ViewFilter>
 					<Filter />
-				</View>
+				</S.ViewFilter>
 				<Ocorrencia
 					acionamento={'acionamento'}
 					relato={
@@ -69,8 +67,8 @@ const Home = () => {
 					status={'Em Aberto'}
 					data={date}
 				/>
-			</View>
-		</ScrollView>
+			</S.Wrapper>
+		</S.Container>
 	);
 };
 

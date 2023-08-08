@@ -1,9 +1,8 @@
 import { Entypo } from '@expo/vector-icons';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import { fetchFilterOcorrencia } from '../redux/reducers/ocorrenciaReducer';
-import { getAuthDataFromStorage } from '../utils/useStorage';
+import { fetchFilterOcorrencia } from '../../redux/reducers/ocorrenciaReducer';
 
 const Filter = () => {
 	const [selected, setSelected] = useState<number>();

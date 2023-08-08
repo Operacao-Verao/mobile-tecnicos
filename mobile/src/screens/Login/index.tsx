@@ -2,21 +2,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { Input } from '../components/Input';
+import { Input } from '../../components/Input';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import {
-	View,
-	Text,
-	TouchableOpacity,
-	KeyboardAvoidingView,
-} from 'react-native';
 import * as yup from 'yup';
+import * as S from './styles';
 
-import { RootStackParams } from '../Routes/tab.routes';
-import { useAppDispatch, useAppSelector } from '../redux/hooks/useApp';
-import { signinResponsible } from '../redux/reducers/userReducer';
-import { LoginTS } from '../types/Login';
-import { getAuthDataFromStorage } from '../utils/useStorage';
+import { RootStackParams } from '../../Routes/tab.routes';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
+import { signinResponsible } from '../../redux/reducers/userReducer';
+import { LoginTS } from '../../types/Login';
+import { getAuthDataFromStorage } from '../../utils/useStorage';
 
 const schema = yup.object({
 	email: yup
@@ -69,20 +64,16 @@ const Login = () => {
 	}, []);
 
 	return (
-		<KeyboardAvoidingView className="flex-1 bg-darkBackground">
-			<View className="flex-1 justify-between px-5 py-10">
-				<View className="space-y-6">
-					<Text className="font-bold text-3xl text-center text-darkTextColor mb-4">
-						Login
-					</Text>
+		<S.Container>
+			<S.Wrapper>
+				<S.Form>
+					<S.Title>Login</S.Title>
 					{authError && (
-						<View className="bg-red-200 p-5 rounded-md">
-							<Text className="text-red-400 text-center">
-								Usuário não encontrado.
-							</Text>
-						</View>
+						<S.ViewError>
+							<S.TextError>Usuário não encontrado.</S.TextError>
+						</S.ViewError>
 					)}
-					<Text className="text-darkTextColor ml-1 mb-1">Email</Text>
+					<S.Label>Email</S.Label>
 					<Controller
 						control={control}
 						name="email"
@@ -97,7 +88,7 @@ const Login = () => {
 							</Input.Root>
 						)}
 					/>
-					<Text className="text-darkTextColor ml-1 mb-1">Senha</Text>
+					<S.Label>Senha</S.Label>
 					<Controller
 						control={control}
 						name="password"
@@ -113,18 +104,14 @@ const Login = () => {
 							</Input.Root>
 						)}
 					/>
-				</View>
-				<TouchableOpacity
-					className="p-5 bg-sky-500 rounded-full"
-					onPress={handleSubmit(onSubmit)}
-					disabled={state.loading}
-				>
-					<Text className="font-semibold text-darkTextColor text-center">
+				</S.Form>
+				<S.Button onPress={handleSubmit(onSubmit)} disabled={state.loading}>
+					<S.TextButton>
 						{state.loading ? 'Carregando...' : 'Login'}
-					</Text>
-				</TouchableOpacity>
-			</View>
-		</KeyboardAvoidingView>
+					</S.TextButton>
+				</S.Button>
+			</S.Wrapper>
+		</S.Container>
 	);
 };
 

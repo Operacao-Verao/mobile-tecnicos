@@ -5,8 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from '../screens/Home';
 import Login from '../screens/Login';
-import OcorrenciaScreen from '../screens/OcorrenciaScreen';
-import RelatorioScreen from '../screens/RelatorioScreen';
+import OcorrenciaScreen from '../screens/Ocorrencia';
+import RelatorioScreen from '../screens/Relatorio';
 import Config from '../screens/Config';
 
 export type RootStackParams = {

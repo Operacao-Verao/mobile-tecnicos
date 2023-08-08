@@ -1,6 +1,12 @@
 import React from 'react';
-import { Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
+import {
+	Text,
+	TouchableOpacity,
+	TouchableOpacityProps,
+	View,
+} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import * as S from './styles';
 
 interface SettingsItemProps extends TouchableOpacityProps {
 	ItemTitle: string;
@@ -15,20 +21,18 @@ const SettingsItem = ({
 	...rest
 }: SettingsItemProps) => {
 	return (
-		<TouchableOpacity className="flex-row w-full space-x-6 pt-5">
-			<View className="items-center justify-center">
+		<S.Button>
+			<S.Icon>
 				<MaterialIcons name={ItemIcon} size={24} color="white" />
-			</View>
-			<View className="flex-row items-center justify-between flex-1">
-				<View>
-					<Text className="text-darkTextColor font-semibold text-base">
-						{ItemTitle}
-					</Text>
-					<Text className="text-slate-300 text-sm">{ItemSubtitle}</Text>
-				</View>
+			</S.Icon>
+			<S.Content>
+				<S.TextContent>
+					<S.ItemTitle>{ItemTitle}</S.ItemTitle>
+					<S.ItemSubtitle>{ItemSubtitle}</S.ItemSubtitle>
+				</S.TextContent>
 				<MaterialIcons name="chevron-right" size={24} color="white" />
-			</View>
-		</TouchableOpacity>
+			</S.Content>
+		</S.Button>
 	);
 };
 

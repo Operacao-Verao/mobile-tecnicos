@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, TextInput, TextInputProps, View } from 'react-native';
+import { styled } from 'styled-components/native';
 
 interface InputTextProps extends TextInputProps {
 	placeholderText?: string;
@@ -7,9 +8,6 @@ interface InputTextProps extends TextInputProps {
 
 	onChange: (...event: any[]) => void;
 	hasSecureTextEntry?: boolean;
-
-	hasError?: boolean;
-	errorMessage?: string;
 }
 
 const InputContent = ({
@@ -17,22 +15,26 @@ const InputContent = ({
 	placeholderColor,
 	hasSecureTextEntry,
 	onChange,
-	hasError,
-	errorMessage,
 	...rest
 }: InputTextProps) => {
 	return (
 		<View>
-			<TextInput
-				className="border-[1.25px] border-slate-50 rounded-lg p-4 w-full text-darkTextColor"
+			<Input
 				onChangeText={onChange}
 				placeholder={placeholderText}
 				secureTextEntry={hasSecureTextEntry}
 				placeholderTextColor={placeholderColor}
 			/>
-			{hasError && <Text className="text-red-500">{errorMessage}</Text>}
 		</View>
 	);
 };
+
+const Input = styled.TextInput`
+	border: 1.25px solid #f8fafc;
+	border-radius: 8px;
+	padding: 16px;
+	width: 100%;
+	color: #fff;
+`;
 
 export default InputContent;

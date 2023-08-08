@@ -1,8 +1,8 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import { GravidadeStatus } from './Status';
-import { useAppSelector } from '../redux/hooks/useApp';
-import { RelatorioTS } from '../types/Relatorio';
+import { GravidadeStatus } from '../Status';
+import { useAppSelector } from '../../redux/hooks/useApp';
+import { RelatorioTS } from '../../types/Relatorio';
 import { Image } from 'expo-image';
 
 const RelatorioComponent = () => {

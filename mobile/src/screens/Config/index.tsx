@@ -1,9 +1,9 @@
 import React from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import SettingsItem from '../components/SettingsItem';
+import SettingsItem from '../../components/SettingsItem';
 import { Feather } from '@expo/vector-icons';
-import { useAppDispatch, useAppSelector } from '../redux/hooks/useApp';
-import { setThemeStatus } from '../redux/reducers/themeReducer';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
+import { setThemeStatus } from '../../redux/reducers/themeReducer';
+import * as S from './styles';
 
 const Config = () => {
 	const dispatch = useAppDispatch();
@@ -15,19 +15,19 @@ const Config = () => {
 	};
 
 	return (
-		<ScrollView className="flex-1 bg-darkBackground p-5">
-			<View className="flex-row justify-between">
-				<Text className="text-2xl text-darkTextColor">Configurações</Text>
-				<TouchableOpacity onPress={handleModeToggle} className="justify-center">
+		<S.Container>
+			<S.TopBar>
+				<S.Title>Configurações</S.Title>
+				<S.ButtonMode onPress={handleModeToggle}>
 					<Feather
 						name={theme.status === 'dark' ? 'moon' : 'sun'}
 						size={24}
 						color="white"
 					/>
-				</TouchableOpacity>
-			</View>
+				</S.ButtonMode>
+			</S.TopBar>
 
-			<View className="mt-5">
+			<S.Settings>
 				<SettingsItem
 					ItemIcon="logout"
 					ItemTitle="Sair"
@@ -38,8 +38,8 @@ const Config = () => {
 					ItemTitle="Sair"
 					ItemSubtitle="Desconectar da conta atual"
 				/>
-			</View>
-		</ScrollView>
+			</S.Settings>
+		</S.Container>
 	);
 };
 
