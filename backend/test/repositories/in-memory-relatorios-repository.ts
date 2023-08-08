@@ -1,10 +1,15 @@
-import { Ocorrencia } from "@application/entities/ocorrencia";
 import { Relatorio } from "@application/entities/relatorio";
 import { RelatoriosRepository } from "@application/repositories/relatorios-repository";
 import { RelatorioNotFound } from "@application/use-cases/errors/RelatorioNotFound";
+import { InMemoryOcorrenciaRepository } from "./in-memory-ocorrencias-repository";
 
 export class InMemoryRelatoriosRepository implements RelatoriosRepository {
     public relatorios: Relatorio[] = [];
+    public ocorrenciasRepository: InMemoryOcorrenciaRepository;
+    
+    constructor(ocorrenciasRepository: InMemoryOcorrenciaRepository) {
+        this.ocorrenciasRepository = ocorrenciasRepository;
+    }
 
     async criarRelatorio(relatorio: Relatorio, ocorrenciaId: number): Promise<void> {
         this.relatorios.push(relatorio);
@@ -24,11 +29,9 @@ export class InMemoryRelatoriosRepository implements RelatoriosRepository {
         }
     }
 
-    async excluirRelatorio(relatorio: Relatorio): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
+    async listarRelatoriosOcorrencia(ocorrenciaId: number, tecnicoId: number): Promise<Relatorio[]> {
+        const ocorrencia = await this.ocorrenciasRepository.verUmaOcorrencia(ocorrenciaId, tecnicoId);
 
-    async listarRelatoriosOcorrencia(ocorrencia: Ocorrencia): Promise<Relatorio[]> {
-        throw new Error("Method not implemented.");
+        return ocorrencia.relatorios;
     }
 }

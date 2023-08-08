@@ -1,20 +1,27 @@
-import { Ocorrencia } from "@application/entities/ocorrencia";
 import { Relatorio } from "@application/entities/relatorio";
 import { RelatoriosRepository } from "@application/repositories/relatorios-repository";
 import { PrismaService } from "../prisma.service";
 import { OcorrenciaNotFound } from "@application/use-cases/errors/OcorrenciaNotFound";
 import { PrismaRelatorioMapper } from "../mappers/prisma-relatorio-mapper";
 import { RelatorioNotFound } from "@application/use-cases/errors/RelatorioNotFound";
+import { RelatoriosNotFound } from "@application/use-cases/errors/RelatoriosNotFound";
 
 export class PrismaRelatoriosRepository implements RelatoriosRepository {
   constructor(
     private prisma: PrismaService
   ){}
   
-  async criarRelatorio(relatorio: Relatorio, ocorrenciaId: number): Promise<void> {
-    const ocorrencia = await this.prisma.ocorrencia.findUnique({
+  async criarRelatorio(relatorio: Relatorio, ocorrenciaId: number, tecnicoId: number): Promise<void> {
+    const ocorrencia = await this.prisma.ocorrencia.findFirst({
       where: {
-        id: ocorrenciaId
+        AND: [
+          {
+            id: ocorrenciaId
+          },
+          {
+            id_tecnico: tecnicoId
+          }
+        ],
       },
       include: {
         Civil: {
@@ -40,10 +47,17 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
     });
   }
   
-  async alterarRelatorio(relatorio: Relatorio, ocorrenciaId: number): Promise<void> {
-    const ocorrencia = await this.prisma.ocorrencia.findUnique({
+  async alterarRelatorio(relatorio: Relatorio, ocorrenciaId: number, tecnicoId: number): Promise<void> {
+    const ocorrencia = await this.prisma.ocorrencia.findFirst({
       where: {
-        id: ocorrenciaId
+        AND: [
+          {
+            id: ocorrenciaId
+          },
+          {
+            id_tecnico: tecnicoId
+          }
+        ],
       },
       include: {
         Civil: true,
@@ -76,13 +90,35 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
       data: raw
     });
   }
-  
-  async excluirRelatorio(relatorio: Relatorio): Promise<boolean> {
-    throw new Error("Method not implemented.");
-  }
 
-  async listarRelatoriosOcorrencia(ocorrencia: Ocorrencia): Promise<Relatorio[]> {
-    throw new Error("Method not implemented.");
+  async listarRelatoriosOcorrencia(ocorrenciaId: number, tecnicoId: number): Promise<Relatorio[]> {
+    const ocorrencia = await this.prisma.ocorrencia.findFirst({
+      where: {
+        AND: [
+          {
+            id: ocorrenciaId
+          },
+          {
+            id_tecnico: tecnicoId
+          }
+        ],
+      },
+      include: {
+        Relatorio: {
+          include: {
+            Afetados: true,
+            Animal: true,
+            Casa: true,
+            Foto: true
+          }
+        }
+      }
+    });
+
+    if(!ocorrencia) {
+      throw new RelatoriosNotFound();
+    }
+
+    return ocorrencia.Relatorio.map(PrismaRelatorioMapper.toHTTP);
   }
-  
 }

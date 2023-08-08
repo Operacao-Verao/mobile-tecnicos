@@ -6,7 +6,7 @@ import { CriarRelatorio } from "./criar-relatorio";
 describe('Criar relatório', () => {
     it('Deve ser capaz de criar um relatório para uma ocorrência', async () => {
         const ocorrenciasRepository = new InMemoryOcorrenciaRepository();
-        const relatoriosRepository = new InMemoryRelatoriosRepository();
+        const relatoriosRepository = new InMemoryRelatoriosRepository(ocorrenciasRepository);
 
         const criarRelatorio = new CriarRelatorio(relatoriosRepository);
         

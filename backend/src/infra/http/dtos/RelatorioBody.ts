@@ -160,7 +160,7 @@ export class RelatorioBody {
   @IsNotEmpty()
   @IsDateString()
   @ApiProperty({
-    description: "Data de geração do ocorrida",
+    description: "Data de geração do ocorrido",
     example: "2023-08-25 14:00:00",
     format: "yyyy-mm-dd hh:ss:mm"
   })
@@ -169,7 +169,7 @@ export class RelatorioBody {
   @IsNotEmpty()
   @IsDateString()
   @ApiProperty({
-    description: "Data de geração do ocorrida",
+    description: "Data de atendimento do ocorrido",
     example: "2023-08-25 14:00:00",
     format: "yyyy-mm-dd hh:ss:mm"
   })

@@ -1,6 +1,50 @@
 import { Afetados } from "./afetados"
 import { Animais } from "./animais"
 
+export enum GRAVIDADE {
+  NENHUM = 0,
+  RISCO = 1,
+  DESASTRE = 2,
+};
+
+export enum AREA_AFETADA {
+   INESPECIFICADO = 0,
+   PUBLICA = 1,
+   PARTICULAR = 2,
+};
+
+export enum TIPO_CONSTRUCAO {
+  INESPECIFICADO = 0,
+  ALVENARIA = 1,
+  MADEIRA = 2,
+  MISTA = 3,
+};
+
+export enum TIPO_TALUDE {
+  INESPECIFICADO = 0,
+  NATURAL = 1,
+  DE_CORTE = 2,
+  ATERRO = 3,
+};
+
+export enum VEGETACAO {
+  NENHUMA = 0,
+  RASTEIRA = 1,
+  ARVORES = 2,
+};
+
+export enum SITUACAO_VITIMAS {
+  INESPECIFICADO = 0,
+  DESABRIGADOS = 1,
+  DESALOJADOS = 2,
+};
+
+export enum INTERDICAO {
+  NAO = 0,
+  PARCIAL = 1,
+  TOTAL = 2,
+};
+
 interface RelatorioProps {
   gravidade: number,
   relatorio: string,

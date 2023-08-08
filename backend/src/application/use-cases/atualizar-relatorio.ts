@@ -28,6 +28,7 @@ interface FotosBody {
 interface AtualizarRelatorioRequest {
   id: number,
   ocorrenciaId: number,
+  tecnicoId: number,
   enfermos: number
   assunto: string
   gravidade: number
@@ -63,7 +64,7 @@ export class AtualizarRelatorio {
   ) {}
 
   async execute(request: AtualizarRelatorioRequest): Promise<AtualizarRelatorioResponse> {
-    const { animais, afetados, ocorrenciaId, id, ...rest  } = request;
+    const { animais, afetados, ocorrenciaId, id, tecnicoId, ...rest  } = request;
     
     const classAnimais = new Animais(animais);
     
@@ -71,7 +72,7 @@ export class AtualizarRelatorio {
 
     const relatorio = new Relatorio({...rest, animais: classAnimais, afetados: classAfetados}, id);
 
-    await this.relatoriosRepository.alterarRelatorio(relatorio, ocorrenciaId);
+    await this.relatoriosRepository.alterarRelatorio(relatorio, ocorrenciaId, tecnicoId);
 
     return {
       relatorio

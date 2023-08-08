@@ -7,7 +7,7 @@ import { makeRelatorios } from "@test/factories/relatorios-factory";
 describe('Atualizar relatório', () => {
     it('Deve ser capaz de criar um relatório para uma ocorrência', async () => {
         const ocorrenciasRepository = new InMemoryOcorrenciaRepository();
-        const relatoriosRepository = new InMemoryRelatoriosRepository();
+        const relatoriosRepository = new InMemoryRelatoriosRepository(ocorrenciasRepository);
 
         const atualizarRelatorio = new AtualizarRelatorio(relatoriosRepository);
         

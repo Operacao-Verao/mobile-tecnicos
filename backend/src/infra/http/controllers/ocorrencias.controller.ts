@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, HttpStatus, Param, Query } from "@nestjs/common";
+import { Controller, Get, HttpException, HttpStatus, Param, Query, Request } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { ocorrenciaResponse } from "../responses/OcorrenciaResponse";
 import { VerOcorrencias } from "@application/use-cases/ver-ocorrencias";
@@ -15,7 +15,7 @@ export class OcorrenciasController {
     private filtrarOcorrencia: FiltrarOcorrencia
   ) {}
 
-  @Get('ver/:tecnicoId')
+  @Get('ver')
   @ApiOperation({ summary: "Mostra os dados de várias ocorrências" })
   @ApiResponse({
     status: 401,
@@ -29,8 +29,8 @@ export class OcorrenciasController {
     }
   })
   @ApiBearerAuth()
-  async ver(@Param('tecnicoId') tecnicoId: string) {
-    const tecnicoIdToNumber = Number(tecnicoId);
+  async ver(@Request() req) {
+    const tecnicoIdToNumber = Number(req.user.sub);
 
     try {
       const { ocorrencias } = await this.verOcorrencias.execute({
@@ -50,7 +50,7 @@ export class OcorrenciasController {
     }
   }
 
-  @Get('ver/:id/:tecnicoId')
+  @Get('ver/:id')
   @ApiOperation({ summary: "Mostra os dados de uma ocorrência" })
   @ApiResponse({
     status: 401,
@@ -64,8 +64,8 @@ export class OcorrenciasController {
     }
   })
   @ApiBearerAuth()
-  async verUma(@Param('id') id: string, @Param('tecnicoId') tecnicoId: string) {
-    const tecnicoIdToNumber = Number(tecnicoId);
+  async verUma(@Param('id') id: string, @Request() req) {
+    const tecnicoIdToNumber = Number(req.user.sub);
     const ocorrenciaIdToNumber = Number(id);
 
     try {
@@ -100,11 +100,11 @@ export class OcorrenciasController {
     }
   })
   @ApiBearerAuth()
-  async filtrarPorStatus(@Query() { dataHora }: OptionalParams, @Param('tecnicoId') tecnicoId: string) {
+  async filtrarPorStatus(@Query() { dataHora }: OptionalParams, @Request() req) {
     try {
       let dataHoraStringToDate: Date | undefined;
       
-      const tecnicoIdToNumber = Number(tecnicoId);
+      const tecnicoIdToNumber = Number(req.user.sub);
       
       if(dataHora) { dataHoraStringToDate = new Date(dataHora) }
 

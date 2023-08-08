@@ -10,6 +10,7 @@ import { VerOcorrencia } from "@application/use-cases/ver-ocorrencia";
 import { CriarRelatorio } from "@application/use-cases/criar-relatorio";
 import { AtualizarRelatorio } from "@application/use-cases/atualizar-relatorio";
 import { FiltrarOcorrencia } from "@application/use-cases/filtrar-ocorrencia";
+import { VerRelatoriosOcorrencia } from "@application/use-cases/ver-relatorios-ocorrencia";
 
 @Module({
   imports: [DatabaseModule],
@@ -21,7 +22,8 @@ import { FiltrarOcorrencia } from "@application/use-cases/filtrar-ocorrencia";
     VerOcorrencia,
     CriarRelatorio,
     AtualizarRelatorio,
-    FiltrarOcorrencia
+    FiltrarOcorrencia,
+    VerRelatoriosOcorrencia
   ]
 })
 export class HttpModule {}

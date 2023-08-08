@@ -1,5 +1,4 @@
 import { Relatorio } from "@application/entities/relatorio";
-import { base64example } from "@helpers/base64";
 import { makeAfetados } from "./afetados-factory";
 import { makeAnimais } from "./animais-factory";
 
@@ -22,7 +21,7 @@ export function makeRelatorios() {
         interdicao: 1,
         fotos: [
             {
-                url: base64example
+                url: 'base64'
             }
         ],
         afetados: makeAfetados(),
