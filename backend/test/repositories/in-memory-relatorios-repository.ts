@@ -29,6 +29,16 @@ export class InMemoryRelatoriosRepository implements RelatoriosRepository {
         }
     }
 
+    async adicionarFoto(url: string, relatorioId: number, tecnicoId: number): Promise<void> {
+        const relatorio = this.relatorios.find((item) =>  item.id === relatorioId)
+
+        if(!relatorio) {
+            throw new RelatorioNotFound();
+        }
+
+        relatorio.fotos.push({url});
+    }
+
     async listarRelatoriosOcorrencia(ocorrenciaId: number, tecnicoId: number): Promise<Relatorio[]> {
         const ocorrencia = await this.ocorrenciasRepository.verUmaOcorrencia(ocorrenciaId, tecnicoId);
 

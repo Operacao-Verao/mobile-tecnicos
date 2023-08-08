@@ -9,6 +9,8 @@ import { VerRelatoriosOcorrencia } from "@application/use-cases/ver-relatorios-o
 import { RelatorioHelper } from "@helpers/relatorioHelper";
 import { RelatorioViewModel } from "../view-models/relatorio-view-model";
 import { JwtAuthGuard } from "@infra/auth/jwt-auth.guard";
+import { FotosBody } from "../dtos/FotosBody";
+import { AdicionarFoto } from "@application/use-cases/adicionar-foto";
 
 @ApiTags('relatorios')
 @Controller('relatorios')
@@ -16,7 +18,8 @@ export class RelatoriosController {
   constructor( 
     private criarRelatorio: CriarRelatorio,
     private atualizarRelatorio: AtualizarRelatorio,
-    private verRelatoriosOcorrencia: VerRelatoriosOcorrencia
+    private verRelatoriosOcorrencia: VerRelatoriosOcorrencia,
+    private adicionarFoto: AdicionarFoto
   ) {}
   @Post('criar/:ocorrenciaId')
   @UseGuards(JwtAuthGuard)
@@ -127,6 +130,37 @@ export class RelatoriosController {
         status: HttpStatus.NOT_FOUND,
         error: error.message,
       }, HttpStatus.NOT_FOUND, {
+        cause: error
+      });
+    }
+  }
+
+  @Post('adicionarFoto/:relatorioId')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: "Adiciona uma foto em uma ocorrência" })
+  @ApiResponse({
+    status: 401,
+    description: "Unauthorized",
+  })
+  async criarFoto( @Body() body: FotosBody, @Param('relatorioId') relatorioId: string, @Request() req) {
+    const tecnicoId: number = req.user._id;
+    const relatorioIdToNumber = Number(relatorioId);
+
+    try {
+      const { url } = await this.adicionarFoto.execute({
+        relatorioId: relatorioIdToNumber,
+        tecnicoId,
+        url: body.url
+      });
+
+      return {
+        url
+      }
+    } catch (error) {
+      throw new HttpException({
+        status: HttpStatus.PRECONDITION_FAILED,
+        error: error.message,
+      }, HttpStatus.PRECONDITION_FAILED, {
         cause: error
       });
     }

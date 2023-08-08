@@ -121,4 +121,38 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
 
     return ocorrencia.Relatorio.map(PrismaRelatorioMapper.toHTTP);
   }
+
+  async adicionarFoto(url: string, relatorioId: number, tecnicoId: number): Promise<void> {
+    const relatorio = await this.prisma.relatorio.findFirst({
+      where: {
+        AND: [
+          {
+            id: relatorioId
+          },
+          {
+            Ocorrencia: {
+              id_tecnico: tecnicoId
+            }
+          }
+        ]
+      },
+    });
+
+    if(!relatorio) {
+      throw new RelatorioNotFound();
+    }
+
+    await this.prisma.relatorio.update({
+      where: {
+        id: relatorio.id
+      },
+      data: {
+        Foto: {
+          create: {
+            codificado: url
+          }
+        }
+      }
+    });
+  }
 }
