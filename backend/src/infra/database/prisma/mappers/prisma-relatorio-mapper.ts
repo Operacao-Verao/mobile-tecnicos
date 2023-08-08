@@ -21,7 +21,7 @@ export class PrismaRelatorioMapper {
         codificado: item.url
       });
     });
-
+    
     const prisma = {
       area_afetada: relatorio.areaAfetada,
       assunto: relatorio.assunto,
@@ -165,10 +165,10 @@ export class PrismaRelatorioMapper {
   }
 
   static toHTTP(rawRelatorio: RelatorioWithJoins) {
-    const fotos = this.toHTTPFotos(rawRelatorio.Foto);
-    const afetados = this.toHTTPAfetados(rawRelatorio.Afetados);
-    const animais = this.toHTTPAnimais(rawRelatorio.Animal);
-    const dadosVistoria = this.toHTTPDadosVistoria(rawRelatorio.DadosDaVistoria);
+    const fotos = PrismaRelatorioMapper.toHTTPFotos(rawRelatorio.Foto);
+    const afetados = PrismaRelatorioMapper.toHTTPAfetados(rawRelatorio.Afetados);
+    const animais = PrismaRelatorioMapper.toHTTPAnimais(rawRelatorio.Animal);
+    const dadosVistoria = PrismaRelatorioMapper.toHTTPDadosVistoria(rawRelatorio.DadosDaVistoria);
 
     return new Relatorio({
       areaAfetada: rawRelatorio.area_afetada,
@@ -229,6 +229,7 @@ export class PrismaRelatorioMapper {
   }
 
   private static toHTTPDadosVistoria(rawDadosVistoria: RawDadosVistoria) {
+    console.log(rawDadosVistoria)
     return new DadosVistoria({
       arvores: rawDadosVistoria.arvores,
       deslizamento: rawDadosVistoria.deslizamento,

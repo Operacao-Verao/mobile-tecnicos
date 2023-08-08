@@ -232,14 +232,4 @@ export class AtualizarRelatorioBody {
     }
   })
   dadosVistoria: DadosVistoriaBody
-
-  @ApiProperty({
-    description: "Fotos do relatório",
-    example: [
-      {
-        url: base64example
-      }
-    ]
-  })
-  fotos: FotosBody[]
 }

@@ -6,12 +6,15 @@ export class RelatorioHelper {
     static toNumber(relatorio: RelatorioBody) {
         const animais = this.AnimalToNumber(relatorio.animais);
         const afetados = this.AfetadosToNumber(relatorio.afetados);
-        
-        const { enfermos, interdicao, situacaoVitimas, gravidade, areaAfetada, tipoConstrucao, tipoTalude, vegetacao, ...rest } = relatorio;
+        const dataAtendimentoToDate = new Date(relatorio.dataAtendimento);
+        const dataGeracaoToDate = new Date(relatorio.dataGeracao);
+        const { enfermos, interdicao, situacaoVitimas, gravidade, areaAfetada, tipoConstrucao, dataAtendimento, dataGeracao, tipoTalude, vegetacao, ...rest } = relatorio;
 
         const resposta = {
             animais,
             afetados,
+            dataAtendimento: dataAtendimentoToDate,
+            dataGeracao: dataGeracaoToDate,
             enfermos: enfermos,
             interdicao: interdicao,
             situacaoVitimas: situacaoVitimas,

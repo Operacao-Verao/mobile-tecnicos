@@ -39,7 +39,7 @@ export class RelatoriosController {
   })
   @ApiBearerAuth()
   async criar(@Body() body: RelatorioBody, @Param('ocorrenciaId') ocorrenciaId: string, @Request() req) {
-    try {
+    
       const { fotos } = body;
       
       const tecnicoId: number = req.user._id;
@@ -51,14 +51,7 @@ export class RelatoriosController {
       const { relatorio } = await this.criarRelatorio.execute({...relatorioToNumber, ocorrenciaId: ocorrenciaIdToNumber, fotos, tecnicoId});
 
       return RelatorioViewModel.toHTTP(relatorio);
-    } catch (error) {
-      throw new HttpException({
-        status: HttpStatus.PRECONDITION_FAILED,
-        error: error.message,
-      }, HttpStatus.PRECONDITION_FAILED, {
-        cause: error
-      });
-    }
+     
   }
 
   @Put('alterar/:ocorrenciaId')
@@ -78,7 +71,6 @@ export class RelatoriosController {
   @ApiBearerAuth()
   async atualizar(@Body() body: AtualizarRelatorioBody, @Param('ocorrenciaId') ocorrenciaId: string, @Request() req) {
     try {
-      const { fotos } = body;
 
       const tecnicoId: number = req.user._id;
 
@@ -88,7 +80,7 @@ export class RelatoriosController {
 
       const ocorrenciaIdToNumber = Number(ocorrenciaId);
 
-      const { relatorio } = await this.atualizarRelatorio.execute({...parametros, ocorrenciaId: ocorrenciaIdToNumber, fotos, tecnicoId});
+      const { relatorio } = await this.atualizarRelatorio.execute({...parametros, ocorrenciaId: ocorrenciaIdToNumber, tecnicoId});
 
       return RelatorioViewModel.toHTTP(relatorio);
     } catch (error) {
@@ -117,7 +109,7 @@ export class RelatoriosController {
   })
   @ApiBearerAuth()
   async verRelatorios(@Request() req, @Param('ocorrenciaId') ocorrenciaId: string) {
-    try {
+    
       const tecnicoId: number = req.user._id;
       const ocorrenciaIdToNumber = Number(ocorrenciaId);
 
@@ -127,14 +119,7 @@ export class RelatoriosController {
       });
 
       return relatorios.map(RelatorioViewModel.toHTTP);
-    } catch (error) {
-      throw new HttpException({
-        status: HttpStatus.NOT_FOUND,
-        error: error.message,
-      }, HttpStatus.NOT_FOUND, {
-        cause: error
-      });
-    }
+    
   }
 
   @Post('adicionarFoto/:relatorioId')
@@ -143,6 +128,17 @@ export class RelatoriosController {
   @ApiResponse({
     status: 401,
     description: "Unauthorized",
+  })
+  @ApiResponse({
+    status: 201,
+    schema: {
+      type: 'object',
+      properties: {
+        url: {
+          example: "base64"
+        }
+      }
+    }
   })
   async criarFoto( @Body() body: FotosBody, @Param('relatorioId') relatorioId: string, @Request() req) {
     const tecnicoId: number = req.user._id;
@@ -169,8 +165,26 @@ export class RelatoriosController {
   }
 
   @Delete('apagarFoto/:relatorioId/:fotoId')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: "Apaga uma foto de uma ocorrência" })
+  @ApiResponse({
+    status: 401,
+    description: "Unauthorized",
+  })
+  @ApiResponse({
+    status: 200,
+    schema: {
+      type: 'object',
+      properties: {
+        mensagem: {
+          example: "Foto deletada com sucesso"
+        }
+      }
+    }
+  })
   async deletarFoto(@Param('relatorioId') relatorioId: string, @Param('fotoId') fotoId: string, @Request() req) {
-    const tecnicoId: number = req.user._id;
+    
+    const tecnicoId: number = req.user.sub;
     const relatorioIdToNumber = Number(relatorioId);
     const fotoIdToNumber = Number(fotoId);
 

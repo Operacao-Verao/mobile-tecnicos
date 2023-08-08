@@ -93,12 +93,10 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
 
     async filtrarPorStatus(dataHora: Date, tecnicoId: number): Promise<Ocorrencia[]> {
         const andStatement = PrismaOcorrenciaMapper.toPrismaSearch(dataHora, tecnicoId);
-
+        
         const ocorrencias = await this.prisma.ocorrencia.findMany({
             where: {
-                AND: [
-                    andStatement
-                ]
+                AND: andStatement
             },
             include: {
                 Tecnico: {

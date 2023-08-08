@@ -33,10 +33,10 @@ export class PrismaOcorrenciaMapper {
     let relatorios: Relatorio[] = [];
 
     rawOcorrencia.Relatorio.map((item) => {
-      const fotos = this.toHTTPFotos(item.Foto);
-      const afetados = this.toHTTPAfetados(item.Afetados);
-      const animais = this.toHTTPAnimais(item.Animal);
-      const dadosVistoria = this.toHTTPDadosVistoria(item.DadosDaVistoria);
+      const fotos = PrismaOcorrenciaMapper.toHTTPFotos(item.Foto);
+      const afetados = PrismaOcorrenciaMapper.toHTTPAfetados(item.Afetados);
+      const animais = PrismaOcorrenciaMapper.toHTTPAnimais(item.Animal);
+      const dadosVistoria = PrismaOcorrenciaMapper.toHTTPDadosVistoria(item.DadosDaVistoria);
 
       const relatorio = new Relatorio({
         areaAfetada: item.area_afetada,
@@ -65,9 +65,9 @@ export class PrismaOcorrenciaMapper {
       relatorios.push(relatorio);
     })
     
-    const tecnico = this.toHTTPTecnico(rawOcorrencia.Tecnico);
+    const tecnico = PrismaOcorrenciaMapper.toHTTPTecnico(rawOcorrencia.Tecnico);
 
-    const endereco = this.toHTTPEndereco(rawOcorrencia.Civil.Endereco);
+    const endereco = PrismaOcorrenciaMapper.toHTTPEndereco(rawOcorrencia.Civil.Endereco);
 
     return new Ocorrencia({
       acionamento: rawOcorrencia.acionamento,
@@ -87,7 +87,7 @@ export class PrismaOcorrenciaMapper {
     if(tecnicoId) {
       andStatement.push(
         {
-          idTecnico: tecnicoId
+          id_tecnico: tecnicoId
         },
       );
     }
@@ -95,7 +95,7 @@ export class PrismaOcorrenciaMapper {
     if(dataHora) {
       andStatement.push(
         {
-          dataOcorrencia: {
+          data_ocorrencia: {
               lte: dataHora
           }
         }
@@ -105,7 +105,7 @@ export class PrismaOcorrenciaMapper {
     return andStatement;
   }
 
-  private static toHTTPFotos(rawFoto: RawFoto[]) {
+  static toHTTPFotos(rawFoto: RawFoto[]) {
     let fotos: {url: string}[] = [];
 
     rawFoto.map((item) => {
@@ -117,7 +117,7 @@ export class PrismaOcorrenciaMapper {
     return fotos;
   }
 
-  private static toHTTPAfetados(rawAfetados: RawAfetados) {
+  static toHTTPAfetados(rawAfetados: RawAfetados) {
     return new Afetados({
       adultos: rawAfetados.adultos,
       criancas: rawAfetados.criancas,
@@ -129,7 +129,7 @@ export class PrismaOcorrenciaMapper {
     }, rawAfetados.id);
   }
 
-  private static toHTTPAnimais(rawAnimal: RawAnimal) {
+  static toHTTPAnimais(rawAnimal: RawAnimal) {
     return new Animais({
       aves: rawAnimal.aves,
       caes: rawAnimal.caes,
@@ -138,7 +138,7 @@ export class PrismaOcorrenciaMapper {
     }, rawAnimal.id);
   }
 
-  private static toHTTPDadosVistoria(rawDadosVistoria: RawDadosVistoria) {
+  static toHTTPDadosVistoria(rawDadosVistoria: RawDadosVistoria) {
     return new DadosVistoria({
       arvores: rawDadosVistoria.arvores,
       deslizamento: rawDadosVistoria.deslizamento,
@@ -155,7 +155,7 @@ export class PrismaOcorrenciaMapper {
     })
   }
 
-  private static toHTTPTecnico(rawTecnico: RawTecnicoWithJoins) {
+  static toHTTPTecnico(rawTecnico: RawTecnicoWithJoins) {
     return new Tecnico({
       email: rawTecnico.Funcionario.email,
       nome:rawTecnico.Funcionario.nome,
@@ -163,7 +163,7 @@ export class PrismaOcorrenciaMapper {
     }, rawTecnico.id);
   }
 
-  private static toHTTPEndereco(rawEndereco: RawEndereco) {
+  static toHTTPEndereco(rawEndereco: RawEndereco) {
     return new Endereco({
       cep: rawEndereco.cep,
       bairro: rawEndereco.bairro,

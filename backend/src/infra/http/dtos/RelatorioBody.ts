@@ -1,6 +1,6 @@
 import { base64example } from "@helpers/base64"
 import { ApiProperty } from "@nestjs/swagger"
-import { IsDateString, IsNotEmpty, IsNumber, IsString, MaxLength, MinLength } from "class-validator"
+import { IsDateString, IsNotEmpty, IsNumber, IsString, Max, MaxLength, Min, MinLength } from "class-validator"
 import { AfetadosBody } from "./AfetadosBody"
 import { AnimaisBody } from "./AnimaisBody"
 import { FotosBody } from "./FotosBody"
@@ -17,26 +17,30 @@ export class RelatorioBody {
 
   @IsNotEmpty()
   @IsNumber()
+  @Min(0)
+  @Max(2)
   @ApiProperty({
-    description: "Interdição ou não",
+    description: "Não (0), parcial (1) ou total (1)",
     example: 1,
   })
   interdicao: number
 
   @IsNotEmpty()
   @IsNumber()
+  @Min(0)
+  @Max(2)
   @ApiProperty({
-    description: "Desabrigados ou desalojados",
+    description: "Inespecificado (0), desabrigados (1) ou desalojados (2)",
     example: 2,
   })
   situacaoVitimas: number
 
   @IsNotEmpty()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(9)
+  @IsNumber()
+  @Min(0)
+  @Max(2)
   @ApiProperty({
-    description: "Gravidade do ocorrido",
+    description: "Nenhum (0), risco (1) ou desastre (2)",
     example: 2
   })
   gravidade: number
@@ -112,41 +116,42 @@ export class RelatorioBody {
   observacoes: string
 
   @IsNotEmpty()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(10)
+  @IsNumber()
+  @Min(0)
+  @Max(2)
   @ApiProperty({
-    description: "areaAfetada do ocorrido",
+    description: "Inespecificado (0), publica (1) ou particular (2)",
     example: 1
   })
   areaAfetada: number
 
   @IsNotEmpty()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(9)
+  @IsNumber()
+  @Min(0)
+  @Max(3)
   @ApiProperty({
-    description: "Tipo de construção do ocorrido",
+    description: "Inespecificado (0), alvenaria (1), madeira (2) ou mista (3)",
     example: 1
   })
   tipoConstrucao: number
 
   @IsNotEmpty()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(8)
+  @IsNumber()
+  @Min(0)
+  @Max(3)
   @ApiProperty({
-    description: "Tipo do talude do ocorrido",
-    example: 1
+    description: "Inespecificado (0), natural (1), de corte (2) ou aterro (3)",
+    example: 1,
+
   })
   tipoTalude: number
 
   @IsNotEmpty()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(20)
+  @IsNumber()
+  @Min(0)
+  @Max(2)
   @ApiProperty({
-    description: "Tipo de vegetação do ocorrido",
+    description: "Nenhuma (0), rasteira (1) ou árvores (2)",
     example: 1
   })
   vegetacao: number
@@ -161,7 +166,7 @@ export class RelatorioBody {
   @IsNotEmpty()
   @IsDateString()
   @ApiProperty({
-    description: "Data de geração do ocorrido",
+    description: "Data de geração do ocorrida",
     example: "2023-08-25 14:00:00",
     format: "yyyy-mm-dd hh:ss:mm"
   })
@@ -170,7 +175,7 @@ export class RelatorioBody {
   @IsNotEmpty()
   @IsDateString()
   @ApiProperty({
-    description: "Data de atendimento do ocorrido",
+    description: "Data de geração do ocorrida",
     example: "2023-08-25 14:00:00",
     format: "yyyy-mm-dd hh:ss:mm"
   })
@@ -228,5 +233,5 @@ export class RelatorioBody {
       }
     ]
   })
-  fotos: FotosBody[]
+  fotos?: FotosBody[]
 }

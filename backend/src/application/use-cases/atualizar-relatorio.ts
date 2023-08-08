@@ -66,7 +66,6 @@ interface AtualizarRelatorioRequest {
   afetados: AfetadosBody
   animais: AnimaisBody
   dadosVistoria: DadosVistoriaBody
-  fotos: FotosBody[]
 }
 
 interface AtualizarRelatorioResponse {

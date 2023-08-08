@@ -5,13 +5,16 @@ import { OcorrenciaNotFound } from "@application/use-cases/errors/OcorrenciaNotF
 import { PrismaRelatorioMapper } from "../mappers/prisma-relatorio-mapper";
 import { RelatorioNotFound } from "@application/use-cases/errors/RelatorioNotFound";
 import { RelatoriosNotFound } from "@application/use-cases/errors/RelatoriosNotFound";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class PrismaRelatoriosRepository implements RelatoriosRepository {
   constructor(
     private prisma: PrismaService
   ){}
   
   async criarRelatorio(relatorio: Relatorio, ocorrenciaId: number, tecnicoId: number): Promise<void> {
+    
     const ocorrencia = await this.prisma.ocorrencia.findFirst({
       where: {
         AND: [
@@ -109,7 +112,8 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
             Afetados: true,
             Animal: true,
             Casa: true,
-            Foto: true
+            Foto: true,
+            DadosDaVistoria: true
           }
         }
       }

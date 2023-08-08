@@ -1,6 +1,7 @@
 import { Relatorio } from "@application/entities/relatorio";
 import { AnimalViewModel } from "./animal-view-model";
 import { AfetadosViewModel } from "./afetados-view-model";
+import { DadosVistoriaViewModel } from "./dados-vistoria-view-model";
 
 export class RelatorioViewModel {
   static toHTTP(relatorio: Relatorio) {
@@ -25,7 +26,8 @@ export class RelatorioViewModel {
       vegetacao: relatorio.vegetacao,
       fotos: relatorio.fotos,
       animais: AnimalViewModel.toHTTP(relatorio.animais),
-      afetados: AfetadosViewModel.toHTTP(relatorio.afetados)
+      afetados: AfetadosViewModel.toHTTP(relatorio.afetados),
+      dadosVistoria: DadosVistoriaViewModel.toHTTP(relatorio.dadosVistoria)
     }
   }
 }
