@@ -24,7 +24,8 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                     include: {
                         Afetados: true,
                         Animal: true,
-                        Foto: true
+                        Foto: true,
+                        DadosDaVistoria: true
                     }
                 },
                 Civil: {
@@ -68,7 +69,8 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                     include: {
                         Afetados: true,
                         Animal: true,
-                        Foto: true
+                        Foto: true,
+                        DadosDaVistoria: true
                     }
                 },
                 Civil: {
@@ -108,7 +110,8 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                     include: {
                         Afetados: true,
                         Animal: true,
-                        Foto: true
+                        Foto: true,
+                        DadosDaVistoria: true
                     }
                 },
                 Civil: {
