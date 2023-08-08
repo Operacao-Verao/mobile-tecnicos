@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../Routes/tab.routes';
 import { OpenStatus } from '../Status';
+import * as S from './styles';
 
 export function Ocorrencia(data: OcorrenciaTS) {
 	const formattedDate = data.data?.toLocaleString();
@@ -16,23 +17,18 @@ export function Ocorrencia(data: OcorrenciaTS) {
 	};
 
 	return (
-		<View className="h-52 bg-slate-50 rounded-lg justify-around space-y-7 p-4 mt-6">
-			<View className="flex-row justify-between items-center">
-				<Text className="font-semibold">Av. Sete de Setembro, 38 Centro</Text>
+		<S.Container>
+			<S.Row>
+				<S.Address>Av. Sete de Setembro, 38 Centro</S.Address>
 				<OpenStatus status={data.status} />
-			</View>
-			<Text className="text-sm">{data.relato}</Text>
-			<View className="flex-row items-center justify-between">
-				<Text className="">{formattedDate}</Text>
-				<TouchableOpacity
-					className="bg-sky-500 px-3 py-3 rounded-md"
-					onPress={handleNavigate}
-				>
-					<Text className="font-semibold text-white text-center">
-						Ver detalhes
-					</Text>
-				</TouchableOpacity>
-			</View>
-		</View>
+			</S.Row>
+			<S.SmallText>{data.relato}</S.SmallText>
+			<S.Row>
+				<S.SmallText>{formattedDate}</S.SmallText>
+				<S.Button onPress={handleNavigate}>
+					<S.ButtonText>Ver detalhes</S.ButtonText>
+				</S.Button>
+			</S.Row>
+		</S.Container>
 	);
 }

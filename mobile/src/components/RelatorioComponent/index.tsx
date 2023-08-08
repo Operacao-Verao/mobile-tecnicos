@@ -4,6 +4,7 @@ import { GravidadeStatus } from '../Status';
 import { useAppSelector } from '../../redux/hooks/useApp';
 import { RelatorioTS } from '../../types/Relatorio';
 import { Image } from 'expo-image';
+import * as S from './styles';
 
 const RelatorioComponent = () => {
 	const state = useAppSelector<RelatorioTS | undefined>(
@@ -11,148 +12,94 @@ const RelatorioComponent = () => {
 	);
 
 	return (
-		<ScrollView className="space-y-4 border-[1.5px] border-slate-400 rounded-2xl p-3 mt-5 mb-10">
-			<View className="flex-row justify-between items-center">
-				<Text className="text-darkTextColor text-lg font-semibold">
-					Relatório
-				</Text>
+		<S.Container>
+			<S.Row>
+				<S.Title>Relatório</S.Title>
 				<GravidadeStatus status={state?.gravidade} />
-			</View>
+			</S.Row>
 			<View>
 				<Image source={state?.foto} />
 			</View>
-			<View className="">
-				<Text className="text-darkTextColor text-base font-semibold">
-					Memorando:{' '}
-				</Text>
-				<Text className="text-darkTextColor text-sm">{state?.memorando}</Text>
-			</View>
-			<View className="">
-				<Text className="text-darkTextColor text-base font-semibold mb-2">
-					Dados da Vistoria:
-				</Text>
+			<S.Column>
+				<S.Label>Memorando: </S.Label>
+				<S.Info>{state?.memorando}</S.Info>
+			</S.Column>
+			<View>
+				<S.Label>Dados da Vistoria:</S.Label>
 
-				<View className="flex-row flex-wrap gap-2">
+				<S.CardBadge>
 					{state?.dadoVistoria &&
 						Object.entries(state.dadoVistoria).map(
 							([itemName, itemValue]) =>
 								itemValue === true && (
-									<Text
-										className="text-slate-700 text-sm capitalize bg-slate-100 rounded-full px-2 py-1"
-										key={itemName}
-									>
-										{itemName}
-									</Text>
+									<S.ItemBadge key={itemName}>{itemName}</S.ItemBadge>
 								)
 						)}
-				</View>
+				</S.CardBadge>
 			</View>
-			<View>
-				<Text className="text-darkTextColor text-base font-semibold">
-					Assunto:
-				</Text>
-				<Text className="text-darkTextColor text-sm">{state?.assunto}</Text>
-			</View>
-			<View className="flex-row justify-between items-center">
-				<View>
-					<Text className="text-darkTextColor text-base font-semibold">
-						Área Afetada:
-					</Text>
-					<Text className="text-darkTextColor text-sm">
-						{state?.areaAfetada}
-					</Text>
-				</View>
-				<View>
-					<Text className="text-darkTextColor text-base font-semibold">
-						Tipo Construção:
-					</Text>
-					<Text className="text-darkTextColor text-sm">
-						{state?.tipoConstrucao}
-					</Text>
-				</View>
-				<View>
-					<Text className="text-darkTextColor text-base font-semibold">
-						Tipo Talude:
-					</Text>
-					<Text className="text-darkTextColor text-sm">
-						{state?.tipoTalude}
-					</Text>
-				</View>
-			</View>
-			<View>
-				<Text className="text-darkTextColor text-base font-semibold">
-					Afetados:{' '}
-				</Text>
-				<View className="flex-row flex-wrap space-y-[2px] items-center">
-					<Text className="text-darkTextColor text-sm w-1/3">
-						Adultos: {state?.afetados?.adultos}
-					</Text>
-					<Text className="text-darkTextColor text-sm w-1/3">
-						Crianças: {state?.afetados?.criancas}
-					</Text>
-					<Text className="text-darkTextColor text-sm w-1/3">
-						Idosos: {state?.afetados?.idosos}
-					</Text>
-					<Text className="text-darkTextColor text-sm w-1/3">
+			<S.Column>
+				<S.Label>Assunto:</S.Label>
+				<S.Info>{state?.assunto}</S.Info>
+			</S.Column>
+			<S.Row>
+				<S.Column>
+					<S.Label>Área Afetada:</S.Label>
+					<S.Info>{state?.areaAfetada}</S.Info>
+				</S.Column>
+				<S.Column>
+					<S.Label>Tipo Construção:</S.Label>
+					<S.Info>{state?.tipoConstrucao}</S.Info>
+				</S.Column>
+				<S.Column>
+					<S.Label>Tipo Talude:</S.Label>
+					<S.Info>{state?.tipoTalude}</S.Info>
+				</S.Column>
+			</S.Row>
+			<S.Column>
+				<S.Label>Afetados: </S.Label>
+				<S.Row>
+					<S.AfetadosItem>Adultos: {state?.afetados?.adultos}</S.AfetadosItem>
+					<S.AfetadosItem>Crianças: {state?.afetados?.criancas}</S.AfetadosItem>
+					<S.AfetadosItem>Idosos: {state?.afetados?.idosos}</S.AfetadosItem>
+					<S.AfetadosItem>
 						Deficientes: {state?.afetados?.especiais}
-					</Text>
-					<Text className="text-darkTextColor text-sm w-1/3">
-						Enfermos: {state?.afetados?.enfermos}
-					</Text>
-					<Text className="text-darkTextColor text-sm w-1/3">
-						Feridos: {state?.afetados?.feridos}
-					</Text>
-				</View>
-			</View>
-			<View>
-				<Text className="text-darkTextColor text-base font-semibold">
-					Animais:{' '}
-				</Text>
-				<View className="flex-row flex-wrap space-y-[2px] items-center">
-					<Text className="text-darkTextColor text-sm w-1/4">
-						Cães: {state?.animais?.caes}
-					</Text>
-					<Text className="text-darkTextColor text-sm w-1/4">
-						Gatos: {state?.animais?.gatos}
-					</Text>
-					<Text className="text-darkTextColor text-sm w-1/4">
-						Aves: {state?.animais?.aves}
-					</Text>
-					<Text className="text-darkTextColor text-sm w-1/4">
-						Equinos: {state?.animais?.equinos}
-					</Text>
-				</View>
-			</View>
-			<View className="flex-row items-center">
-				<Text className="text-darkTextColor text-base font-semibold">
-					Situação:{' '}
-				</Text>
-				<Text className="text-darkTextColor text-sm">{state?.situacao}</Text>
-			</View>
-			<View className="flex-row items-center">
-				<Text className="text-darkTextColor text-base font-semibold">
-					Encaminhamento:{' '}
-				</Text>
-				<Text className="text-darkTextColor text-sm">
-					{state?.encaminhamento}
-				</Text>
-			</View>
-			<View className="flex-row items-center">
-				<Text className="text-darkTextColor text-base font-semibold">
-					Ofício:{' '}
-				</Text>
-				<Text className="text-darkTextColor text-sm">{state?.oficio}</Text>
-			</View>
-			<View className="flex-row items-center">
-				<Text className="text-darkTextColor text-base font-semibold">
-					Vegetação:{' '}
-				</Text>
-				<Text className="text-darkTextColor text-sm">{state?.vegetacao}</Text>
-			</View>
+					</S.AfetadosItem>
+					<S.AfetadosItem>Enfermos: {state?.afetados?.enfermos}</S.AfetadosItem>
+					<S.AfetadosItem>Feridos: {state?.afetados?.feridos}</S.AfetadosItem>
+				</S.Row>
+			</S.Column>
+			<S.Column>
+				<S.Label>Animais: </S.Label>
+				<S.Row>
+					<S.AnimaisItem>Cães: {state?.animais?.caes}</S.AnimaisItem>
+					<S.AnimaisItem>Gatos: {state?.animais?.gatos}</S.AnimaisItem>
+					<S.AnimaisItem>Aves: {state?.animais?.aves}</S.AnimaisItem>
+					<S.AnimaisItem>Equinos: {state?.animais?.equinos}</S.AnimaisItem>
+				</S.Row>
+			</S.Column>
+			<S.RowItem>
+				<S.Label>Situação: </S.Label>
+				<S.Info>{state?.situacao}</S.Info>
+			</S.RowItem>
+			<S.RowItem>
+				<S.Label>Encaminhamento: </S.Label>
+				<S.Info>{state?.encaminhamento}</S.Info>
+			</S.RowItem>
+			<S.RowItem>
+				<S.Label>Ofício: </S.Label>
+				<S.Info>{state?.oficio}</S.Info>
+			</S.RowItem>
+			<S.RowItem>
+				<S.Label>Vegetação: </S.Label>
+				<S.Info>{state?.vegetacao}</S.Info>
+			</S.RowItem>
 			{state?.observacoes && (
-				<Text className="text-darkTextColor text-sm">{state?.observacoes}</Text>
+				<S.RowItem>
+					<S.Label>Observação: </S.Label>
+					<S.Info>{state?.observacoes}</S.Info>
+				</S.RowItem>
 			)}
-		</ScrollView>
+		</S.Container>
 	);
 };
 
