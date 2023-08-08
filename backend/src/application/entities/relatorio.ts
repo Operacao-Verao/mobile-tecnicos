@@ -64,10 +64,10 @@ interface RelatorioProps {
   situacaoVitimas: number,
   dataGeracao: Date,
   dataAtendimento: Date
-  fotos: {
+  fotos?: {
     url: string
   }[],
-  dadosVistoria: DadosVistoria
+  dadosVistoria?: DadosVistoria
   afetados?: Afetados
   animais?: Animais
 }

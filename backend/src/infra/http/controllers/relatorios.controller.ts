@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Request, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { relatorioResponse } from "../responses/RelatorioResponse";
 import { RelatorioBody } from "../dtos/RelatorioBody";
@@ -11,6 +11,7 @@ import { RelatorioViewModel } from "../view-models/relatorio-view-model";
 import { JwtAuthGuard } from "@infra/auth/jwt-auth.guard";
 import { FotosBody } from "../dtos/FotosBody";
 import { AdicionarFoto } from "@application/use-cases/adicionar-foto";
+import { ApagarFoto } from "@application/use-cases/apagar-foto";
 
 @ApiTags('relatorios')
 @Controller('relatorios')
@@ -19,7 +20,8 @@ export class RelatoriosController {
     private criarRelatorio: CriarRelatorio,
     private atualizarRelatorio: AtualizarRelatorio,
     private verRelatoriosOcorrencia: VerRelatoriosOcorrencia,
-    private adicionarFoto: AdicionarFoto
+    private adicionarFoto: AdicionarFoto,
+    private apagarFoto: ApagarFoto
   ) {}
   @Post('criar/:ocorrenciaId')
   @UseGuards(JwtAuthGuard)
@@ -155,6 +157,32 @@ export class RelatoriosController {
 
       return {
         url
+      }
+    } catch (error) {
+      throw new HttpException({
+        status: HttpStatus.PRECONDITION_FAILED,
+        error: error.message,
+      }, HttpStatus.PRECONDITION_FAILED, {
+        cause: error
+      });
+    }
+  }
+
+  @Delete('apagarFoto/:relatorioId/:fotoId')
+  async deletarFoto(@Param('relatorioId') relatorioId: string, @Param('fotoId') fotoId: string, @Request() req) {
+    const tecnicoId: number = req.user._id;
+    const relatorioIdToNumber = Number(relatorioId);
+    const fotoIdToNumber = Number(fotoId);
+
+    try {
+      const { mensagem } = await this.apagarFoto.execute({
+        relatorioId: relatorioIdToNumber,
+        tecnicoId,
+        fotoId: fotoIdToNumber
+      });
+
+      return {
+        mensagem
       }
     } catch (error) {
       throw new HttpException({

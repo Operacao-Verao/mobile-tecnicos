@@ -12,6 +12,7 @@ import { AtualizarRelatorio } from "@application/use-cases/atualizar-relatorio";
 import { FiltrarOcorrencia } from "@application/use-cases/filtrar-ocorrencia";
 import { VerRelatoriosOcorrencia } from "@application/use-cases/ver-relatorios-ocorrencia";
 import { AdicionarFoto } from "@application/use-cases/adicionar-foto";
+import { ApagarFoto } from "@application/use-cases/apagar-foto";
 
 @Module({
   imports: [DatabaseModule],
@@ -25,7 +26,8 @@ import { AdicionarFoto } from "@application/use-cases/adicionar-foto";
     AtualizarRelatorio,
     FiltrarOcorrencia,
     VerRelatoriosOcorrencia,
-    AdicionarFoto
+    AdicionarFoto,
+    ApagarFoto
   ]
 })
 export class HttpModule {}
