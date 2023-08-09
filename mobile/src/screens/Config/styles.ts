@@ -12,8 +12,9 @@ export const TopBar = styled.View`
 `;
 
 export const Title = styled.Text`
-	font-size: 24px;
 	color: ${(props) => props.theme.color};
+	font-family: Poppins_600SemiBold;
+	font-size: 24px;
 `;
 
 export const ButtonMode = styled.TouchableOpacity`

@@ -50,10 +50,12 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 		borderWidth: 1,
 		borderColor: '#475569',
-		width: 150,
+		width: 130,
 	},
 	SelectText: {
 		color: '#475569',
+		fontFamily: 'Poppins_400Regular',
+		fontSize: 16,
 	},
 	Dropdown: {
 		borderRadius: 8,
@@ -61,6 +63,8 @@ const styles = StyleSheet.create({
 	},
 	rowText: {
 		color: '#475569',
+		fontFamily: 'Poppins_400Regular',
+		fontSize: 14,
 	},
 });
 

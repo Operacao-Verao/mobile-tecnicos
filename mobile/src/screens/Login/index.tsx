@@ -46,7 +46,10 @@ const Login = () => {
 			await dispatch(
 				signinResponsible({ email: data.email, password: data.password })
 			).unwrap();
-			navigation.navigate('bottomBar', { screen: 'home' });
+
+			if (state.token) {
+				navigation.navigate('bottomBar', { screen: 'home' });
+			}
 		} catch (error) {
 			setAuthError(!!error);
 			console.log('Erro na autenticação.', error);
@@ -81,7 +84,6 @@ const Login = () => {
 							<Input.Root>
 								<Input.Input
 									placeholderText="eve.holt@reqres.in"
-									placeholderColor="white"
 									onChange={onChange}
 								/>
 								<Input.ErrorText ErrorText={errors.email?.message} />
@@ -96,7 +98,6 @@ const Login = () => {
 							<Input.Root>
 								<Input.Input
 									placeholderText="cityliscka"
-									placeholderColor="white"
 									hasSecureTextEntry
 									onChange={onChange}
 								/>

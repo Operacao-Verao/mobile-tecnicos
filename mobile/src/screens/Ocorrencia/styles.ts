@@ -10,10 +10,16 @@ export const OcorrenciaWrapper = styled.View`
 	gap: 16px;
 `;
 
-export const TopBar = styled.View`
+export const Row = styled.View`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+`;
+
+export const RowWTBetween = styled.View`
+	flex-direction: row;
+	align-items: center;
+	gap: 25px;
 `;
 
 export const Date = styled.Text`
@@ -21,7 +27,8 @@ export const Date = styled.Text`
 	font-size: 16px;
 	border: 1.5px solid #94a3b8;
 	border-radius: 9999px;
-	padding: 4px 12px 4px 14px;
+	padding: 7px 12px 2px 14px;
+	font-family: Poppins_400Regular;
 `;
 
 export const Ocorrencia = styled.View`
@@ -36,10 +43,11 @@ export const Card = styled.View``;
 export const Label = styled.Text`
 	color: ${(props) => props.theme.color};
 	font-size: 16px;
-	font-weight: 600;
+	font-family: Poppins_500Medium;
 `;
 
 export const Info = styled.Text`
 	color: ${(props) => props.theme.color};
-	font-size: 14px;
+	font-family: Poppins_400Regular;
+	font-size: 13px;
 `;

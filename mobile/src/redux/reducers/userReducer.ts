@@ -34,6 +34,7 @@ export const signinResponsible = createAsyncThunk(
 
 			if (response.status === 200) {
 				saveAuthDataToStorage(token);
+				return token;
 			}
 		} catch (error: any) {
 			return thunkAPI.rejectWithValue(error.response.data);
@@ -59,7 +60,7 @@ export const slice = createSlice({
 			.addCase(signinResponsible.fulfilled, (state, action: any) => {
 				state.error = null;
 				state.loading = false;
-				state.token = action.payload?.token;
+				state.token = action.payload;
 			})
 			.addCase(signinResponsible.rejected, (state, action) => {
 				state.error = action.error;

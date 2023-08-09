@@ -6,6 +6,7 @@ export const TextGreen = styled.Text`
 	background-color: #dcfce7;
 	color: #22c55e;
 	text-align: right;
+	font-family: Poppins_400Regular;
 `;
 
 export const TextRed = styled.Text`
@@ -14,6 +15,7 @@ export const TextRed = styled.Text`
 	background-color: #fee2e2;
 	color: #ef4444;
 	text-align: right;
+	font-family: Poppins_400Regular;
 `;
 
 export const TextYellow = styled.Text`
@@ -22,4 +24,5 @@ export const TextYellow = styled.Text`
 	background-color: #fef08a;
 	color: #ca8a04;
 	text-align: center;
+	font-family: Poppins_400Regular;
 `;

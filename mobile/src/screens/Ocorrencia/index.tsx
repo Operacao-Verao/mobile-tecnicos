@@ -4,6 +4,7 @@ import RelatorioComponent from '../../components/RelatorioComponent';
 import { OpenStatus } from '../../components/Status';
 import { useAppSelector } from '../../redux/hooks/useApp';
 import * as S from './styles';
+import BackButton from '../../components/BackButton';
 
 const OcorrenciaScreen = () => {
 	const loading = useAppSelector((state) => state.ocorrencia.loading);
@@ -16,10 +17,13 @@ const OcorrenciaScreen = () => {
 	return (
 		<S.Container>
 			<S.OcorrenciaWrapper>
-				<S.TopBar>
-					<S.Date>20/05/2023</S.Date>
+				<S.Row>
+					<S.RowWTBetween>
+						<BackButton />
+						<S.Date>20/05/2023</S.Date>
+					</S.RowWTBetween>
 					<OpenStatus status={state.status} />
-				</S.TopBar>
+				</S.Row>
 				<S.Ocorrencia>
 					<S.Card>
 						<S.Label>Civil: </S.Label>

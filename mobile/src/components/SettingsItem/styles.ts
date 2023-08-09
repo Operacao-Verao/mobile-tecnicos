@@ -23,11 +23,12 @@ export const TextContent = styled.View``;
 
 export const ItemTitle = styled.Text`
 	color: ${(props) => props.theme.color};
-	font-weight: 600;
-	font-size: 16px;
+	font-family: Poppins_500Medium;
+	font-size: 15px;
 `;
 
 export const ItemSubtitle = styled.Text`
 	color: ${(props) => props.theme.color};
-	font-size: 14px;
+	font-family: Poppins_400Regular;
+	font-size: 13px;
 `;

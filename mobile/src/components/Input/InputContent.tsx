@@ -37,10 +37,12 @@ const InputContent = ({
 
 const Input = styled.TextInput`
 	border: ${(props) => props.theme.border};
+	color: ${(props) => props.theme.color};
+	font-family: Poppins_400Regular;
 	border-radius: 8px;
 	padding: 16px;
 	width: 100%;
-	color: ${(props) => props.theme.color};
+	margin-top: -10px;
 `;
 
 export default InputContent;

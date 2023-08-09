@@ -9,10 +9,10 @@ export const Wrapper = styled.View`
 `;
 
 export const Title = styled.Text`
-	font-weight: bold;
+	color: ${(props) => props.theme.color};
+	font-family: Poppins_600SemiBold;
 	font-size: 24px;
 	text-align: center;
-	color: ${(props) => props.theme.color};
 `;
 
 export const ViewFilter = styled.View`

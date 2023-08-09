@@ -8,7 +8,7 @@ export const Container = styled.ScrollView`
 
 export const Title = styled.Text`
 	color: ${(props) => props.theme.color};
+	font-family: Poppins_600SemiBold;
 	font-size: 24px;
-	font-weight: 600;
 	text-align: center;
 `;

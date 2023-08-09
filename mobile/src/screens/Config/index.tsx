@@ -33,12 +33,6 @@ const Config = () => {
 					ItemSubtitle="Desconectar da conta atual"
 					IconColor={theme.status === 'dark' ? 'white' : 'black'}
 				/>
-				<SettingsItem
-					ItemIcon="logout"
-					ItemTitle="Sair"
-					ItemSubtitle="Desconectar da conta atual"
-					IconColor={theme.status === 'dark' ? 'white' : 'black'}
-				/>
 			</S.Settings>
 		</S.Container>
 	);

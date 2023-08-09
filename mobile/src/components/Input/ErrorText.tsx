@@ -12,7 +12,8 @@ const ErrorText = ({ ErrorText }: ErrorTextProps) => {
 
 const TextError = styled.Text`
 	color: #ef4444;
-	margin: 4px 0 0 4px;
+	margin: 6px 0 0 4px;
+	font-family: Poppins_400Regular;
 `;
 
 export default ErrorText;

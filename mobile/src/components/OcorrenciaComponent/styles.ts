@@ -19,11 +19,13 @@ export const Row = styled.View`
 `;
 
 export const Address = styled.Text`
-	font-weight: 600;
+	font-family: Poppins_500Medium;
+	font-size: 13px;
 `;
 
 export const SmallText = styled.Text`
-	font-size: 14px;
+	font-family: Poppins_400Regular;
+	font-size: 13px;
 `;
 
 export const Button = styled.TouchableOpacity`
@@ -33,7 +35,7 @@ export const Button = styled.TouchableOpacity`
 `;
 
 export const ButtonText = styled.Text`
-	font-weight: 600;
+	font-family: Poppins_600SemiBold;
 	color: #fff;
 	text-align: center;
 `;

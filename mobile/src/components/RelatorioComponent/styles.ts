@@ -31,19 +31,20 @@ export const Column = styled.View`
 
 export const Title = styled.Text`
 	color: ${(props) => props.theme.color};
+	font-family: Poppins_500Medium;
 	font-size: 18px;
-	font-weight: 600;
 `;
 
 export const Label = styled.Text`
 	color: ${(props) => props.theme.color};
-	font-size: 16px;
-	font-weight: 600;
+	font-family: Poppins_500Medium;
+	font-size: 14px;
 `;
 
 export const Info = styled.Text`
 	color: ${(props) => props.theme.color};
-	font-size: 14px;
+	font-family: Poppins_400Regular;
+	font-size: 13px;
 `;
 
 export const CardBadge = styled.View`
@@ -55,6 +56,7 @@ export const CardBadge = styled.View`
 
 export const ItemBadge = styled.Text`
 	color: #334155;
+	font-family: Poppins_400Regular;
 	background-color: #f1f5f9;
 	font-size: 14px;
 	text-transform: capitalize;
@@ -64,12 +66,13 @@ export const ItemBadge = styled.Text`
 
 export const AfetadosItem = styled.Text`
 	color: ${(props) => props.theme.color};
-	font-size: 14px;
+	font-family: Poppins_400Regular;
+	font-size: 13px;
 	width: 33%;
 `;
 
 export const AnimaisItem = styled.Text`
 	color: ${(props) => props.theme.color};
-	font-size: 14px;
+	font-size: 13px;
 	width: 25%;
 `;

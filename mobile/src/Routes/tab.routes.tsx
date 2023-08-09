@@ -74,17 +74,24 @@ const TabRoutes = () => {
 export default TabRoutes;
 
 export function AppRoutes() {
+	const user = useAppSelector((state) => state.user);
+
 	return (
 		<NavigationContainer independent>
 			<Stack.Navigator screenOptions={{ headerShown: false }}>
 				<>
-					<Stack.Screen name="login" component={Login} />
-					<Stack.Screen
-						name="bottomBar"
-						component={TabRoutes}
-						options={{ headerShown: false }}
-					/>
-					<Stack.Screen name="ocorrencia" component={OcorrenciaScreen} />
+					{user.token ? (
+						<>
+							<Stack.Screen
+								name="bottomBar"
+								component={TabRoutes}
+								options={{ headerShown: false }}
+							/>
+							<Stack.Screen name="ocorrencia" component={OcorrenciaScreen} />
+						</>
+					) : (
+						<Stack.Screen name="login" component={Login} />
+					)}
 				</>
 			</Stack.Navigator>
 		</NavigationContainer>
