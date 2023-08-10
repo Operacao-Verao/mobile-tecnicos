@@ -4,15 +4,20 @@ import { styled } from 'styled-components/native';
 import { useAppSelector } from '../../redux/hooks/useApp';
 
 interface InputTextProps extends TextInputProps {
+	keyboardType?: 'numeric';
 	placeholderText?: string;
-
-	onChange: (...event: any[]) => void;
+	numberOfLines?: number;
+	multiline?: boolean;
 	hasSecureTextEntry?: boolean;
+	onChange: (...event: any[]) => void;
 }
 
 const InputContent = ({
 	placeholderText,
 	hasSecureTextEntry,
+	numberOfLines,
+	keyboardType,
+	multiline,
 	onChange,
 	...rest
 }: InputTextProps) => {
@@ -21,17 +26,18 @@ const InputContent = ({
 
 	theme.status === 'light'
 		? (placeholderColor = '#000')
-		: (placeholderColor = '#fff');
+		: (placeholderColor = '#e9e9e9');
 
 	return (
-		<View>
-			<Input
-				onChangeText={onChange}
-				placeholder={placeholderText}
-				secureTextEntry={hasSecureTextEntry}
-				placeholderTextColor={placeholderColor}
-			/>
-		</View>
+		<Input
+			onChangeText={onChange}
+			placeholder={placeholderText}
+			secureTextEntry={hasSecureTextEntry}
+			placeholderTextColor={placeholderColor}
+			keyboardType={keyboardType}
+			multiline={multiline}
+			numberOfLines={numberOfLines}
+		/>
 	);
 };
 
@@ -41,7 +47,7 @@ const Input = styled.TextInput`
 	font-family: Poppins_400Regular;
 	border-radius: 8px;
 	padding: 16px;
-	width: 100%;
+	min-width: 29%;
 	margin-top: -10px;
 `;
 

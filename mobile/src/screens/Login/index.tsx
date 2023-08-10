@@ -4,30 +4,14 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
 import { Input } from '../../components/Input';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import * as S from './styles';
+import { schemaLogin } from '../../utils/schemaLogin';
 
 import { RootStackParams } from '../../Routes/tab.routes';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
 import { signinResponsible } from '../../redux/reducers/userReducer';
 import { LoginTS } from '../../types/Login';
 import { getAuthDataFromStorage } from '../../utils/useStorage';
-
-const schema = yup.object({
-	email: yup
-		.string()
-		.required('Informe o email.')
-		.email('O email não é válido.'),
-	password: yup.string().required('Informe a senha'),
-	//   .min(8, {
-	//     message: 'Senha inválida. A senha deve ter pelo menos 8 caracteres.',
-	//   })
-	//   .max(100, { message: 'A senha deve conter no máximo 100 caracteres' })
-	//   .matches(
-	//     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-	//     'A senha deve conter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.'
-	//   ),
-});
 
 const Login = () => {
 	const [authError, setAuthError] = useState(false);
@@ -39,7 +23,7 @@ const Login = () => {
 		control,
 		handleSubmit,
 		formState: { errors },
-	} = useForm({ resolver: yupResolver(schema) });
+	} = useForm({ resolver: yupResolver(schemaLogin) });
 
 	const onSubmit: SubmitHandler<LoginTS> = async (data: LoginTS) => {
 		try {
