@@ -9,7 +9,7 @@ import { api } from '../../lib/axios';
 import { OcorrenciaTS } from '../../types/Ocorrencia';
 
 type CredentialsTS = {
-	token: string;
+	token: string | null;
 	id?: FormData;
 	status?: string;
 };
@@ -95,11 +95,8 @@ export const fetchOcorrencias = createAsyncThunk(
 					Authorization: `Bearer ${token}`,
 				},
 			});
-
-			if (response.status === 200) {
-				let ocorrencias = response.data;
-				return ocorrencias;
-			}
+			console.log(response);
+			return response.data;
 		} catch (error) {
 			return 'Erro: ' + error;
 		}

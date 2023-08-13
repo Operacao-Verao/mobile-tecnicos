@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const schemaLogin = yup.object({
-	email: yup
+	username: yup
 		.string()
 		.required('Informe o email.')
 		.email('O email não é válido.'),

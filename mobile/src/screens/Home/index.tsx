@@ -1,27 +1,28 @@
-import { useEffect } from 'react';
+// TODO: Usar a requisição do redux pra botar na tela as ocorrências
 
-import { getAuthDataFromStorage } from '../../utils/useStorage';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParams } from '../../Routes/tab.routes';
+import { useEffect, useState } from 'react';
 import { Ocorrencia } from '../../components/OcorrenciaComponent';
 import Filter from '../../components/Filter';
 import * as S from './styles';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
+import { fetchOcorrencias } from '../../redux/reducers/ocorrenciaReducer';
+import { OcorrenciaTS } from '../../types/Ocorrencia';
 
 const Home = () => {
-	const navigation =
-		useNavigation<NativeStackNavigationProp<RootStackParams, 'login'>>();
+	const dispatch = useAppDispatch();
+	const user = useAppSelector((state) => state.user);
+	const ocorrencia = useAppSelector((state) => state.ocorrencia.ocorrencias);
+	const [ocorrencias, setOcorrencias] = useState<OcorrenciaTS[]>([]);
 	const date = new Date();
 
 	useEffect(() => {
-		const fetchAuthData = async () => {
-			const authData = await getAuthDataFromStorage();
-			if (!authData?.token) {
-				navigation.navigate('bottomBar', { screen: 'login' });
-			}
+		const getOcorrencias = () => {
+			dispatch(fetchOcorrencias({ token: user.token }));
+			setOcorrencias(ocorrencia);
+			console.log(ocorrencias);
 		};
 
-		fetchAuthData();
+		getOcorrencias();
 	}, []);
 
 	return (

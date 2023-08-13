@@ -1,3 +1,5 @@
+// TODO: Usar a requisição do redux pra botar na tela a ocorrência
+
 import React from 'react';
 import { Loading } from '../../components/Loading';
 import RelatorioComponent from '../../components/RelatorioComponent';

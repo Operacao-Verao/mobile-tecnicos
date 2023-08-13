@@ -5,13 +5,30 @@ import { useEffect, useState } from 'react';
 import { Input } from '../../components/Input';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as S from './styles';
-import { schemaLogin } from '../../utils/schemaLogin';
+import * as yup from 'yup';
 
 import { RootStackParams } from '../../Routes/tab.routes';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
-import { signinResponsible } from '../../redux/reducers/userReducer';
+import { setToken, signinResponsible } from '../../redux/reducers/userReducer';
 import { LoginTS } from '../../types/Login';
 import { getAuthDataFromStorage } from '../../utils/useStorage';
+import { api } from '../../lib/axios';
+
+const schemaLogin = yup.object({
+	username: yup
+		.string()
+		.required('Informe o email.')
+		.email('O email não é válido.'),
+	password: yup.string().required('Informe a senha'),
+	//   .min(8, {
+	//     message: 'Senha inválida. A senha deve ter pelo menos 8 caracteres.',
+	//   })
+	//   .max(100, { message: 'A senha deve conter no máximo 100 caracteres' })
+	//   .matches(
+	//     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+	//     'A senha deve conter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.'
+	//   ),
+});
 
 const Login = () => {
 	const [authError, setAuthError] = useState(false);
@@ -28,9 +45,8 @@ const Login = () => {
 	const onSubmit: SubmitHandler<LoginTS> = async (data: LoginTS) => {
 		try {
 			await dispatch(
-				signinResponsible({ email: data.email, password: data.password })
+				signinResponsible({ username: data.username, password: data.password })
 			).unwrap();
-
 			if (state.token) {
 				navigation.navigate('bottomBar', { screen: 'home' });
 			}
@@ -63,14 +79,14 @@ const Login = () => {
 					<S.Label>Email</S.Label>
 					<Controller
 						control={control}
-						name="email"
+						name="username"
 						render={({ field: { onChange } }) => (
 							<Input.Root>
 								<Input.Input
 									placeholderText="eve.holt@reqres.in"
 									onChange={onChange}
 								/>
-								<Input.ErrorText ErrorText={errors.email?.message} />
+								<Input.ErrorText ErrorText={errors.username?.message} />
 							</Input.Root>
 						)}
 					/>

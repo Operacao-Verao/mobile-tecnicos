@@ -8,7 +8,7 @@ import { api } from '../../lib/axios';
 import { saveAuthDataToStorage } from '../../utils/useStorage';
 
 type LoginTS = {
-	email: string;
+	username: string;
 	password: string;
 };
 
@@ -26,18 +26,13 @@ const initialState: State = {
 
 export const signinResponsible = createAsyncThunk(
 	'/login',
-	async ({ email, password }: LoginTS, thunkAPI) => {
+	async ({ username, password }: LoginTS, thunkAPI) => {
 		try {
-			const data = { email, password };
-			const response = await api.post('login', data);
-			const token = response.data.token;
-
-			if (response.status === 200) {
-				saveAuthDataToStorage(token);
-				return token;
-			}
+			const data = { username, password };
+			const response = await api.post('tecnicos/login', data);
+			return response.data.access_token;
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.response.data);
+			return thunkAPI.rejectWithValue(error.response?.data || error.message);
 		}
 	}
 );

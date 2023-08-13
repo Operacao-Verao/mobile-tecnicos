@@ -1,3 +1,6 @@
+// TODO: Criar o redux pra foto
+// TODO: Mandar tudo pro redux e fazer a requisição
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
