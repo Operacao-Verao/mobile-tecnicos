@@ -6,23 +6,28 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../Routes/tab.routes';
 import { OpenStatus } from '../Status';
 import * as S from './styles';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
+import { fetchOneOcorrencia } from '../../redux/reducers/ocorrenciaReducer';
 
 export function Ocorrencia(data: OcorrenciaTS) {
+	const token = useAppSelector((state) => state.user.token);
+	const dispatch = useAppDispatch();
 	const formattedDate = data.data?.toLocaleString();
 	const navigation =
 		useNavigation<NativeStackNavigationProp<RootStackParams, 'ocorrencia'>>();
 
 	const handleNavigate = () => {
-		navigation.navigate('ocorrencia');
+		dispatch(fetchOneOcorrencia({ id: data.id, token: token }));		navigation.navigate('ocorrencia');
 	};
 
 	return (
 		<S.Container>
 			<S.Row>
-				<S.Address>Av. Sete de Setembro, 38 Centro</S.Address>
+				<S.Address>
+					{data.endereco.rua}, {data.endereco.bairro}
+				</S.Address>
 				<OpenStatus status={data.status} />
 			</S.Row>
-			<S.SmallText>{data.relato}</S.SmallText>
 			<S.Row>
 				<S.SmallText>{formattedDate}</S.SmallText>
 				<S.Button onPress={handleNavigate}>

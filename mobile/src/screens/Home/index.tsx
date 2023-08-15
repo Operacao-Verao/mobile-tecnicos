@@ -11,20 +11,17 @@ import { OcorrenciaTS } from '../../types/Ocorrencia';
 const Home = () => {
 	const dispatch = useAppDispatch();
 	const user = useAppSelector((state) => state.user);
-	const ocorrencia = useAppSelector((state) => state.ocorrencia.ocorrencias);
+	const state = useAppSelector((state) => state.ocorrencia);
 	const [ocorrencias, setOcorrencias] = useState<OcorrenciaTS[]>([]);
-	const date = new Date();
 
 	useEffect(() => {
 		const getOcorrencias = () => {
 			dispatch(fetchOcorrencias({ token: user.token }));
-			setOcorrencias(ocorrencia);
-			console.log(ocorrencias);
+			setOcorrencias(state.ocorrencias);
 		};
-
 		getOcorrencias();
 	}, []);
-
+	console.log(state.ocorrencias);
 	return (
 		<S.Container>
 			<S.Wrapper>
@@ -32,42 +29,27 @@ const Home = () => {
 				<S.ViewFilter>
 					<Filter />
 				</S.ViewFilter>
-				<Ocorrencia
-					acionamento={'acionamento'}
-					relato={
-						'Enchente na vilinha com deslizamento em duas casas no mesmo número'
-					}
-					num_casas={3}
-					status={'Em Aberto'}
-					data={date}
-				/>
-				<Ocorrencia
-					acionamento={'acionamento'}
-					relato={
-						'Enchente na vilinha com deslizamento em duas casas no mesmo número'
-					}
-					num_casas={3}
-					status={'Em Aberto'}
-					data={date}
-				/>
-				<Ocorrencia
-					acionamento={'acionamento'}
-					relato={
-						'Enchente na vilinha com deslizamento em duas casas no mesmo número'
-					}
-					num_casas={3}
-					status={'Em Aberto'}
-					data={date}
-				/>
-				<Ocorrencia
-					acionamento={'acionamento'}
-					relato={
-						'Enchente na vilinha com deslizamento em duas casas no mesmo número'
-					}
-					num_casas={3}
-					status={'Em Aberto'}
-					data={date}
-				/>
+				{state.ocorrencias.map((item) => (
+					<Ocorrencia
+						key={item.id}
+						id={item.id}
+						acionamento={item.acionamento}
+						num_casas={item.num_casas}
+						status={item.status}
+						data={new Date(item.data)}
+						endereco={{
+							cep: item.endereco.cep,
+							bairro: item.endereco.bairro,
+							cidade: item.endereco.cidade,
+							rua: item.endereco.rua,
+						}}
+						tecnico={{
+							id: item.tecnico.id,
+							email: item.tecnico.email,
+							nome: item.tecnico.nome,
+						}}
+					/>
+				))}
 			</S.Wrapper>
 		</S.Container>
 	);

@@ -24,6 +24,7 @@ export const RowWTBetween = styled.View`
 
 export const Date = styled.Text`
 	color: ${(props) => props.theme.colorGray};
+	text-transform: capitalize;
 	font-size: 16px;
 	border: 1.5px solid #94a3b8;
 	border-radius: 9999px;
@@ -38,7 +39,7 @@ export const Ocorrencia = styled.View`
 	padding: 12px;
 `;
 
-export const Card = styled.View``;
+export const Column = styled.View``;
 
 export const Label = styled.Text`
 	color: ${(props) => props.theme.color};

@@ -10,7 +10,7 @@ import { OcorrenciaTS } from '../../types/Ocorrencia';
 
 type CredentialsTS = {
 	token: string | null;
-	id?: FormData;
+	id?: number;
 	status?: string;
 };
 
@@ -23,12 +23,11 @@ type State = {
 
 const initialState: State = {
 	ocorrencia: {
+		id: 0,
 		acionamento: '',
-		relato:
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate felis massa. Donec non purus vitae diam venenatis feugiat et vel nulla. Etiam quam eros, ultricies sit amet neque et.',
 		num_casas: 3,
-		status: 'Em Aberto',
-		data: null,
+		status: true,
+		data: '',
 		relatorio: {
 			afetados: {
 				adultos: 0,
@@ -80,6 +79,17 @@ const initialState: State = {
 				equinos: 0,
 			},
 		},
+		endereco: {
+			cep: '',
+			bairro: '',
+			cidade: '',
+			rua: '',
+		},
+		tecnico: {
+			id: 0,
+			email: '',
+			nome: '',
+		},
 	},
 	ocorrencias: [],
 	loading: false,
@@ -90,13 +100,13 @@ export const fetchOcorrencias = createAsyncThunk(
 	'ocorrencias/ver',
 	async ({ token }: CredentialsTS) => {
 		try {
-			const response = await api.get('ocorrencias/ver', {
+			const response = await api.get('/ocorrencias/ver', {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			});
-			console.log(response);
-			return response.data;
+			let ocorrencias = response.data;
+			return ocorrencias;
 		} catch (error) {
 			return 'Erro: ' + error;
 		}
@@ -133,11 +143,8 @@ export const fetchFilterOcorrencia = createAsyncThunk(
 				},
 			});
 
-			if (response.status === 200) {
-				let ocorrencias = response.data;
-				console.log('deu certo');
-				return ocorrencias;
-			}
+			let ocorrencias = response.data;
+			return ocorrencias;
 		} catch (error) {
 			console.log('deu erro');
 			return 'Erro: ' + error;

@@ -11,6 +11,7 @@ import BackButton from '../../components/BackButton';
 const OcorrenciaScreen = () => {
 	const loading = useAppSelector((state) => state.ocorrencia.loading);
 	const state = useAppSelector((state) => state.ocorrencia.ocorrencia);
+	const formattedDate = new Date(state.data);
 
 	if (loading) {
 		return <Loading />;
@@ -22,28 +23,21 @@ const OcorrenciaScreen = () => {
 				<S.Row>
 					<S.RowWTBetween>
 						<BackButton />
-						<S.Date>20/05/2023</S.Date>
+						<S.Date>{formattedDate.toString()}</S.Date>
 					</S.RowWTBetween>
 					<OpenStatus status={state.status} />
 				</S.Row>
 				<S.Ocorrencia>
-					<S.Card>
-						<S.Label>Civil: </S.Label>
-						<S.Info>Samantha Zduniak</S.Info>
-					</S.Card>
-					<S.Card>
+					<S.Column>
 						<S.Label>Endereço:</S.Label>
 						<S.Info>
-							Av. Sete de Setembro, 38 Centro, Franco da Rocha - SP
+							{state.endereco.rua}, {state.endereco.bairro},{' '}
+							{state.endereco.cidade}
 						</S.Info>
-					</S.Card>
-					<S.Card>
-						<S.Label>Relato: </S.Label>
-						<S.Info>{state.relato}</S.Info>
-					</S.Card>
+					</S.Column>
 				</S.Ocorrencia>
 			</S.OcorrenciaWrapper>
-			{state.relatorio && <RelatorioComponent />}
+			{!state.relatorio && <RelatorioComponent />}
 		</S.Container>
 	);
 };

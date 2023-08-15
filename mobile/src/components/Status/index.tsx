@@ -3,13 +3,14 @@ import { View } from 'react-native';
 import * as S from './styles';
 
 type Props = {
-	status: string | null | undefined;
+	status?: boolean | null | undefined;
+	gravidade?: string | null | undefined;
 };
 
 export const OpenStatus = ({ status }: Props) => {
 	return (
 		<View>
-			{status === 'Em Aberto' ? (
+			{status === true ? (
 				<S.TextGreen>Em Aberto</S.TextGreen>
 			) : (
 				<S.TextRed>Fechado</S.TextRed>
@@ -18,10 +19,10 @@ export const OpenStatus = ({ status }: Props) => {
 	);
 };
 
-export const GravidadeStatus = ({ status }: Props) => {
+export const GravidadeStatus = ({ gravidade }: Props) => {
 	return (
 		<View>
-			{status === 'Risco' ? (
+			{gravidade === 'Risco' ? (
 				<S.TextYellow>Risco</S.TextYellow>
 			) : (
 				<S.TextRed>Desastre</S.TextRed>

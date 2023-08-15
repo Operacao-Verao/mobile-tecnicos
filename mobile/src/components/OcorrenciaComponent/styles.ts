@@ -20,6 +20,7 @@ export const Row = styled.View`
 
 export const Address = styled.Text`
 	font-family: Poppins_500Medium;
+	text-transform: capitalize;
 	font-size: 13px;
 `;
 
