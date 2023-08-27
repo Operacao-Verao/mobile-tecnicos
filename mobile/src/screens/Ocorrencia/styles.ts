@@ -52,3 +52,16 @@ export const Info = styled.Text`
 	font-family: Poppins_400Regular;
 	font-size: 13px;
 `;
+
+export const Button = styled.TouchableOpacity`
+	background-color: #0ea5e9;
+	padding: 12px;
+	margin-top: 30px;
+	border-radius: 6px;
+`;
+
+export const ButtonText = styled.Text`
+	font-family: Poppins_600SemiBold;
+	color: #fff;
+	text-align: center;
+`;

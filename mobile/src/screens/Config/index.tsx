@@ -1,8 +1,9 @@
-import React from 'react';
-import SettingsItem from '../../components/SettingsItem';
-import { Feather } from '@expo/vector-icons';
+import React, { useEffect } from 'react';
+import { fetchUserData } from '../../redux/reducers/userReducer';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
 import { setThemeStatus } from '../../redux/reducers/themeReducer';
+import SettingsItem from '../../components/SettingsItem';
+import { Feather } from '@expo/vector-icons';
 import * as S from './styles';
 
 const Config = () => {
@@ -12,6 +13,13 @@ const Config = () => {
 	const handleModeToggle = async () => {
 		dispatch(setThemeStatus(theme.status === 'dark' ? 'light' : 'dark'));
 	};
+
+	useEffect(() => {
+		const getUserData = () => {
+			dispatch(fetchUserData({ token: user.token }));
+		};
+		getUserData();
+	}, []);
 
 	return (
 		<S.Container>
@@ -26,8 +34,18 @@ const Config = () => {
 				</S.ButtonMode>
 			</S.TopBar>
 
+			<S.SettingsAccount>
+				<SettingsItem
+					FeatherIcon
+					ItemIconFeather="user"
+					ItemTitle={user.user?.nome}
+					ItemSubtitle={user.user?.email}
+					IconColor={theme.status === 'dark' ? 'white' : 'black'}
+				/>
+			</S.SettingsAccount>
 			<S.Settings>
 				<SettingsItem
+					hasRight
 					ItemIcon="logout"
 					ItemTitle="Sair"
 					ItemSubtitle="Desconectar da conta atual"

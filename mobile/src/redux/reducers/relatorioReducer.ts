@@ -9,9 +9,11 @@ import { api } from '../../lib/axios';
 import { RelatorioTS } from '../../types/Relatorio';
 
 type CredentialsTS = {
-	token: string;
+	token: string | null;
 	id?: FormData;
 	status?: string;
+	ocorrenciaId?: number;
+	body?: RelatorioTS;
 };
 
 type State = {
@@ -32,7 +34,7 @@ const initialState: State = {
 			feridos: 0,
 			enfermos: 0,
 		},
-		dadoVistoria: {
+		dadosVistoria: {
 			desmoronamento: false,
 			escorregamento: false,
 			esgoto_escorregamento: false,
@@ -47,7 +49,7 @@ const initialState: State = {
 			outros: '',
 		},
 		enfermos: 0,
-		gravidade: null,
+		gravidade: 0,
 		relatorio: '',
 		encaminhamento: '',
 		memorando: '',
@@ -55,22 +57,22 @@ const initialState: State = {
 		processo: '',
 		assunto: '',
 		observacoes: '',
-		areaAfetada: null,
-		tipoConstrucao: null,
-		tipoTalude: null,
-		vegetacao: null,
+		areaAfetada: 0,
+		tipoConstrucao: 0,
+		tipoTalude: 0,
+		vegetacao: 0,
 		danosMateriais: false,
 		dataGeracao: null,
 		dataAtendimento: null,
-		foto: null,
+		fotos: null,
 		animais: {
 			caes: 0,
 			gatos: 0,
 			aves: 0,
 			equinos: 0,
 		},
-		interdicao: 'Sim',
-		situacao: 'Desabrigados',
+		interdicao: 0,
+		situacao: 0,
 	},
 	relatorios: [],
 	loading: false,
@@ -91,6 +93,27 @@ export const fetchRelatorios = createAsyncThunk(
 				let relatorios = response.data;
 				return relatorios;
 			}
+		} catch (error) {
+			return 'Erro: ' + error;
+		}
+	}
+);
+
+export const createRelatorio = createAsyncThunk(
+	'relatorios/criar',
+	async ({ token, ocorrenciaId, body }: CredentialsTS) => {
+		try {
+			const response = await api.post(
+				`relatorios/criar/${ocorrenciaId}`,
+				body,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+
+			return response.data;
 		} catch (error) {
 			return 'Erro: ' + error;
 		}
@@ -156,6 +179,18 @@ export const slice = createSlice({
 				}
 			)
 			.addCase(fetchRelatorios.rejected, (state, action) => {
+				state.error = action.error;
+				state.loading = false;
+			})
+			.addCase(createRelatorio.pending, (state) => {
+				state.error = null;
+				state.loading = true;
+			})
+			.addCase(createRelatorio.fulfilled, (state) => {
+				state.error = null;
+				state.loading = false;
+			})
+			.addCase(createRelatorio.rejected, (state, action) => {
 				state.error = action.error;
 				state.loading = false;
 			})

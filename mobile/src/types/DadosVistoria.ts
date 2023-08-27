@@ -1,4 +1,4 @@
-export type dadoVistoriaTS = {
+export type dadosVistoriaTS = {
 	desmoronamento: boolean;
 	escorregamento: boolean;
 	esgoto_escorregamento: boolean;
@@ -10,5 +10,5 @@ export type dadoVistoriaTS = {
 	judicial: boolean;
 	monitoramento: boolean;
 	transito: boolean;
-	outros: string;
+	outros?: string;
 };

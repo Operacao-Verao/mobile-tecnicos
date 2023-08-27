@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { GravidadeStatus } from '../Status';
 import { useAppSelector } from '../../redux/hooks/useApp';
 import { RelatorioTS } from '../../types/Relatorio';
@@ -18,7 +18,7 @@ const RelatorioComponent = () => {
 				<GravidadeStatus gravidade={relatorio?.gravidade} />
 			</S.Row>
 			<View>
-				<Image source={relatorio?.foto} />
+				<Image source={relatorio?.fotos} />
 			</View>
 			<S.Column>
 				<S.Label>Memorando: </S.Label>
@@ -28,8 +28,8 @@ const RelatorioComponent = () => {
 				<S.Label>Dados da Vistoria:</S.Label>
 
 				<S.CardBadge>
-					{relatorio?.dadoVistoria &&
-						Object.entries(relatorio.dadoVistoria).map(
+					{relatorio?.dadosVistoria &&
+						Object.entries(relatorio.dadosVistoria).map(
 							([itemName, itemValue]) =>
 								itemValue === true && (
 									<S.ItemBadge key={itemName}>{itemName}</S.ItemBadge>

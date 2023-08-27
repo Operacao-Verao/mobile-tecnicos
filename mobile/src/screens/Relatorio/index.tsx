@@ -1,14 +1,15 @@
-// TODO: Criar o redux pra foto
-// TODO: Mandar tudo pro redux e fazer a requisição
+import React, { useState } from 'react';
+import { Image } from 'react-native';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { schemaRelatorio } from '../../utils';
+
 import {
 	MultipleSelectList,
 	SelectList,
 } from 'react-native-dropdown-select-list';
-import { Input } from '../../components/Input';
+
 import {
 	dataAreaAfetada,
 	dataSituacao,
@@ -17,11 +18,9 @@ import {
 	dataVegetacao,
 	dataVistoria,
 } from '../../constants';
-import { schemaRelatorio } from '../../utils/schemaRelatorio';
+import { Input } from '../../components/Input';
 import * as S from './styles';
-import * as ImagePicker from 'expo-image-picker';
-import * as ImageManipulator from 'expo-image-manipulator';
-import { Alert, Image } from 'react-native';
+import { useImagePicker } from './hooks/useImagePicker';
 
 const RelatorioScreen = () => {
 	const [selectedVistoria, setSelectedVistoria] = useState('');
@@ -32,55 +31,23 @@ const RelatorioScreen = () => {
 	const [selectedVegetacao, setSelectedVegetacao] = useState('');
 	const [selectedImageUri, setSelectedImageUri] = useState('');
 
+	const handleImagePicker = async () => {
+		const imageUri = await useImagePicker();
+		if (imageUri) {
+			setSelectedImageUri(imageUri);
+		}
+	};
+
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({ resolver: yupResolver(schemaRelatorio) });
 
-	async function handleSelectImage() {
-		try {
-			const { status } = await ImagePicker.requestCameraPermissionsAsync();
-			if (status !== ImagePicker.PermissionStatus.GRANTED) {
-				return Alert.alert(
-					'É necessário conceder permissão para acessar seu álbum!'
-				);
-			}
-
-			const response = await ImagePicker.launchImageLibraryAsync({
-				mediaTypes: ImagePicker.MediaTypeOptions.Images,
-				allowsEditing: true,
-				aspect: [9, 16],
-				quality: 1,
-			});
-
-			if (response.canceled) {
-				return;
-			}
-
-			if (!response.canceled) {
-				const imgManipuled = await ImageManipulator.manipulateAsync(
-					response.assets[0].uri,
-					[{ resize: { width: 900 } }],
-					{
-						compress: 1,
-						format: ImageManipulator.SaveFormat.JPEG,
-						base64: true,
-					}
-				);
-
-				setSelectedImageUri(imgManipuled.uri);
-				console.log(imgManipuled.base64);
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
 	return (
 		<S.Container>
 			<S.Title>Criar Relatório</S.Title>
-			<S.Button onPress={handleSelectImage}>
+			<S.Button onPress={handleImagePicker}>
 				{selectedImageUri ? (
 					<S.ButtonText>Imagem salva</S.ButtonText>
 				) : (
@@ -92,11 +59,11 @@ const RelatorioScreen = () => {
 				<S.Label>Memorando</S.Label>
 				<Controller
 					control={control}
-					name="memo"
+					name="memorando"
 					render={({ field: { onChange } }) => (
 						<Input.Root>
 							<Input.Input placeholderText="Ex.: 05355" onChange={onChange} />
-							<Input.ErrorText ErrorText={errors.memo?.message} />
+							<Input.ErrorText ErrorText={errors.memorando?.message} />
 						</Input.Root>
 					)}
 				/>

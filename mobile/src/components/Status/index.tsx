@@ -4,7 +4,7 @@ import * as S from './styles';
 
 type Props = {
 	status?: boolean | null | undefined;
-	gravidade?: string | null | undefined;
+	gravidade?: number | null | undefined;
 };
 
 export const OpenStatus = ({ status }: Props) => {
@@ -22,7 +22,7 @@ export const OpenStatus = ({ status }: Props) => {
 export const GravidadeStatus = ({ gravidade }: Props) => {
 	return (
 		<View>
-			{gravidade === 'Risco' ? (
+			{gravidade === 1 ? (
 				<S.TextYellow>Risco</S.TextYellow>
 			) : (
 				<S.TextRed>Desastre</S.TextRed>

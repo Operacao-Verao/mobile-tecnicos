@@ -27,7 +27,7 @@ const initialState: State = {
 		acionamento: '',
 		num_casas: 3,
 		status: true,
-		data: '',
+		data: null,
 		relatorio: {
 			afetados: {
 				adultos: 0,
@@ -38,7 +38,7 @@ const initialState: State = {
 				feridos: 0,
 				enfermos: 0,
 			},
-			dadoVistoria: {
+			dadosVistoria: {
 				desmoronamento: true,
 				escorregamento: true,
 				esgoto_escorregamento: true,
@@ -52,9 +52,9 @@ const initialState: State = {
 				transito: true,
 				outros: '',
 			},
-			situacao: 'Desabrigados',
+			situacao: 0,
 			enfermos: 0,
-			gravidade: 'Risco',
+			gravidade: 0,
 			relatorio: '',
 			encaminhamento: 'Não sei',
 			memorando: '503095',
@@ -63,15 +63,15 @@ const initialState: State = {
 			assunto:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate felis massa. Donec non purus vitae diam venenatis feugiat',
 			observacoes: '',
-			areaAfetada: 'Pública',
-			tipoConstrucao: 'Alvenaria',
-			tipoTalude: 'Aterro',
-			vegetacao: 'Presença de Árvores',
+			areaAfetada: 0,
+			tipoConstrucao: 0,
+			tipoTalude: 0,
+			vegetacao: 0,
 			danosMateriais: false,
 			dataGeracao: null,
 			dataAtendimento: null,
-			interdicao: 'Sim',
-			foto: null,
+			interdicao: 0,
+			fotos: null,
 			animais: {
 				caes: 0,
 				gatos: 0,

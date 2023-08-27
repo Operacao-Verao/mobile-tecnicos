@@ -24,3 +24,5 @@ export const ButtonMode = styled.TouchableOpacity`
 export const Settings = styled.View`
 	margin-top: 20px;
 `;
+
+export const SettingsAccount = styled.View``;

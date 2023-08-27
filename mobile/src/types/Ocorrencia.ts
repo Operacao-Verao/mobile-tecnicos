@@ -3,7 +3,7 @@ import { RelatorioTS } from './Relatorio';
 export type OcorrenciaTS = {
 	id: number;
 	acionamento: string;
-	data: Date | string;
+	data: Date | null;
 	num_casas: number;
 	status: boolean;
 	endereco: {

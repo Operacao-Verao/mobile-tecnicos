@@ -43,6 +43,12 @@ const dataSituacao = [
 	{ key: '2', value: 'Desalojados' },
 ];
 
+const dataInterdicao = [
+	{ key: '0', value: 'Não' },
+	{ key: '1', value: 'Parcial' },
+	{ key: '2', value: 'Total' },
+];
+
 export {
 	dataVistoria,
 	dataAreaAfetada,
@@ -50,4 +56,5 @@ export {
 	dataTipoTalude,
 	dataVegetacao,
 	dataSituacao,
+	dataInterdicao,
 };

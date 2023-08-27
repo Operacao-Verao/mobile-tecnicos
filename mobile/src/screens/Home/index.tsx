@@ -1,27 +1,22 @@
-// TODO: Usar a requisição do redux pra botar na tela as ocorrências
-
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
+import { fetchOcorrencias } from '../../redux/reducers/ocorrenciaReducer';
 import { Ocorrencia } from '../../components/OcorrenciaComponent';
 import Filter from '../../components/Filter';
 import * as S from './styles';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
-import { fetchOcorrencias } from '../../redux/reducers/ocorrenciaReducer';
-import { OcorrenciaTS } from '../../types/Ocorrencia';
 
 const Home = () => {
 	const dispatch = useAppDispatch();
-	const user = useAppSelector((state) => state.user);
+	const token = useAppSelector((state) => state.user.token);
 	const state = useAppSelector((state) => state.ocorrencia);
-	const [ocorrencias, setOcorrencias] = useState<OcorrenciaTS[]>([]);
 
 	useEffect(() => {
 		const getOcorrencias = () => {
-			dispatch(fetchOcorrencias({ token: user.token }));
-			setOcorrencias(state.ocorrencias);
+			dispatch(fetchOcorrencias({ token: token }));
 		};
 		getOcorrencias();
 	}, []);
-	console.log(state.ocorrencias);
+
 	return (
 		<S.Container>
 			<S.Wrapper>
@@ -36,7 +31,7 @@ const Home = () => {
 						acionamento={item.acionamento}
 						num_casas={item.num_casas}
 						status={item.status}
-						data={new Date(item.data)}
+						data={item.data}
 						endereco={{
 							cep: item.endereco.cep,
 							bairro: item.endereco.bairro,
