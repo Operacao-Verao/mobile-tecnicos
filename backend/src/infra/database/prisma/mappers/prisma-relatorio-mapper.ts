@@ -229,7 +229,6 @@ export class PrismaRelatorioMapper {
   }
 
   private static toHTTPDadosVistoria(rawDadosVistoria: RawDadosVistoria) {
-    console.log(rawDadosVistoria)
     return new DadosVistoria({
       arvores: rawDadosVistoria.arvores,
       deslizamento: rawDadosVistoria.deslizamento,

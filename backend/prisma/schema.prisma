@@ -17,7 +17,7 @@ model Afetados {
   mortos       Int?
   feridos      Int?
   enfermos     Int?
-  Relatorio    Relatorio @relation(fields: [id_relatorio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Afetados_ibfk_1")
+  Relatorio    Relatorio @relation(fields: [id_relatorio], references: [id], onUpdate: Restrict, map: "Afetados_ibfk_1")
 }
 
 model AlertaChuva {
@@ -25,7 +25,7 @@ model AlertaChuva {
   id_pluviometro Int?
   status_chuva   String       @db.VarChar(50)
   data_chuva     DateTime     @db.DateTime(0)
-  Pluviometro    Pluviometro? @relation(fields: [id_pluviometro], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "AlertaChuva_ibfk_1")
+  Pluviometro    Pluviometro? @relation(fields: [id_pluviometro], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "AlertaChuva_ibfk_1")
 
   @@index([id_pluviometro], map: "id_pluviometro")
 }
@@ -35,7 +35,7 @@ model AlertaRio {
   id_fluviometro  Int?
   status_rio      String?      @db.VarChar(50)
   data_alerta_rio DateTime     @db.DateTime(0)
-  Fluviometro     Fluviometro? @relation(fields: [id_fluviometro], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "AlertaRio_ibfk_1")
+  Fluviometro     Fluviometro? @relation(fields: [id_fluviometro], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "AlertaRio_ibfk_1")
 
   @@index([id_fluviometro], map: "id_fluviometro")
 }
@@ -47,7 +47,7 @@ model Animal {
   gatos        Int?
   aves         Int?
   equinos      Int?
-  Relatorio    Relatorio @relation(fields: [id_relatorio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Animal_ibfk_1")
+  Relatorio    Relatorio @relation(fields: [id_relatorio], references: [id], onUpdate: Restrict, map: "Animal_ibfk_1")
 }
 
 model Cargo {
@@ -57,32 +57,29 @@ model Cargo {
 }
 
 model Casa {
-  id          Int         @id @default(autoincrement())
-  cep         String      @db.Char(8)
-  numero      String?     @db.VarChar(10)
-  complemento String?     @db.VarChar(50)
-  Endereco    Endereco    @relation(fields: [cep], references: [cep], onDelete: NoAction, onUpdate: NoAction, map: "Casa_ibfk_1")
+  id          Int        @id @default(autoincrement())
+  cep         String     @db.Char(8)
+  numero      String?    @db.VarChar(10)
+  complemento String?    @db.VarChar(50)
+  Endereco    Endereco   @relation(fields: [cep], references: [cep], onUpdate: Restrict, map: "Casa_ibfk_1")
   Civil       Civil[]
-  Relatorio   Relatorio[]
+  Relatorio   Relatorio?
 
   @@index([cep], map: "cep")
 }
 
 model Civil {
   id         Int          @id @default(autoincrement())
-  cep        String       @db.Char(8)
-  id_casa    Int
+  id_casa    Int?
   nome       String       @db.VarChar(100)
   email      String?      @unique(map: "email") @db.VarChar(70)
   senha      String       @db.VarChar(70)
   cpf        String       @unique(map: "cpf") @db.Char(11)
   celular    String       @db.Char(11)
   telefone   String?      @db.Char(10)
-  Casa       Casa         @relation(fields: [id_casa], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Civil_ibfk_1")
-  Endereco   Endereco     @relation(fields: [cep], references: [cep], onDelete: NoAction, onUpdate: NoAction, map: "Civil_ibfk_2")
+  Casa       Casa?        @relation(fields: [id_casa], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Civil_ibfk_1")
   Ocorrencia Ocorrencia[]
 
-  @@index([cep], map: "cep")
   @@index([id_casa], map: "id_casa")
 }
 
@@ -90,7 +87,7 @@ model Comunicado {
   id        Int    @id @default(autoincrement())
   id_gestor Int
   conteudo  String @db.VarChar(355)
-  Gestor    Gestor @relation(fields: [id_gestor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Comunicado_ibfk_1")
+  Gestor    Gestor @relation(fields: [id_gestor], references: [id], onUpdate: Restrict, map: "Comunicado_ibfk_1")
 
   @@index([id_gestor], map: "id_gestor")
 }
@@ -110,7 +107,7 @@ model DadosDaVistoria {
   monitoramento      Boolean?
   transito           Boolean?
   outros             String?   @db.VarChar(355)
-  Relatorio          Relatorio @relation(fields: [id_relatorio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "DadosDaVistoria_ibfk_1")
+  Relatorio          Relatorio @relation(fields: [id_relatorio], references: [id], onUpdate: Restrict, map: "DadosDaVistoria_ibfk_1")
 }
 
 model Endereco {
@@ -119,7 +116,6 @@ model Endereco {
   bairro      String        @db.VarChar(100)
   cidade      String?       @db.VarChar(70)
   Casa        Casa[]
-  Civil       Civil[]
   Fluviometro Fluviometro[]
   LocalAjuda  LocalAjuda[]
   Pluviometro Pluviometro[]
@@ -131,7 +127,7 @@ model Fluviometro {
   latitude  Decimal?    @db.Decimal(8, 3)
   longitude Decimal?    @db.Decimal(8, 3)
   AlertaRio AlertaRio[]
-  Endereco  Endereco?   @relation(fields: [cep], references: [cep], onDelete: NoAction, onUpdate: NoAction, map: "Fluviometro_ibfk_1")
+  Endereco  Endereco?   @relation(fields: [cep], references: [cep], onDelete: Restrict, onUpdate: Restrict, map: "Fluviometro_ibfk_1")
   NivelRio  NivelRio[]
 
   @@index([cep], map: "cep")
@@ -141,7 +137,7 @@ model Foto {
   id           Int       @id @default(autoincrement())
   id_relatorio Int
   codificado   String    @db.LongText
-  Relatorio    Relatorio @relation(fields: [id_relatorio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Foto_ibfk_1")
+  Relatorio    Relatorio @relation(fields: [id_relatorio], references: [id], onUpdate: Restrict, map: "Foto_ibfk_1")
 
   @@index([id_relatorio], map: "id_relatorio")
 }
@@ -149,7 +145,7 @@ model Foto {
 model Funcionario {
   id           Int        @id @default(autoincrement())
   nome         String     @db.VarChar(100)
-  email        String?    @unique @db.VarChar(100)
+  email        String?    @unique(map: "email") @db.VarChar(100)
   senha        String     @db.VarChar(70)
   tipo_usuario Int
   Gestor       Gestor?
@@ -158,10 +154,11 @@ model Funcionario {
 }
 
 model Gestor {
-  id             Int          @id @default(autoincrement())
-  id_funcionario Int          @unique(map: "id_funcionario")
-  Comunicado     Comunicado[]
-  Funcionario    Funcionario  @relation(fields: [id_funcionario], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Gestor_ibfk_1")
+  id                Int                 @id @default(autoincrement())
+  id_funcionario    Int                 @unique(map: "id_funcionario")
+  Comunicado        Comunicado[]
+  Funcionario       Funcionario         @relation(fields: [id_funcionario], references: [id], onUpdate: Restrict, map: "Gestor_ibfk_1")
+  ServiceWorkerData ServiceWorkerData[]
 }
 
 model LocalAjuda {
@@ -169,7 +166,7 @@ model LocalAjuda {
   cep      String   @db.Char(8)
   tipo     String?  @db.VarChar(100)
   conteudo String?  @db.VarChar(355)
-  Endereco Endereco @relation(fields: [cep], references: [cep], onDelete: NoAction, onUpdate: NoAction, map: "LocalAjuda_ibfk_1")
+  Endereco Endereco @relation(fields: [cep], references: [cep], onUpdate: Restrict, map: "LocalAjuda_ibfk_1")
 
   @@index([cep], map: "cep")
 }
@@ -178,11 +175,11 @@ model Memo {
   id            Int        @id @default(autoincrement())
   id_relatorio  Int        @unique(map: "id_relatorio")
   id_secretaria Int
-  data_memo     DateTime   @db.Date
+  data_memo     DateTime   @db.DateTime(0)
   status_memo   String     @db.VarChar(355)
   processo      String?    @db.Char(10)
-  Relatorio     Relatorio  @relation(fields: [id_relatorio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Memo_ibfk_1")
-  Secretaria    Secretaria @relation(fields: [id_secretaria], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Memo_ibfk_2")
+  Relatorio     Relatorio  @relation(fields: [id_relatorio], references: [id], onUpdate: Restrict, map: "Memo_ibfk_1")
+  Secretaria    Secretaria @relation(fields: [id_secretaria], references: [id], onUpdate: Restrict, map: "Memo_ibfk_2")
 
   @@index([id_secretaria], map: "id_secretaria")
 }
@@ -192,7 +189,7 @@ model NivelChuva {
   id_pluviometro Int?
   chuva_em_mm    Decimal?     @db.Decimal(5, 2)
   data_chuva     DateTime?    @db.DateTime(0)
-  Pluviometro    Pluviometro? @relation(fields: [id_pluviometro], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "NivelChuva_ibfk_1")
+  Pluviometro    Pluviometro? @relation(fields: [id_pluviometro], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "NivelChuva_ibfk_1")
 
   @@index([id_pluviometro], map: "id_pluviometro")
 }
@@ -202,22 +199,23 @@ model NivelRio {
   id_fluviometro Int?
   nivel_rio      Decimal?     @db.Decimal(5, 2)
   data_diario    DateTime?    @db.DateTime(0)
-  Fluviometro    Fluviometro? @relation(fields: [id_fluviometro], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "NivelRio_ibfk_1")
+  Fluviometro    Fluviometro? @relation(fields: [id_fluviometro], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "NivelRio_ibfk_1")
 
   @@index([id_fluviometro], map: "id_fluviometro")
 }
 
 model Ocorrencia {
   id              Int         @id @default(autoincrement())
-  id_tecnico      Int
+  id_tecnico      Int?
   id_civil        Int
   acionamento     String      @db.VarChar(100)
   relato_civil    String      @db.VarChar(355)
   num_casas       Int
   aprovado        Boolean
-  data_ocorrencia DateTime    @db.Date
-  Tecnico         Tecnico     @relation(fields: [id_tecnico], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Ocorrencia_ibfk_1")
-  Civil           Civil       @relation(fields: [id_civil], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Ocorrencia_ibfk_2")
+  encerrado       Boolean
+  data_ocorrencia DateTime    @db.DateTime(0)
+  Tecnico         Tecnico?    @relation(fields: [id_tecnico], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Ocorrencia_ibfk_1")
+  Civil           Civil       @relation(fields: [id_civil], references: [id], onUpdate: Restrict, map: "Ocorrencia_ibfk_2")
   Relatorio       Relatorio[]
 
   @@index([id_civil], map: "id_civil")
@@ -231,7 +229,7 @@ model Pluviometro {
   longitude   Decimal?      @db.Decimal(8, 3)
   AlertaChuva AlertaChuva[]
   NivelChuva  NivelChuva[]
-  Endereco    Endereco      @relation(fields: [cep], references: [cep], onDelete: NoAction, onUpdate: NoAction, map: "Pluviometro_ibfk_1")
+  Endereco    Endereco      @relation(fields: [cep], references: [cep], onUpdate: Restrict, map: "Pluviometro_ibfk_1")
 
   @@index([cep], map: "cep")
 }
@@ -242,7 +240,7 @@ model Registro {
   acao           Int
   descricao      String      @db.VarChar(127)
   momento        DateTime    @db.DateTime(0)
-  Funcionario    Funcionario @relation(fields: [id_funcionario], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Registro_ibfk_1")
+  Funcionario    Funcionario @relation(fields: [id_funcionario], references: [id], onUpdate: Restrict, map: "Registro_ibfk_1")
 
   @@index([id_funcionario], map: "id_funcionario")
 }
@@ -250,7 +248,7 @@ model Registro {
 model Relatorio {
   id               Int              @id @default(autoincrement())
   id_ocorrencia    Int
-  id_casa          Int?
+  id_casa          Int              @unique(map: "id_casa")
   gravidade        Int
   relatorio        String           @db.VarChar(355)
   encaminhamento   String           @db.VarChar(155)
@@ -266,17 +264,16 @@ model Relatorio {
   situacao_vitimas Int
   interdicao       Int
   danos_materiais  Boolean
-  data_geracao     DateTime         @db.Date
-  data_atendimento DateTime         @db.Date
+  data_geracao     DateTime         @db.DateTime(0)
+  data_atendimento DateTime         @db.DateTime(0)
   Afetados         Afetados?
   Animal           Animal?
   DadosDaVistoria  DadosDaVistoria?
   Foto             Foto[]
   Memo             Memo?
-  Ocorrencia       Ocorrencia       @relation(fields: [id_ocorrencia], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Relatorio_ibfk_1")
-  Casa             Casa?            @relation(fields: [id_casa], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Relatorio_ibfk_2")
+  Ocorrencia       Ocorrencia       @relation(fields: [id_ocorrencia], references: [id], onUpdate: Restrict, map: "Relatorio_ibfk_1")
+  Casa             Casa             @relation(fields: [id_casa], references: [id], onUpdate: Restrict, map: "Relatorio_ibfk_2")
 
-  @@index([id_casa], map: "id_casa")
   @@index([id_ocorrencia], map: "id_ocorrencia")
 }
 
@@ -292,8 +289,8 @@ model Secretario {
   id_secretaria   Int
   id_cargo        Int
   nome_secretario String     @db.VarChar(100)
-  Secretaria      Secretaria @relation(fields: [id_secretaria], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Secretario_ibfk_1")
-  Cargo           Cargo      @relation(fields: [id_cargo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Secretario_ibfk_2")
+  Secretaria      Secretaria @relation(fields: [id_secretaria], references: [id], onUpdate: Restrict, map: "Secretario_ibfk_1")
+  Cargo           Cargo      @relation(fields: [id_cargo], references: [id], onUpdate: Restrict, map: "Secretario_ibfk_2")
 
   @@index([id_cargo], map: "id_cargo")
   @@index([id_secretaria], map: "id_secretaria")
@@ -302,6 +299,18 @@ model Secretario {
 model Tecnico {
   id             Int          @id @default(autoincrement())
   id_funcionario Int          @unique(map: "id_funcionario")
+  ativo          Boolean
   Ocorrencia     Ocorrencia[]
-  Funcionario    Funcionario  @relation(fields: [id_funcionario], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Tecnico_ibfk_1")
+  Funcionario    Funcionario  @relation(fields: [id_funcionario], references: [id], onUpdate: Restrict, map: "Tecnico_ibfk_1")
+}
+
+model ServiceWorkerData {
+  id          Int    @id @default(autoincrement())
+  sw_endpoint String @db.VarChar(250)
+  auth        String @db.VarChar(40)
+  p256dh      String @db.VarChar(110)
+  id_gestor   Int
+  Gestor      Gestor @relation(fields: [id_gestor], references: [id], onUpdate: Restrict, map: "ServiceWorkerData_ibfk_1")
+
+  @@index([id_gestor], map: "id_gestor")
 }

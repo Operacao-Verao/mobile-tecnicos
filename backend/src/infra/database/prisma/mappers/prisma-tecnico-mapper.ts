@@ -1,18 +1,18 @@
 import { Tecnico } from "@application/entities/tecnico"
 import { Funcionario as RawFuncionario, Tecnico as RawTecnico } from "@prisma/client"
 
-interface RawTecnicoAndFuncionario extends RawFuncionario {
-  Tecnico: RawTecnico
+interface RawTecnicoAndFuncionario extends RawTecnico {
+  Funcionario: RawFuncionario
 }
 
 export class PrismaTecnicoMapper {
   static toDomain(rawTecnico: RawTecnicoAndFuncionario) {
     return new Tecnico({
-      email: rawTecnico.email,
-      nome: rawTecnico.nome,
-      senha: rawTecnico.senha
+      email: rawTecnico.Funcionario.email,
+      nome: rawTecnico.Funcionario.nome,
+      senha: rawTecnico.Funcionario.senha
     },
-    rawTecnico.Tecnico.id
+    rawTecnico.id
     )
   }
 }

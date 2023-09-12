@@ -19,7 +19,7 @@ async function bootstrap() {
       secret: 'nau',
       resave: false,
       saveUninitialized: false,
-      cookie: { maxAge: 3600000 }
+      cookie: { maxAge: 1000 }
     })
   );
 

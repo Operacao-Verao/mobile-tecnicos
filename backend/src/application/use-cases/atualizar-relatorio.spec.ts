@@ -36,11 +36,6 @@ describe('Atualizar relatório', () => {
             observacoes: "",
             tipoConstrucao: 2,
             tipoTalude: 1,
-            fotos: [
-                {
-                    url: base64example
-                }
-            ],
             dataGeracao: new Date(),
             dataAtendimento: new Date(),
             afetados: {

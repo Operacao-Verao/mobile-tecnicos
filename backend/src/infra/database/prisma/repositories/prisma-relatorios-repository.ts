@@ -29,11 +29,7 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
       include: {
         Civil: {
           include: {
-            Endereco: {
-              include: {
-                Casa: true
-              }
-            }
+            Casa: true
           }
         }
       }

@@ -10,13 +10,12 @@ export class PrismaTecnicosRepository implements TecnicosRepository {
   
   async findById(id: number): Promise<Tecnico | null> {
     
-    const tecnico = await this.prisma.funcionario.findFirst({
+    const tecnico = await this.prisma.tecnico.findFirst({
+      where: {
+        id
+      },
       include: {
-        Tecnico: {
-          where: {
-            id
-          }
-        }
+        Funcionario: true
       }
     });
 
@@ -41,6 +40,6 @@ export class PrismaTecnicosRepository implements TecnicosRepository {
       return null;
     }
 
-    return PrismaTecnicoMapper.toDomain(funcionario);
+    return PrismaTecnicoMapper.toDomain({id: funcionario.Tecnico.id, id_funcionario: funcionario.id, ativo: funcionario.Tecnico.ativo, Funcionario: funcionario});
   }
 }

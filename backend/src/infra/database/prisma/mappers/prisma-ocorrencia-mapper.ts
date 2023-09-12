@@ -5,10 +5,14 @@ import { Endereco } from '@application/entities/endereco'
 import { Ocorrencia } from '@application/entities/ocorrencia'
 import { Relatorio } from '@application/entities/relatorio'
 import { Tecnico } from '@application/entities/tecnico'
-import { Ocorrencia as RawOcorrencia, Relatorio as RawRelatorio, Tecnico as RawTecnico, Funcionario as RawFuncionario, Animal as RawAnimal, Afetados as RawAfetados, Civil as RawCivil, Endereco as RawEndereco, Foto as RawFoto, DadosDaVistoria as RawDadosVistoria } from '@prisma/client'
+import { Ocorrencia as RawOcorrencia, Relatorio as RawRelatorio, Tecnico as RawTecnico, Funcionario as RawFuncionario, Animal as RawAnimal, Afetados as RawAfetados, Civil as RawCivil, Endereco as RawEndereco, Foto as RawFoto, DadosDaVistoria as RawDadosVistoria, Casa as RawCasa } from '@prisma/client'
+
+interface RawCasaWithJoins extends RawCasa {
+  Endereco: RawEndereco
+}
 
 interface RawCivilWithJoins extends RawCivil {
-  Endereco: RawEndereco
+  Casa: RawCasaWithJoins
 }
 
 interface RawTecnicoWithJoins extends RawTecnico {
@@ -67,7 +71,7 @@ export class PrismaOcorrenciaMapper {
     
     const tecnico = PrismaOcorrenciaMapper.toHTTPTecnico(rawOcorrencia.Tecnico);
 
-    const endereco = PrismaOcorrenciaMapper.toHTTPEndereco(rawOcorrencia.Civil.Endereco);
+    const endereco = PrismaOcorrenciaMapper.toHTTPEndereco(rawOcorrencia.Civil.Casa.Endereco);
 
     return new Ocorrencia({
       acionamento: rawOcorrencia.acionamento,
