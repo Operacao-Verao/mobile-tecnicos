@@ -49,6 +49,7 @@ export const Label = styled.Text`
 
 export const Info = styled.Text`
 	color: ${(props) => props.theme.color};
+	text-transform: capitalize;
 	font-family: Poppins_400Regular;
 	font-size: 13px;
 `;

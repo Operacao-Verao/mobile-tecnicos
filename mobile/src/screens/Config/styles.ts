@@ -9,6 +9,7 @@ export const Container = styled.ScrollView`
 export const TopBar = styled.View`
 	flex-direction: row;
 	justify-content: space-between;
+	margin-bottom: 50px;
 `;
 
 export const Title = styled.Text`
@@ -22,7 +23,7 @@ export const ButtonMode = styled.TouchableOpacity`
 `;
 
 export const Settings = styled.View`
-	margin-top: 20px;
+	margin-top: 10px;
 `;
 
 export const SettingsAccount = styled.View``;

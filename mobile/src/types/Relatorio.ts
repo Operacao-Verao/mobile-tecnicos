@@ -3,9 +3,9 @@ import { AnimaisTS } from './Animais';
 import { dadosVistoriaTS } from './DadosVistoria';
 
 export type RelatorioTS = {
-	enfermos: number;
+	enfermos: number | undefined;
 	interdicao: number; // Não (0), parcial (1) ou total (2)
-	situacao: number; // Inespecificado (0), desabrigados (1) ou desalojados (2)
+	situacaoVitimas: number; // Inespecificado (0), desabrigados (1) ou desalojados (2)
 	gravidade?: number; // Nenhum (0), risco (1) ou desastre (2)
 	relatorio: string;
 	encaminhamento: string;
@@ -19,10 +19,12 @@ export type RelatorioTS = {
 	tipoTalude: number; // Inespecificado (0), natural (1), de corte (2) ou aterro (3)
 	vegetacao: number; // Nenhuma (0), rasteira (1) ou árvores (2)
 	danosMateriais: boolean;
-	dataGeracao: Date | null;
-	dataAtendimento: Date | null;
+	dataGeracao: string | null;
+	dataAtendimento: string | null;
 	afetados?: AfetadosTS;
 	animais?: AnimaisTS;
 	dadosVistoria: dadosVistoriaTS;
-	fotos: string | null;
+	fotos: {
+		url: string;
+	};
 };

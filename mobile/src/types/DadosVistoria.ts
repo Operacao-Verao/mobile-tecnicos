@@ -1,7 +1,7 @@
 export type dadosVistoriaTS = {
 	desmoronamento: boolean;
-	escorregamento: boolean;
-	esgoto_escorregamento: boolean;
+	deslizamento: boolean;
+	esgoto_escoamento: boolean;
 	erosao: boolean;
 	inundacao: boolean;
 	incendio: boolean;
@@ -10,5 +10,4 @@ export type dadosVistoriaTS = {
 	judicial: boolean;
 	monitoramento: boolean;
 	transito: boolean;
-	outros?: string;
 };

@@ -3,7 +3,10 @@ import styled from 'styled-components/native';
 export const Container = styled.ScrollView`
 	flex: 1;
 	background-color: ${(props) => props.theme.background};
-	padding: 0px 20px;
+`;
+
+export const Wrapper = styled.ScrollView`
+	padding: 20px;
 `;
 
 export const Title = styled.Text`
@@ -11,6 +14,7 @@ export const Title = styled.Text`
 	font-family: Poppins_600SemiBold;
 	font-size: 24px;
 	text-align: center;
+	margin-bottom: 20px;
 `;
 
 export const Form = styled.View`
@@ -42,7 +46,7 @@ export const Column = styled.View`
 	gap: 15px;
 `;
 
-export const Button = styled.TouchableOpacity`
+export const ButtonImage = styled.TouchableOpacity`
 	background-color: ${(props) => props.theme.background};
 	border: ${(props) => props.theme.border};
 	flex: 1;
@@ -51,6 +55,19 @@ export const Button = styled.TouchableOpacity`
 	border-radius: 6px;
 `;
 
-export const ButtonText = styled.Text`
+export const Button = styled.TouchableOpacity`
+	padding: 20px;
+	background-color: #0ea5e9;
+	border-radius: 9999px;
+`;
+
+export const ButtonTextImage = styled.Text`
 	font-family: Poppins_400Regular;
+`;
+
+export const ButtonText = styled.Text`
+	font-family: Poppins_600SemiBold;
+	color: #fff;
+	font-weight: 600;
+	text-align: center;
 `;

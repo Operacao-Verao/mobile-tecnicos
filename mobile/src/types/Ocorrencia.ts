@@ -17,5 +17,5 @@ export type OcorrenciaTS = {
 		email: string;
 		nome: string;
 	};
-	relatorio?: RelatorioTS;
+	relatorios?: [RelatorioTS];
 };

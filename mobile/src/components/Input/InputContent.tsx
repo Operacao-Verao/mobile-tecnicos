@@ -26,7 +26,7 @@ const InputContent = ({
 
 	theme.status === 'light'
 		? (placeholderColor = '#000')
-		: (placeholderColor = '#e9e9e9');
+		: (placeholderColor = '#cbd5e1');
 
 	return (
 		<Input

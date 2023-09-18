@@ -53,3 +53,4 @@ export const TextButton = styled.Text`
 	font-weight: 600;
 	text-align: center;
 `;
+

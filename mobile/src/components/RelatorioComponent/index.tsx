@@ -1,25 +1,25 @@
 import React from 'react';
 import { View } from 'react-native';
 import { GravidadeStatus } from '../Status';
-import { useAppSelector } from '../../redux/hooks/useApp';
 import { RelatorioTS } from '../../types/Relatorio';
 import { Image } from 'expo-image';
 import * as S from './styles';
 
-const RelatorioComponent = () => {
-	const relatorio = useAppSelector<RelatorioTS | undefined>(
-		(state) => state.ocorrencia.ocorrencia.relatorio
-	);
+type Props = {
+	index: number;
+	relatorio: RelatorioTS;
+};
+
+const RelatorioComponent = ({ relatorio, index }: Props) => {
+	console.log(relatorio);
 
 	return (
 		<S.Container>
 			<S.Row>
-				<S.Title>Relatório</S.Title>
+				<S.Title>Relatório {index + 1}</S.Title>
 				<GravidadeStatus gravidade={relatorio?.gravidade} />
 			</S.Row>
-			<View>
-				<Image source={relatorio?.fotos} />
-			</View>
+			<View>{/* <Image source={relatorio?.fotos.url} /> */}</View>
 			<S.Column>
 				<S.Label>Memorando: </S.Label>
 				<S.Info>{relatorio?.memorando}</S.Info>
@@ -87,7 +87,7 @@ const RelatorioComponent = () => {
 			</S.Column>
 			<S.RowItem>
 				<S.Label>Situação: </S.Label>
-				<S.Info>{relatorio?.situacao}</S.Info>
+				<S.Info>{relatorio?.situacaoVitimas}</S.Info>
 			</S.RowItem>
 			<S.RowItem>
 				<S.Label>Encaminhamento: </S.Label>

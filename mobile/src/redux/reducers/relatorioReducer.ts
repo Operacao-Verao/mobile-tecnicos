@@ -34,20 +34,6 @@ const initialState: State = {
 			feridos: 0,
 			enfermos: 0,
 		},
-		dadosVistoria: {
-			desmoronamento: false,
-			escorregamento: false,
-			esgoto_escorregamento: false,
-			erosao: false,
-			inundacao: false,
-			incendio: false,
-			arvores: false,
-			infiltracao_trinca: false,
-			judicial: false,
-			monitoramento: false,
-			transito: false,
-			outros: '',
-		},
 		enfermos: 0,
 		gravidade: 0,
 		relatorio: '',
@@ -64,7 +50,9 @@ const initialState: State = {
 		danosMateriais: false,
 		dataGeracao: null,
 		dataAtendimento: null,
-		fotos: null,
+		fotos: {
+			url: '',
+		},
 		animais: {
 			caes: 0,
 			gatos: 0,
@@ -72,7 +60,20 @@ const initialState: State = {
 			equinos: 0,
 		},
 		interdicao: 0,
-		situacao: 0,
+		situacaoVitimas: 0,
+		dadosVistoria: {
+			desmoronamento: false,
+			deslizamento: false,
+			esgoto_escoamento: false,
+			erosao: false,
+			inundacao: false,
+			incendio: false,
+			arvores: false,
+			infiltracao_trinca: false,
+			judicial: false,
+			monitoramento: false,
+			transito: false,
+		},
 	},
 	relatorios: [],
 	loading: false,
@@ -81,7 +82,7 @@ const initialState: State = {
 
 export const fetchRelatorios = createAsyncThunk(
 	'relatorios/ver',
-	async ({ token }: CredentialsTS) => {
+	async ({ token }: CredentialsTS, thunkAPI) => {
 		try {
 			const response = await api.get('relatorios/ver', {
 				headers: {
@@ -89,19 +90,16 @@ export const fetchRelatorios = createAsyncThunk(
 				},
 			});
 
-			if (response.status === 200) {
-				let relatorios = response.data;
-				return relatorios;
-			}
-		} catch (error) {
-			return 'Erro: ' + error;
+			return response.data;
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response?.data || error.message);
 		}
 	}
 );
 
 export const createRelatorio = createAsyncThunk(
 	'relatorios/criar',
-	async ({ token, ocorrenciaId, body }: CredentialsTS) => {
+	async ({ token, ocorrenciaId, body }: CredentialsTS, thunkAPI) => {
 		try {
 			const response = await api.post(
 				`relatorios/criar/${ocorrenciaId}`,
@@ -114,15 +112,15 @@ export const createRelatorio = createAsyncThunk(
 			);
 
 			return response.data;
-		} catch (error) {
-			return 'Erro: ' + error;
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response?.data || error.message);
 		}
 	}
 );
 
 export const fetchOneRelatorio = createAsyncThunk(
 	'relatorios/ver/{id}',
-	async ({ id, token }: CredentialsTS) => {
+	async ({ id, token }: CredentialsTS, thunkAPI) => {
 		try {
 			const response = await api.get(`relatorios/ver/${id}`, {
 				headers: {
@@ -134,15 +132,15 @@ export const fetchOneRelatorio = createAsyncThunk(
 				let relatorio = response.data;
 				return relatorio;
 			}
-		} catch (error) {
-			return 'Erro: ' + error;
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response?.data || error.message);
 		}
 	}
 );
 
 export const fetchFilterRelatorio = createAsyncThunk(
 	'relatorios/filtrar/{status}',
-	async ({ status, token }: CredentialsTS) => {
+	async ({ status, token }: CredentialsTS, thunkAPI) => {
 		try {
 			const response = await api.get(`relatorios/ver/${status}`, {
 				headers: {
@@ -154,8 +152,8 @@ export const fetchFilterRelatorio = createAsyncThunk(
 				let relatorios = response.data;
 				return relatorios;
 			}
-		} catch (error) {
-			return 'Erro: ' + error;
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response?.data || error.message);
 		}
 	}
 );

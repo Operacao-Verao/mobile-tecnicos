@@ -24,7 +24,7 @@ const SettingsItem = ({
 	...rest
 }: SettingsItemProps) => {
 	return (
-		<S.Button>
+		<S.Button {...rest}>
 			<S.Icon>
 				{FeatherIcon ? (
 					<Feather name={ItemIconFeather} size={24} color={IconColor} />

@@ -44,11 +44,12 @@ const Login = () => {
 		<S.Container>
 			<S.Wrapper>
 				<S.Form>
-					<S.Title>Login</S.Title>
-					{authError && (
+					{authError ? (
 						<S.ViewError>
 							<S.TextError>Usuário não encontrado.</S.TextError>
 						</S.ViewError>
+					) : (
+						<S.Title>Login</S.Title>
 					)}
 					<S.Label>Email</S.Label>
 					<Controller
