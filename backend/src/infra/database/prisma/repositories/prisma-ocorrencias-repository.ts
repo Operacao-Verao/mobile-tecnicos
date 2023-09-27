@@ -81,7 +81,8 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                     include: {
                         Residencial: {
                             include: {
-                                Endereco: true
+                                Endereco: true,
+                                Casa: true
                             }
                         }
                     }
@@ -91,6 +92,7 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                 data_ocorrencia: 'desc'
             }
         });
+
 
         if(!ocorrencia) {
             throw new OcorrenciasNotFound();

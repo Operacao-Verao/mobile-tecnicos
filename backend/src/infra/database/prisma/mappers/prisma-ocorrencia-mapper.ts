@@ -1,15 +1,17 @@
 import { Afetados } from '@application/entities/afetados'
 import { Animais } from '@application/entities/animais'
+import { Casa } from '@application/entities/casa'
 import { DadosVistoria } from '@application/entities/dadosVistoria'
 import { Endereco } from '@application/entities/endereco'
 import { Ocorrencia } from '@application/entities/ocorrencia'
 import { Relatorio } from '@application/entities/relatorio'
 import { Residencial } from '@application/entities/residencial'
 import { Tecnico } from '@application/entities/tecnico'
-import { Ocorrencia as RawOcorrencia, Relatorio as RawRelatorio, Tecnico as RawTecnico, Funcionario as RawFuncionario, Animal as RawAnimal, Afetados as RawAfetados, Civil as RawCivil, Endereco as RawEndereco, Foto as RawFoto, DadosDaVistoria as RawDadosVistoria, Residencial as RawResidencial } from '@prisma/client'
+import { Ocorrencia as RawOcorrencia, Relatorio as RawRelatorio, Tecnico as RawTecnico, Funcionario as RawFuncionario, Animal as RawAnimal, Afetados as RawAfetados, Civil as RawCivil, Endereco as RawEndereco, Foto as RawFoto, DadosDaVistoria as RawDadosVistoria, Residencial as RawResidencial, Casa as RawCasa } from '@prisma/client'
 
 interface ResidencialWithJoins extends RawResidencial {
-  Endereco: RawEndereco
+  Endereco: RawEndereco,
+  Casa: RawCasa[]
 }
 
 interface RawCivilWithJoins extends RawCivil {
@@ -71,7 +73,11 @@ export class PrismaOcorrenciaMapper {
     
     const tecnico = PrismaOcorrenciaMapper.toHTTPTecnico(rawOcorrencia.Tecnico);
 
-    const residencial = PrismaOcorrenciaMapper.toHTTPResidencial(rawOcorrencia.Civil.Residencial);
+    const endereco = PrismaOcorrenciaMapper.toHTTPEndereco(rawOcorrencia.Civil.Residencial.Endereco);
+
+    let casas = PrismaOcorrenciaMapper.toHTTPCasas(rawOcorrencia.Civil.Residencial.Casa);
+
+    const residencial = PrismaOcorrenciaMapper.toHTTPResidencial(rawOcorrencia.Civil.Residencial, endereco, casas);
 
     return new Ocorrencia({
       acionamento: rawOcorrencia.acionamento,
@@ -175,11 +181,24 @@ export class PrismaOcorrenciaMapper {
       rua: rawEndereco.rua
     });
   }
-  static toHTTPResidencial(rawResidencial: ResidencialWithJoins) {
-    const endereco = this.toHTTPEndereco(rawResidencial.Endereco);
+
+  static toHTTPCasas(rawCasa: RawCasa[]) {
+    let casas: Casa[] = [];
+
+    rawCasa.map((item) => {
+      casas.push(new Casa({
+        complemento: item.complemento,
+        interdicao: item.interdicao,
+      }))
+    })
+    return casas;
+  }
+
+  static toHTTPResidencial(rawResidencial: ResidencialWithJoins, endereco: Endereco, casas: Casa[]) {
     return new Residencial({
       numero: rawResidencial.numero,
-      endereco
+      endereco,
+      casas
     }, rawResidencial.id);
   }
 }

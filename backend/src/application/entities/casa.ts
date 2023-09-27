@@ -1,7 +1,6 @@
 import { Residencial } from "./residencial";
 
 interface CasaProps {
-  residencial: Residencial,
   interdicao: number,
   complemento: string,
 }
@@ -31,13 +30,5 @@ export class Casa {
 
   public set complemento(complemento: string) {
     this.props.complemento = complemento;
-  }
-
-  public get residencial(): Residencial {
-    return this.props.residencial;
-  }
-
-  public set residencial(residencial: Residencial) {
-    this.props.residencial = residencial;
   }
 }

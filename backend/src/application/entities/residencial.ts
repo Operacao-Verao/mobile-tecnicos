@@ -1,8 +1,10 @@
+import { Casa } from "./casa";
 import { Endereco } from "./endereco";
 
 interface ResidencialProps {
   numero: string,
-  endereco: Endereco
+  endereco: Endereco,
+  casas: Casa[]
 }
 
 export class Residencial {
@@ -30,5 +32,13 @@ export class Residencial {
 
   public set endereco(endereco: Endereco) {
     this.props.endereco = endereco;
+  }
+
+  public get casas(): Casa[] {
+    return this.props.casas;
+  }
+
+  public set casas(casa: Casa) {
+    this.props.casas.push(casa);
   }
 }
