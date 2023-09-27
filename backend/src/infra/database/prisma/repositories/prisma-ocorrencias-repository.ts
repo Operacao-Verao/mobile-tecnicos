@@ -30,7 +30,7 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                 },
                 Civil: {
                     include: {
-                        Casa: {
+                        Residencial: {
                             include: {
                                 Endereco: true
                             }
@@ -79,7 +79,7 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                 },
                 Civil: {
                     include: {
-                        Casa: {
+                        Residencial: {
                             include: {
                                 Endereco: true
                             }
@@ -122,7 +122,7 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                 },
                 Civil: {
                     include: {
-                        Casa: {
+                        Residencial: {
                             include: {
                                 Endereco: true
                             }
