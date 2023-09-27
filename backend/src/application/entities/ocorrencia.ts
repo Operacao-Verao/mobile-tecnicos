@@ -1,4 +1,4 @@
-import { Endereco } from "./endereco";
+import { Residencial } from "./residencial";
 import { Relatorio } from "./relatorio";
 import { Tecnico } from "./tecnico";
 
@@ -10,7 +10,7 @@ interface OcorrenciaProps {
   data: Date,
   relatorios?: Relatorio[],
   tecnico?: Tecnico,
-  endereco: Endereco
+  residencial: Residencial
 }
 
 export class Ocorrencia {
@@ -72,12 +72,12 @@ export class Ocorrencia {
     return this.props.tecnico;
   }
 
-  public set endereco(endereco: Endereco) {
-    this.props.endereco = endereco;
+  public set residencial(residencial: Residencial) {
+    this.props.residencial = residencial;
   }
 
-  public get endereco(): Endereco {
-    return this.props.endereco;
+  public get residencial(): Residencial {
+    return this.props.residencial;
   }
 
   public set data(data: Date) {

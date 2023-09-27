@@ -20,7 +20,6 @@ export function makeRelatorios() {
         situacaoVitimas: 2,
         relatorio: "Enchente na vilinha com queda e deslizamento",
         processo: "Dados do processo",
-        interdicao: 1,
         dadosVistoria,
         fotos: [
             {

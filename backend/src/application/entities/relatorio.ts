@@ -40,12 +40,6 @@ export enum SITUACAO_VITIMAS {
   DESALOJADOS = 2,
 };
 
-export enum INTERDICAO {
-  NAO = 0,
-  PARCIAL = 1,
-  TOTAL = 2,
-};
-
 interface RelatorioProps {
   gravidade: number,
   relatorio: string,
@@ -59,7 +53,6 @@ interface RelatorioProps {
   tipoConstrucao: number,
   tipoTalude: number,
   vegetacao: number,
-  interdicao: number,
   danosMateriais: boolean,
   situacaoVitimas: number,
   dataGeracao: Date,
@@ -89,14 +82,6 @@ export class Relatorio {
 
   public get id(): number {
     return this._id;
-  }
-
-  public set interdicao(interdicao: number) {
-    this.props.interdicao = interdicao;
-  }
-
-  public get interdicao(): number {
-    return this.props.interdicao;
   }
 
   public set situacaoVitimas(situacaoVitimas: number) {

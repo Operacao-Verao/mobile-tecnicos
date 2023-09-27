@@ -29,7 +29,11 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
       include: {
         Civil: {
           include: {
-            Casa: true
+            Residencial: {
+              include: {
+                Casa: true
+              }
+            }
           }
         }
       }
@@ -39,7 +43,7 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
       throw new OcorrenciaNotFound();
     }
 
-    const raw = PrismaRelatorioMapper.toPrisma(relatorio, ocorrenciaId, ocorrencia.Civil.id_casa);
+    const raw = PrismaRelatorioMapper.toPrisma(relatorio, ocorrenciaId, ocorrencia.Civil);
 
     await this.prisma.relatorio.create({
       data: raw

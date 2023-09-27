@@ -57,30 +57,29 @@ model Cargo {
 }
 
 model Casa {
-  id          Int        @id @default(autoincrement())
-  cep         String     @db.Char(8)
-  numero      String?    @db.VarChar(10)
-  complemento String?    @db.VarChar(50)
-  Endereco    Endereco   @relation(fields: [cep], references: [cep], onUpdate: Restrict, map: "Casa_ibfk_1")
-  Civil       Civil[]
-  Relatorio   Relatorio?
+  id             Int         @id @default(autoincrement())
+  id_residencial Int
+  interdicao     Int
+  complemento    String?     @db.VarChar(50)
+  Residencial    Residencial @relation(fields: [id_residencial], references: [id], onUpdate: Restrict, map: "Casa_ibfk_1")
+  Relatorio      Relatorio?
 
-  @@index([cep], map: "cep")
+  @@index([id_residencial], map: "id_residencial")
 }
 
 model Civil {
-  id         Int          @id @default(autoincrement())
-  id_casa    Int?
-  nome       String       @db.VarChar(100)
-  email      String?      @unique(map: "email") @db.VarChar(70)
-  senha      String       @db.VarChar(70)
-  cpf        String       @unique(map: "cpf") @db.Char(11)
-  celular    String       @db.Char(11)
-  telefone   String?      @db.Char(10)
-  Casa       Casa?        @relation(fields: [id_casa], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Civil_ibfk_1")
-  Ocorrencia Ocorrencia[]
+  id             Int          @id @default(autoincrement())
+  id_residencial Int?
+  nome           String       @db.VarChar(100)
+  email          String?      @db.VarChar(70)
+  senha          String       @db.VarChar(70)
+  cpf            String       @unique(map: "cpf") @db.Char(11)
+  celular        String       @db.Char(11)
+  telefone       String?      @db.Char(10)
+  Residencial    Residencial? @relation(fields: [id_residencial], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Civil_ibfk_1")
+  Ocorrencia     Ocorrencia[]
 
-  @@index([id_casa], map: "id_casa")
+  @@index([id_residencial], map: "id_residencial")
 }
 
 model Comunicado {
@@ -115,10 +114,10 @@ model Endereco {
   rua         String        @db.VarChar(155)
   bairro      String        @db.VarChar(100)
   cidade      String?       @db.VarChar(70)
-  Casa        Casa[]
   Fluviometro Fluviometro[]
   LocalAjuda  LocalAjuda[]
   Pluviometro Pluviometro[]
+  Residencial Residencial[]
 }
 
 model Fluviometro {
@@ -208,18 +207,21 @@ model Ocorrencia {
   id              Int         @id @default(autoincrement())
   id_tecnico      Int?
   id_civil        Int
+  id_residencial  Int
   acionamento     String      @db.VarChar(100)
-  relato_civil    String      @db.VarChar(355)
+  relato_civil    String      @db.VarChar(1024)
   num_casas       Int
   aprovado        Boolean
   encerrado       Boolean
   data_ocorrencia DateTime    @db.DateTime(0)
   Tecnico         Tecnico?    @relation(fields: [id_tecnico], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Ocorrencia_ibfk_1")
   Civil           Civil       @relation(fields: [id_civil], references: [id], onUpdate: Restrict, map: "Ocorrencia_ibfk_2")
+  Residencial     Residencial @relation(fields: [id_residencial], references: [id], onUpdate: Restrict, map: "Ocorrencia_ibfk_3")
   Relatorio       Relatorio[]
 
   @@index([id_civil], map: "id_civil")
   @@index([id_tecnico], map: "id_tecnico")
+  @@index([id_residencial], map: "id_residencial")
 }
 
 model Pluviometro {
@@ -250,19 +252,18 @@ model Relatorio {
   id_ocorrencia    Int
   id_casa          Int              @unique(map: "id_casa")
   gravidade        Int
-  relatorio        String           @db.VarChar(355)
+  relatorio        String           @db.VarChar(1024)
   encaminhamento   String           @db.VarChar(155)
   memorando        String           @db.VarChar(100)
   oficio           String           @db.VarChar(100)
   processo         String           @db.VarChar(100)
   assunto          String           @db.VarChar(200)
-  observacoes      String           @db.VarChar(355)
+  observacoes      String           @db.VarChar(1024)
   area_afetada     Int
   tipo_construcao  Int
   tipo_talude      Int
   vegetacao        Int
   situacao_vitimas Int
-  interdicao       Int
   danos_materiais  Boolean
   data_geracao     DateTime         @db.DateTime(0)
   data_atendimento DateTime         @db.DateTime(0)
@@ -313,4 +314,16 @@ model ServiceWorkerData {
   Gestor      Gestor @relation(fields: [id_gestor], references: [id], onUpdate: Restrict, map: "ServiceWorkerData_ibfk_1")
 
   @@index([id_gestor], map: "id_gestor")
+}
+
+model Residencial {
+  id         Int          @id @default(autoincrement())
+  cep        String       @db.Char(8)
+  numero     String?      @db.VarChar(10)
+  Casa       Casa[]
+  Civil      Civil[]
+  Ocorrencia Ocorrencia[]
+  Endereco   Endereco     @relation(fields: [cep], references: [cep], onUpdate: Restrict, map: "Residencial_ibfk_1")
+
+  @@index([cep], map: "cep")
 }
