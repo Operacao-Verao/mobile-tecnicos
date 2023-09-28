@@ -9,7 +9,6 @@ export class RelatorioViewModel {
       id: relatorio.id,
       areaAfetada: relatorio.areaAfetada,
       assunto: relatorio.assunto,
-      interdicao: relatorio.interdicao,
       situacaoVitimas: relatorio.situacaoVitimas,
       danosMateriais: relatorio.danosMateriais,
       dataAtendimento: relatorio.dataAtendimento,

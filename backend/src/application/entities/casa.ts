@@ -1,5 +1,3 @@
-import { Residencial } from "./residencial";
-
 interface CasaProps {
   interdicao: number,
   complemento: string,
@@ -14,6 +12,14 @@ export class Casa {
       this._id = id;
     }
     this.props = props;
+  }
+
+  public set id(id: number) {
+    this._id = id;
+  }
+
+  public get id(): number {
+      return this._id;
   }
 
   public get interdicao(): number {

@@ -1,12 +1,14 @@
-import { Endereco } from "@application/entities/endereco";
+import { Residencial } from "@application/entities/residencial";
 
 export class EnderecoViewModel {
-  static toHTTP(endereco: Endereco) {
+  static toHTTP(residencial: Residencial) {
     return {
-      cep: endereco.cep,
-      bairro: endereco.bairro,
-      cidade: endereco.cidade,
-      rua: endereco.rua
+      cep: residencial.endereco.cep,
+      bairro: residencial.endereco.bairro,
+      cidade: residencial.endereco.cidade,
+      rua: residencial.endereco.rua,
+      numero: residencial.numero,
+      casas: residencial.casas
     }
   }
 }

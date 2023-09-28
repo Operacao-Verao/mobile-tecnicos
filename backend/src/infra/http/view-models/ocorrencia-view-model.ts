@@ -11,7 +11,7 @@ export class OcorrenciaViewModel {
       data: ocorrencia.data,
       num_casas: ocorrencia.num_casas,
       status: ocorrencia.status,
-      endereco: EnderecoViewModel.toHTTP(ocorrencia.endereco),
+      endereco: EnderecoViewModel.toHTTP(ocorrencia.residencial),
       tecnico: TecnicoViewModel.toHTTP(ocorrencia.tecnico),
       relatorios: ocorrencia.relatorios.map(RelatorioViewModel.toHTTP),
     }

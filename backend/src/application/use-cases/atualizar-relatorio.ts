@@ -81,7 +81,7 @@ export class AtualizarRelatorio {
   ) {}
 
   async execute(request: AtualizarRelatorioRequest): Promise<AtualizarRelatorioResponse> {
-    const { animais, afetados, ocorrenciaId, dadosVistoria, id, tecnicoId, casaId, ...rest  } = request;
+    const { animais, afetados, ocorrenciaId, dadosVistoria, id, tecnicoId, casaId, interdicao, ...rest  } = request;
     
     const classAnimais = new Animais(animais);
     

@@ -105,7 +105,6 @@ export class RelatoriosController {
   })
   @ApiBearerAuth()
   async verRelatorios(@Request() req, @Param('ocorrenciaId') ocorrenciaId: string) {
-    
       const tecnicoId: number = req.user._id;
       const ocorrenciaIdToNumber = Number(ocorrenciaId);
 

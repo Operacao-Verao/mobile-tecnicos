@@ -13,7 +13,7 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
     private prisma: PrismaService
   ){}
   
-  async criarRelatorio(relatorio: Relatorio, ocorrenciaId: number, tecnicoId: number, casaId: number): Promise<void> {
+  async criarRelatorio(relatorio: Relatorio, ocorrenciaId: number, tecnicoId: number, casaId: number, interdicao: number): Promise<void> {
     const ocorrencia = await this.prisma.ocorrencia.findFirst({
       where: {
         AND: [
@@ -42,6 +42,15 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
 
     await this.prisma.relatorio.create({
       data: raw
+    });
+
+    await this.prisma.casa.update({
+      where: {
+        id: casaId
+      },
+      data: {
+        interdicao
+      }
     });
   }
   
