@@ -43,6 +43,7 @@ interface DadosVistoriaBody {
 
 interface CriarRelatorioRequest {
   ocorrenciaId: number
+  casaId: number
   tecnicoId: number
   assunto: string
   gravidade: number
@@ -79,7 +80,7 @@ export class CriarRelatorio {
   ) {}
 
   async execute(request: CriarRelatorioRequest): Promise<CriarRelatorioResponse> {
-    const { animais, afetados, dadosVistoria, tecnicoId, ocorrenciaId, ...rest  } = request;
+    const { animais, afetados, dadosVistoria, tecnicoId, ocorrenciaId, casaId, ...rest  } = request;
     
     const classAnimais = new Animais(animais);
     
@@ -89,7 +90,7 @@ export class CriarRelatorio {
 
     const relatorio = new Relatorio({...rest, animais: classAnimais, afetados: classAfetados, dadosVistoria: classDadosVistoria});
 
-    await this.relatoriosRepository.criarRelatorio(relatorio, ocorrenciaId, tecnicoId);
+    await this.relatoriosRepository.criarRelatorio(relatorio, ocorrenciaId, tecnicoId, casaId);
 
     return {
       relatorio

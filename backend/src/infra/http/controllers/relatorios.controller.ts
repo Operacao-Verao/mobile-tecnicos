@@ -38,7 +38,7 @@ export class RelatoriosController {
     }
   })
   @ApiBearerAuth()
-  async criar(@Body() body: RelatorioBody, @Param('ocorrenciaId') ocorrenciaId: string, @Request() req) {
+  async criar(@Body() body: RelatorioBody, @Request() req) {
     
       const { fotos } = body;
       
@@ -46,9 +46,7 @@ export class RelatoriosController {
 
       const relatorioToNumber = RelatorioHelper.toNumber(body);
 
-      const ocorrenciaIdToNumber = Number(ocorrenciaId);
-
-      const { relatorio } = await this.criarRelatorio.execute({...relatorioToNumber, ocorrenciaId: ocorrenciaIdToNumber, fotos, tecnicoId});
+      const { relatorio } = await this.criarRelatorio.execute({...relatorioToNumber, ocorrenciaId: relatorioToNumber.ocorrencia_id, fotos, tecnicoId, casaId: relatorioToNumber.casa_id});
 
       return RelatorioViewModel.toHTTP(relatorio);
      
@@ -69,7 +67,7 @@ export class RelatoriosController {
     }
   })
   @ApiBearerAuth()
-  async atualizar(@Body() body: AtualizarRelatorioBody, @Param('ocorrenciaId') ocorrenciaId: string, @Request() req) {
+  async atualizar(@Body() body: AtualizarRelatorioBody, @Request() req) {
     try {
 
       const tecnicoId: number = req.user._id;
@@ -78,9 +76,7 @@ export class RelatoriosController {
 
       const parametros = {...relatorioToNumber, id: Number(body.id)};
 
-      const ocorrenciaIdToNumber = Number(ocorrenciaId);
-
-      const { relatorio } = await this.atualizarRelatorio.execute({...parametros, ocorrenciaId: ocorrenciaIdToNumber, tecnicoId});
+      const { relatorio } = await this.atualizarRelatorio.execute({...parametros, ocorrenciaId: parametros.ocorrencia_id, tecnicoId, casaId: parametros.casa_id});
 
       return RelatorioViewModel.toHTTP(relatorio);
     } catch (error) {

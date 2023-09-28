@@ -13,8 +13,7 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
     private prisma: PrismaService
   ){}
   
-  async criarRelatorio(relatorio: Relatorio, ocorrenciaId: number, tecnicoId: number): Promise<void> {
-    
+  async criarRelatorio(relatorio: Relatorio, ocorrenciaId: number, tecnicoId: number, casaId: number): Promise<void> {
     const ocorrencia = await this.prisma.ocorrencia.findFirst({
       where: {
         AND: [
@@ -29,11 +28,7 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
       include: {
         Civil: {
           include: {
-            Residencial: {
-              include: {
-                Casa: true
-              }
-            }
+            Residencial: true
           }
         }
       }
@@ -43,14 +38,14 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
       throw new OcorrenciaNotFound();
     }
 
-    const raw = PrismaRelatorioMapper.toPrisma(relatorio, ocorrenciaId, ocorrencia.Civil);
+    const raw = PrismaRelatorioMapper.toPrisma(relatorio, ocorrenciaId, casaId);
 
     await this.prisma.relatorio.create({
       data: raw
     });
   }
   
-  async alterarRelatorio(relatorio: Relatorio, ocorrenciaId: number, tecnicoId: number): Promise<void> {
+  async alterarRelatorio(relatorio: Relatorio, ocorrenciaId: number, tecnicoId: number, casaId: number): Promise<void> {
     const ocorrencia = await this.prisma.ocorrencia.findFirst({
       where: {
         AND: [
@@ -84,7 +79,7 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
       throw new RelatorioNotFound();
     }
 
-    const raw = PrismaRelatorioMapper.toPrismaUpdate(relatorio, ocorrenciaId, ocorrencia.Civil.id_casa);
+    const raw = PrismaRelatorioMapper.toPrismaUpdate(relatorio, ocorrenciaId, casaId);
 
     await this.prisma.relatorio.update({
       where: {

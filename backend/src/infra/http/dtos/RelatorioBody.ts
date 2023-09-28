@@ -1,6 +1,6 @@
 import { base64example } from "@helpers/base64"
 import { ApiProperty } from "@nestjs/swagger"
-import { IsDateString, IsNotEmpty, IsNumber, IsString, Max, MaxLength, Min, MinLength } from "class-validator"
+import { IsDateString, IsNotEmpty, IsNumber, IsString, IsUUID, Max, MaxLength, Min, MinLength } from "class-validator"
 import { AfetadosBody } from "./AfetadosBody"
 import { AnimaisBody } from "./AnimaisBody"
 import { FotosBody } from "./FotosBody"
@@ -14,6 +14,24 @@ export class RelatorioBody {
     example: 2,
   })
   enfermos: number
+
+  @IsNotEmpty()
+  @IsNumber()
+  @IsUUID()
+  @ApiProperty({
+    description: "Id da ocorrência",
+    example: 2,
+  })
+  ocorrencia_id: number
+
+  @IsNotEmpty()
+  @IsNumber()
+  @IsUUID()
+  @ApiProperty({
+    description: "Id da casa",
+    example: 2,
+  })
+  casa_id: number
 
   @IsNotEmpty()
   @IsNumber()

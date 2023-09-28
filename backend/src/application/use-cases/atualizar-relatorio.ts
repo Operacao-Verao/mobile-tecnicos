@@ -44,6 +44,7 @@ interface DadosVistoriaBody {
 interface AtualizarRelatorioRequest {
   id: number
   ocorrenciaId: number
+  casaId: number
   tecnicoId: number
   enfermos: number
   assunto: string
@@ -80,7 +81,7 @@ export class AtualizarRelatorio {
   ) {}
 
   async execute(request: AtualizarRelatorioRequest): Promise<AtualizarRelatorioResponse> {
-    const { animais, afetados, ocorrenciaId, dadosVistoria, id, tecnicoId, ...rest  } = request;
+    const { animais, afetados, ocorrenciaId, dadosVistoria, id, tecnicoId, casaId, ...rest  } = request;
     
     const classAnimais = new Animais(animais);
     
@@ -90,7 +91,7 @@ export class AtualizarRelatorio {
 
     const relatorio = new Relatorio({...rest, animais: classAnimais, afetados: classAfetados, dadosVistoria: classDadosVistoria}, id);
 
-    await this.relatoriosRepository.alterarRelatorio(relatorio, ocorrenciaId, tecnicoId);
+    await this.relatoriosRepository.alterarRelatorio(relatorio, ocorrenciaId, tecnicoId, casaId);
 
     return {
       relatorio
