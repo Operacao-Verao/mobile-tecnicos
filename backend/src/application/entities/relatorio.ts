@@ -41,6 +41,7 @@ export enum SITUACAO_VITIMAS {
 };
 
 interface RelatorioProps {
+  casaId: number;
   gravidade: number,
   relatorio: string,
   encaminhamento: string,
@@ -49,6 +50,7 @@ interface RelatorioProps {
   processo: string,
   assunto: string,
   observacoes: string,
+  interdicao: number,
   areaAfetada: number,
   tipoConstrucao: number,
   tipoTalude: number,
@@ -98,6 +100,14 @@ export class Relatorio {
 
   public get gravidade(): number {
     return this.props.gravidade;
+  }
+
+  public set interdicao(interdicao: number) {
+    this.props.interdicao = interdicao;
+  }
+
+  public get interdicao(): number {
+    return this.props.interdicao;
   }
 
   public set relatorio(relatorio: string) {
@@ -154,6 +164,14 @@ export class Relatorio {
 
   public get observacoes(): string {
     return this.props.observacoes;
+  }
+
+  public set casaId(casaId: number) {
+    this.props.casaId = casaId;
+  }
+
+  public get casaId(): number {
+    return this.props.casaId;
   }
 
   public set areaAfetada(areaAfetada: number) {

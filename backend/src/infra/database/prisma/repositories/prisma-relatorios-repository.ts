@@ -13,7 +13,7 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
     private prisma: PrismaService
   ){}
   
-  async criarRelatorio(relatorio: Relatorio, ocorrenciaId: number, tecnicoId: number, casaId: number, interdicao: number): Promise<void> {
+  async criarRelatorio(relatorio: Relatorio, ocorrenciaId: number, tecnicoId: number, casaId: number): Promise<void> {
     const ocorrencia = await this.prisma.ocorrencia.findFirst({
       where: {
         AND: [
@@ -49,7 +49,7 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
         id: casaId
       },
       data: {
-        interdicao
+        interdicao: relatorio.interdicao
       }
     });
   }
@@ -98,36 +98,25 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
     });
   }
 
-  async listarRelatoriosOcorrencia(ocorrenciaId: number, tecnicoId: number): Promise<Relatorio[]> {
-    const ocorrencia = await this.prisma.ocorrencia.findFirst({
+  async listarRelatoriosCasa(casaId: number): Promise<Relatorio[]> {
+    const relatorios = await this.prisma.relatorio.findMany({
       where: {
         AND: [
           {
-            id: ocorrenciaId
-          },
-          {
-            id_tecnico: tecnicoId
+            Casa: 
+            {
+              id: casaId
+            }
           }
-        ],
-      },
-      include: {
-        Relatorio: {
-          include: {
-            Afetados: true,
-            Animal: true,
-            Casa: true,
-            Foto: true,
-            DadosDaVistoria: true
-          }
-        }
+        ]
       }
     });
 
-    if(!ocorrencia) {
+    if(!relatorios) {
       throw new RelatoriosNotFound();
     }
 
-    return ocorrencia.Relatorio.map(PrismaRelatorioMapper.toHTTP);
+    return relatorios.map(PrismaRelatorioMapper.toHTTP);
   }
 
   async adicionarFoto(url: string, relatorioId: number, tecnicoId: number): Promise<void> {

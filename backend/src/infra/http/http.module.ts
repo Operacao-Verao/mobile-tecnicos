@@ -13,10 +13,12 @@ import { FiltrarOcorrencia } from "@application/use-cases/filtrar-ocorrencia";
 import { VerRelatoriosOcorrencia } from "@application/use-cases/ver-relatorios-ocorrencia";
 import { AdicionarFoto } from "@application/use-cases/adicionar-foto";
 import { ApagarFoto } from "@application/use-cases/apagar-foto";
+import { CriarCasa } from "@application/use-cases/criar-casa";
+import { CasasController } from "./controllers/casas.controller";
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [TecnicosController, OcorrenciasController, RelatoriosController],
+  controllers: [TecnicosController, OcorrenciasController, RelatoriosController, CasasController],
   providers: [
     AuthService, 
     JwtService,
@@ -27,7 +29,8 @@ import { ApagarFoto } from "@application/use-cases/apagar-foto";
     FiltrarOcorrencia,
     VerRelatoriosOcorrencia,
     AdicionarFoto,
-    ApagarFoto
+    ApagarFoto,
+    CriarCasa
   ]
 })
 export class HttpModule {}

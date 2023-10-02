@@ -23,9 +23,9 @@ export class RelatoriosController {
     private adicionarFoto: AdicionarFoto,
     private apagarFoto: ApagarFoto
   ) {}
-  @Post('criar/:ocorrenciaId')
+  @Post('criar')
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: "Cria um relatório para uma ocorrência" })
+  @ApiOperation({ summary: "Cria um relatório para uma casa" })
   @ApiResponse({
     status: 401,
     description: "Unauthorized",
@@ -39,20 +39,28 @@ export class RelatoriosController {
   })
   @ApiBearerAuth()
   async criar(@Body() body: RelatorioBody, @Request() req) {
-    
-      const { fotos } = body;
+      try {
+        const { fotos } = body;
       
-      const tecnicoId: number = req.user._id;
+        const tecnicoId: number = req.user._id;
 
-      const relatorioToNumber = RelatorioHelper.toNumber(body);
+        const relatorioToNumber = RelatorioHelper.toNumber(body);
 
-      const { relatorio } = await this.criarRelatorio.execute({...relatorioToNumber, ocorrenciaId: relatorioToNumber.ocorrencia_id, fotos, tecnicoId, casaId: relatorioToNumber.casa_id});
+        const { relatorio } = await this.criarRelatorio.execute({...relatorioToNumber, ocorrenciaId: relatorioToNumber.ocorrencia_id, fotos, tecnicoId, casaId: relatorioToNumber.casa_id});
 
-      return RelatorioViewModel.toHTTP(relatorio);
+        return RelatorioViewModel.toHTTP(relatorio);
+      } catch (error) {
+        throw new HttpException({
+          status: HttpStatus.PRECONDITION_FAILED,
+          error: error.message,
+        }, HttpStatus.PRECONDITION_FAILED, {
+          cause: error
+        });
+      }
      
   }
 
-  @Put('alterar/:ocorrenciaId')
+  @Put('alterar')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: "Atualiza um relatório de uma ocorrência" })
   @ApiResponse({
@@ -89,9 +97,9 @@ export class RelatoriosController {
     }
   }
 
-  @Get('ver/:ocorrenciaId')
+  @Get('ver/:casaId')
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: "Mostra os dados de vários relatórios de uma ocorrência" })
+  @ApiOperation({ summary: "Mostra os dados de vários relatórios de uma casa" })
   @ApiResponse({
     status: 401,
     description: "Unauthorized",
@@ -104,17 +112,14 @@ export class RelatoriosController {
     }
   })
   @ApiBearerAuth()
-  async verRelatorios(@Request() req, @Param('ocorrenciaId') ocorrenciaId: string) {
-      const tecnicoId: number = req.user._id;
-      const ocorrenciaIdToNumber = Number(ocorrenciaId);
+  async verRelatorios(@Param('casaId') casaId: string) {
+      const casaIdToNumber = Number(casaId);
 
       const { relatorios } = await this.verRelatoriosOcorrencia.execute({
-        tecnicoId,
-        ocorrenciaId: ocorrenciaIdToNumber
+        casaId: casaIdToNumber
       });
 
       return relatorios.map(RelatorioViewModel.toHTTP);
-    
   }
 
   @Post('adicionarFoto/:relatorioId')
@@ -135,7 +140,7 @@ export class RelatoriosController {
       }
     }
   })
-  async criarFoto( @Body() body: FotosBody, @Param('relatorioId') relatorioId: string, @Request() req) {
+  async criarFoto(@Body() body: FotosBody, @Param('relatorioId') relatorioId: string, @Request() req) {
     const tecnicoId: number = req.user._id;
     const relatorioIdToNumber = Number(relatorioId);
 

@@ -17,7 +17,6 @@ export class AtualizarRelatorioBody {
 
   @IsNotEmpty()
   @IsNumber()
-  @IsUUID()
   @ApiProperty({
     description: "Id da ocorrência",
     example: 2,
@@ -26,7 +25,6 @@ export class AtualizarRelatorioBody {
 
   @IsNotEmpty()
   @IsNumber()
-  @IsUUID()
   @ApiProperty({
     description: "Id da casa",
     example: 2,

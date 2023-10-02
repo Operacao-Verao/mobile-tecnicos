@@ -32,6 +32,7 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                     include: {
                         Residencial: {
                             include: {
+                                Casa: true,
                                 Endereco: true
                             }
                         }

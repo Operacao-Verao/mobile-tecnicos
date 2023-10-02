@@ -18,6 +18,7 @@ describe('Atualizar relatório', () => {
 
         const { relatorio } = await atualizarRelatorio.execute({
             id: novoRelatorio.id,
+            casaId: novoRelatorio.casaId,
             tecnicoId: ocorrencia.tecnico.id,
             vegetacao: 1,
             interdicao: 1,

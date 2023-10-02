@@ -6,6 +6,8 @@ import { OcorrenciaRepository } from "@application/repositories/ocorrencia-repos
 import { PrismaOcorrenciaRepository } from "./prisma/repositories/prisma-ocorrencias-repository";
 import { RelatoriosRepository } from "@application/repositories/relatorios-repository";
 import { PrismaRelatoriosRepository } from "./prisma/repositories/prisma-relatorios-repository";
+import { CasaRepository } from "@application/repositories/casa-repository";
+import { PrismaCasasRepository } from "./prisma/repositories/prisma-casas-repository";
 
 @Module({
   providers: [
@@ -21,12 +23,17 @@ import { PrismaRelatoriosRepository } from "./prisma/repositories/prisma-relator
     {
       provide: RelatoriosRepository,
       useClass: PrismaRelatoriosRepository
+    },
+    {
+      provide: CasaRepository,
+      useClass: PrismaCasasRepository
     }
   ],
   exports: [
     TecnicosRepository,
     OcorrenciaRepository,
-    RelatoriosRepository
+    RelatoriosRepository,
+    CasaRepository
   ]
 })
 export class DatabaseModule {}

@@ -49,9 +49,9 @@ export class InMemoryRelatoriosRepository implements RelatoriosRepository {
         relatorio.fotos.pop();
     }
 
-    async listarRelatoriosOcorrencia(ocorrenciaId: number, tecnicoId: number): Promise<Relatorio[]> {
-        const ocorrencia = await this.ocorrenciasRepository.verUmaOcorrencia(ocorrenciaId, tecnicoId);
+    async listarRelatoriosCasa(casaId: number): Promise<Relatorio[]> {
+        const relatorios = this.relatorios.filter((item) =>  item.casaId === casaId);
 
-        return ocorrencia.relatorios;
+        return relatorios;
     }
 }

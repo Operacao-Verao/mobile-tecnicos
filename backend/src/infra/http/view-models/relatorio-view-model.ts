@@ -24,9 +24,9 @@ export class RelatorioViewModel {
       tipoTalude: relatorio.tipoTalude,
       vegetacao: relatorio.vegetacao,
       fotos: relatorio.fotos,
-      animais: AnimalViewModel.toHTTP(relatorio.animais),
-      afetados: AfetadosViewModel.toHTTP(relatorio.afetados),
-      dadosVistoria: DadosVistoriaViewModel.toHTTP(relatorio.dadosVistoria)
+      animais: relatorio.animais ? AnimalViewModel.toHTTP(relatorio.animais) : {},
+      afetados: relatorio.afetados ? AfetadosViewModel.toHTTP(relatorio.afetados)  : {},
+      dadosVistoria: relatorio.dadosVistoria ? DadosVistoriaViewModel.toHTTP(relatorio.dadosVistoria)  : {}
     }
   }
 }

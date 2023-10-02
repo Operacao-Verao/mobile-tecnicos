@@ -5,8 +5,11 @@ import { makeDadosVistoria } from "./dados-vistoria-factory";
 
 export function makeRelatorios() {
     const dadosVistoria = makeDadosVistoria();
+    const afetados = makeAfetados();
+    const animais = makeAnimais();
     return new Relatorio({
         areaAfetada: 2,
+        interdicao: 1,
         assunto: "Assunto desse relatório",
         danosMateriais: true,
         encaminhamento: "Foi para alguma secretaria",
@@ -14,6 +17,7 @@ export function makeRelatorios() {
         memorando: "56489",
         oficio: "Ofício de teste",
         vegetacao: 1,
+        casaId: 1,
         tipoTalude: 2,
         observacoes: "Observações realizadas pelo técnico",
         tipoConstrucao: 1,
@@ -26,8 +30,8 @@ export function makeRelatorios() {
                 url: 'base64'
             }
         ],
-        afetados: makeAfetados(),
-        animais: makeAnimais(),
+        afetados,
+        animais,
         dataGeracao: new Date(),
         dataAtendimento: new Date()
     },

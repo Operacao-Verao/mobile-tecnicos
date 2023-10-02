@@ -16,7 +16,7 @@ describe('Ver relatórios ocorrência', () => {
         
         await relatoriosRepository.criarRelatorio(relatorio, ocorrencia.id);
 
-        const { relatorios } = await verRelatoriosOcorrencia.execute({ocorrenciaId: ocorrencia.id, tecnicoId: ocorrencia.tecnico.id});
+        const { relatorios } = await verRelatoriosOcorrencia.execute({ casaId:relatorio.casaId });
 
         expect(relatorios[0]).toStrictEqual(relatorio);
     })

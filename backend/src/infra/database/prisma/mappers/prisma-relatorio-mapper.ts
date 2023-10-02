@@ -28,6 +28,7 @@ export class PrismaRelatorioMapper {
       danos_materiais: relatorio.danosMateriais,
       data_atendimento: relatorio.dataAtendimento,
       data_geracao: relatorio.dataGeracao,
+      interdicao: relatorio.interdicao,
       encaminhamento: relatorio.encaminhamento,
       gravidade: relatorio.gravidade,
       memorando: relatorio.memorando,
@@ -163,13 +164,15 @@ export class PrismaRelatorioMapper {
   }
 
   static toHTTP(rawRelatorio: RelatorioWithJoins) {
-    const fotos = PrismaRelatorioMapper.toHTTPFotos(rawRelatorio.Foto);
-    const afetados = PrismaRelatorioMapper.toHTTPAfetados(rawRelatorio.Afetados);
-    const animais = PrismaRelatorioMapper.toHTTPAnimais(rawRelatorio.Animal);
-    const dadosVistoria = PrismaRelatorioMapper.toHTTPDadosVistoria(rawRelatorio.DadosDaVistoria);
+    const fotos = rawRelatorio.Foto ? PrismaRelatorioMapper.toHTTPFotos(rawRelatorio.Foto) : [];
+    const afetados = rawRelatorio.Afetados ? PrismaRelatorioMapper.toHTTPAfetados(rawRelatorio.Afetados) : null;
+    const animais = rawRelatorio.Animal ? PrismaRelatorioMapper.toHTTPAnimais(rawRelatorio.Animal) : null;
+    const dadosVistoria = rawRelatorio.DadosDaVistoria ? PrismaRelatorioMapper.toHTTPDadosVistoria(rawRelatorio.DadosDaVistoria) : null;
 
     return new Relatorio({
       areaAfetada: rawRelatorio.area_afetada,
+      casaId: rawRelatorio.id_casa,
+      interdicao: rawRelatorio.interdicao,
       assunto: rawRelatorio.assunto,
       danosMateriais: rawRelatorio.danos_materiais,
       dataAtendimento: rawRelatorio.data_atendimento,
@@ -192,7 +195,7 @@ export class PrismaRelatorioMapper {
     }, rawRelatorio.id);
   }
 
-  private static toHTTPFotos(rawFoto: RawFoto[]) {
+  private static toHTTPFotos(rawFoto?: RawFoto[]) {
     let fotos: {url: string}[] = [];
 
     rawFoto.map((item) => {

@@ -80,7 +80,7 @@ export class CriarRelatorio {
   ) {}
 
   async execute(request: CriarRelatorioRequest): Promise<CriarRelatorioResponse> {
-    const { animais, afetados, dadosVistoria, tecnicoId, ocorrenciaId, casaId, interdicao, ...rest  } = request;
+    const { animais, afetados, dadosVistoria, tecnicoId, ocorrenciaId, casaId, ...rest  } = request;
     
     const classAnimais = new Animais(animais);
     
@@ -88,9 +88,9 @@ export class CriarRelatorio {
 
     const classDadosVistoria = new DadosVistoria(dadosVistoria);
 
-    const relatorio = new Relatorio({...rest, animais: classAnimais, afetados: classAfetados, dadosVistoria: classDadosVistoria});
+    const relatorio = new Relatorio({...rest, animais: classAnimais, afetados: classAfetados, dadosVistoria: classDadosVistoria, casaId});
     
-    await this.relatoriosRepository.criarRelatorio(relatorio, ocorrenciaId, tecnicoId, casaId, interdicao);
+    await this.relatoriosRepository.criarRelatorio(relatorio, ocorrenciaId, tecnicoId, casaId);
 
     return {
       relatorio

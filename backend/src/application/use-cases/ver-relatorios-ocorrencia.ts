@@ -3,8 +3,7 @@ import { RelatoriosRepository } from "@application/repositories/relatorios-repos
 import { Injectable } from "@nestjs/common";
 
 interface VerRelatoriosOcorrenciaRequest {
-  ocorrenciaId: number,
-  tecnicoId: number
+  casaId: number
 }
 
 interface VerRelatoriosOcorrenciaResponse {
@@ -18,9 +17,9 @@ export class VerRelatoriosOcorrencia {
   ){}
 
   async execute(request: VerRelatoriosOcorrenciaRequest): Promise<VerRelatoriosOcorrenciaResponse> {
-    const { ocorrenciaId, tecnicoId } = request;
+    const { casaId } = request;
 
-    const relatorios = await this.relatoriosRepository.listarRelatoriosOcorrencia(ocorrenciaId, tecnicoId);
+    const relatorios = await this.relatoriosRepository.listarRelatoriosCasa(casaId);
 
     return {
       relatorios

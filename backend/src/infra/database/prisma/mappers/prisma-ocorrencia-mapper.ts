@@ -40,13 +40,15 @@ export class PrismaOcorrenciaMapper {
     let relatorios: Relatorio[] = [];
 
     rawOcorrencia.Relatorio.map((item) => {
-      const fotos = PrismaOcorrenciaMapper.toHTTPFotos(item.Foto);
-      const afetados = PrismaOcorrenciaMapper.toHTTPAfetados(item.Afetados);
-      const animais = PrismaOcorrenciaMapper.toHTTPAnimais(item.Animal);
-      const dadosVistoria = PrismaOcorrenciaMapper.toHTTPDadosVistoria(item.DadosDaVistoria);
+      const fotos = item.Foto ? PrismaOcorrenciaMapper.toHTTPFotos(item.Foto) : [];
+      const afetados = item.Afetados ? PrismaOcorrenciaMapper.toHTTPAfetados(item.Afetados) : null;
+      const animais = item.Animal ? PrismaOcorrenciaMapper.toHTTPAnimais(item.Animal) : null;
+      const dadosVistoria = item.DadosDaVistoria ? PrismaOcorrenciaMapper.toHTTPDadosVistoria(item.DadosDaVistoria) : null;
 
       const relatorio = new Relatorio({
         areaAfetada: item.area_afetada,
+        interdicao: item.interdicao,
+        casaId: item.id_casa,
         assunto: item.assunto,
         situacaoVitimas: item.situacao_vitimas,
         danosMateriais: item.danos_materiais,
@@ -93,6 +95,7 @@ export class PrismaOcorrenciaMapper {
 
   static toPrismaSearch(dataHora: Date, tecnicoId: number) {
     const andStatement: any = [];
+    console.log(dataHora)
 
     if(tecnicoId) {
       andStatement.push(

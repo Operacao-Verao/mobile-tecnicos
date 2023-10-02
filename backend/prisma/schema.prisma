@@ -62,7 +62,7 @@ model Casa {
   interdicao     Int
   complemento    String?     @db.VarChar(50)
   Residencial    Residencial @relation(fields: [id_residencial], references: [id], onUpdate: Restrict, map: "Casa_ibfk_1")
-  Relatorio      Relatorio?
+  Relatorio      Relatorio[]
 
   @@index([id_residencial], map: "id_residencial")
 }
@@ -250,9 +250,10 @@ model Registro {
 model Relatorio {
   id               Int              @id @default(autoincrement())
   id_ocorrencia    Int
-  id_casa          Int              @unique(map: "id_casa")
+  id_casa          Int
   gravidade        Int
   relatorio        String           @db.VarChar(1024)
+  interdicao       Int
   encaminhamento   String           @db.VarChar(155)
   memorando        String           @db.VarChar(100)
   oficio           String           @db.VarChar(100)
@@ -276,6 +277,7 @@ model Relatorio {
   Casa             Casa             @relation(fields: [id_casa], references: [id], onUpdate: Restrict, map: "Relatorio_ibfk_2")
 
   @@index([id_ocorrencia], map: "id_ocorrencia")
+  @@index([id_casa], map: "id_casa")
 }
 
 model Secretaria {

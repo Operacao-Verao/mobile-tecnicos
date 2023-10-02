@@ -22,10 +22,6 @@ interface AnimaisBody {
   equinos: number
 }
 
-interface FotosBody {
-  url: string
-}
-
 interface DadosVistoriaBody {
   desmoronamento: boolean
   deslizamento: boolean
@@ -81,7 +77,7 @@ export class AtualizarRelatorio {
   ) {}
 
   async execute(request: AtualizarRelatorioRequest): Promise<AtualizarRelatorioResponse> {
-    const { animais, afetados, ocorrenciaId, dadosVistoria, id, tecnicoId, casaId, interdicao, ...rest  } = request;
+    const { animais, afetados, ocorrenciaId, dadosVistoria, id, tecnicoId, casaId, ...rest  } = request;
     
     const classAnimais = new Animais(animais);
     
@@ -89,7 +85,7 @@ export class AtualizarRelatorio {
 
     const classDadosVistoria = new DadosVistoria(dadosVistoria);
 
-    const relatorio = new Relatorio({...rest, animais: classAnimais, afetados: classAfetados, dadosVistoria: classDadosVistoria}, id);
+    const relatorio = new Relatorio({...rest, animais: classAnimais, afetados: classAfetados, dadosVistoria: classDadosVistoria, casaId}, id);
 
     await this.relatoriosRepository.alterarRelatorio(relatorio, ocorrenciaId, tecnicoId, casaId);
 
