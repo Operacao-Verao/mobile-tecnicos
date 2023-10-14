@@ -10,7 +10,7 @@ const BackButton = () => {
 
 	return (
 		<TouchableOpacity activeOpacity={0.7} onPress={goBack}>
-			<Feather name="arrow-left" size={32} color={color} />
+			<Feather name="arrow-left" size={26} color={color} />
 		</TouchableOpacity>
 	);
 };

@@ -86,6 +86,13 @@ const initialState: State = {
 			bairro: '',
 			cidade: '',
 			rua: '',
+			numero: 0,
+			casas: [
+				{
+					interdicao: 0,
+					complemento: '',
+				},
+			],
 		},
 		tecnico: {
 			id: 0,

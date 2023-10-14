@@ -101,15 +101,11 @@ export const createRelatorio = createAsyncThunk(
 	'relatorios/criar',
 	async ({ token, ocorrenciaId, body }: CredentialsTS, thunkAPI) => {
 		try {
-			const response = await api.post(
-				`relatorios/criar/${ocorrenciaId}`,
-				body,
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
+			const response = await api.post(`relatorios/criar/`, body, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
 
 			return response.data;
 		} catch (error: any) {

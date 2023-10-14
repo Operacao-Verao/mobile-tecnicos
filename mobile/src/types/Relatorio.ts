@@ -3,6 +3,8 @@ import { AnimaisTS } from './Animais';
 import { dadosVistoriaTS } from './DadosVistoria';
 
 export type RelatorioTS = {
+	ocorrencia_id: number;
+	casa_id: number;
 	enfermos: number | undefined;
 	interdicao: number; // Não (0), parcial (1) ou total (2)
 	situacaoVitimas: number; // Inespecificado (0), desabrigados (1) ou desalojados (2)

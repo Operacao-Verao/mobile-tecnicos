@@ -28,13 +28,16 @@ const RelatorioComponent = ({ relatorio, index }: Props) => {
 				<S.Label>Dados da Vistoria:</S.Label>
 
 				<S.CardBadge>
-					{relatorio?.dadosVistoria &&
+					{relatorio?.dadosVistoria != undefined ? (
+						<S.Info>Nenhum</S.Info>
+					) : (
 						Object.entries(relatorio.dadosVistoria).map(
 							([itemName, itemValue]) =>
 								itemValue === true && (
 									<S.ItemBadge key={itemName}>{itemName}</S.ItemBadge>
 								)
-						)}
+						)
+					)}
 				</S.CardBadge>
 			</View>
 			<S.Column>

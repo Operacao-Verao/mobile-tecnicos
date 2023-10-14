@@ -24,9 +24,7 @@ export function Ocorrencia(data: OcorrenciaTS) {
 	return (
 		<S.Container>
 			<S.Row>
-				<S.Address>
-					{data.endereco.rua}, {data.endereco.bairro}
-				</S.Address>
+				<S.Address ellipsizeMode='tail' numberOfLines={2}>{data.endereco.rua + ' - ' + data.endereco.bairro}</S.Address>
 				<OpenStatus status={data.status} />
 			</S.Row>
 			<S.Row>

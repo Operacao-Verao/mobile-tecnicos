@@ -49,15 +49,7 @@ const TabRoutes = () => {
 					),
 				}}
 			/>
-			<Tab.Screen
-				name="relatorio"
-				component={RelatorioScreen}
-				options={{
-					tabBarIcon: ({ color }) => (
-						<Ionicons name="newspaper-outline" color={color} size={26} />
-					),
-				}}
-			/>
+			
 			<Tab.Screen
 				name="config"
 				component={Config}
@@ -88,6 +80,7 @@ export function AppRoutes() {
 								options={{ headerShown: false }}
 							/>
 							<Stack.Screen name="ocorrencia" component={OcorrenciaScreen} />
+							<Stack.Screen name="relatorio" component={RelatorioScreen} />
 						</>
 					) : (
 						<Stack.Screen name="login" component={Login} />

@@ -28,11 +28,12 @@ import * as S from './styles';
 import { RelatorioTS } from '../../types/Relatorio';
 import Checkbox from 'expo-checkbox';
 import { createRelatorio } from '../../redux/reducers/relatorioReducer';
-import { useAppSelector } from '../../redux/hooks/useApp';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
 import { AndroidMode } from '../../types/AndroidMode';
 import { formatDateToString } from '../../utils/useFormattedDate';
 
 const RelatorioScreen = () => {
+	const dispatch = useAppDispatch();
 	const token = useAppSelector((state) => state.user.token);
 	const ocorrenciaId = useAppSelector(
 		(state) => state.ocorrencia.ocorrencia.id
@@ -140,14 +141,16 @@ const RelatorioScreen = () => {
 		data.tipoTalude = selectedTipoTalude;
 		data.situacaoVitimas = selectedSituacao;
 		data.vegetacao = selectedVegetacao;
-		data.fotos.url = selectedImageUri;
 		data.dataGeracao = formatDateToString(new Date());
 		data.dataAtendimento = formatDateToString(date);
+		data.ocorrencia_id = ocorrenciaId;
+		data.casa_id = 2;
+		data.gravidade = 1;
 
 		console.log(JSON.stringify(data, null, 2));
 
 		try {
-			createRelatorio({ token: token, ocorrenciaId: ocorrenciaId, body: data });
+			await dispatch(createRelatorio({ token: token, ocorrenciaId: ocorrenciaId, body: data })).unwrap();
 			console.log(ocorrenciaId);
 			console.log('deu certo');
 		} catch (error) {

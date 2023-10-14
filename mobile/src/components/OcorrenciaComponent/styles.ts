@@ -8,7 +8,7 @@ export const Container = styled.View`
 	border: ${(props) => props.theme.border};
 	justify-content: space-around;
 	gap: 28px;
-	padding: 16px;
+	padding: 0px 16px;
 	margin-top: 24px;
 `;
 
@@ -22,6 +22,7 @@ export const Address = styled.Text`
 	font-family: Poppins_500Medium;
 	text-transform: capitalize;
 	font-size: 13px;
+	width: 250px;
 `;
 
 export const SmallText = styled.Text`

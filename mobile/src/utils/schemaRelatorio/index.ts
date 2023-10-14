@@ -14,7 +14,7 @@ export const schemaRelatorio = yup.object({
 	vegetacao: yup.number(),
 	oficio: yup.string().required('Informe o oficio'),
 	encaminhamento: yup.string().required('Informe o encaminhamento'),
-	observacoes: yup.string(),
+	observacoes: yup.string().required(),
 	danosMateriais: yup.bool(),
 	dataGeracao: yup.date(),
 	dataAtendimento: yup.date(),

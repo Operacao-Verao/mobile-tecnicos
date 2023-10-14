@@ -31,9 +31,9 @@ const OcorrenciaScreen = () => {
 	return (
 		<S.Container>
 			<S.OcorrenciaWrapper>
+				<BackButton />
 				<S.Row>
 					<S.RowWTBetween>
-						<BackButton />
 						<S.Date>{date}</S.Date>
 					</S.RowWTBetween>
 					<OpenStatus status={ocorrencia.status} />
@@ -43,61 +43,63 @@ const OcorrenciaScreen = () => {
 						<S.Label>Endereço:</S.Label>
 						<S.Info>
 							{ocorrencia.endereco.rua}, {ocorrencia.endereco.bairro},{' '}
-							{ocorrencia.endereco.cidade}
+							{ocorrencia.endereco.cidade} - {ocorrencia.endereco.numero}
 						</S.Info>
+						<S.Info>{ocorrencia.endereco.cep}</S.Info>
+					</S.Column>
+					<S.Column>
+						<S.Label>Casas Afetadas:</S.Label>
+						<S.Info>{ocorrencia.num_casas}</S.Info>
 					</S.Column>
 				</S.Ocorrencia>
 			</S.OcorrenciaWrapper>
-			{ocorrencia.relatorios ? (
-				ocorrencia.relatorios.map((item, index) => (
-					<RelatorioComponent
-						key={index}
-						index={index}
-						relatorio={{
-							enfermos: item.enfermos,
-							interdicao: item.interdicao,
-							situacaoVitimas: item.situacaoVitimas,
-							gravidade: item.gravidade,
-							relatorio: item.relatorio,
-							encaminhamento: item.encaminhamento,
-							memorando: item.memorando,
-							oficio: item.oficio,
-							processo: item.processo,
-							assunto: item.assunto,
-							observacoes: item.observacoes,
-							areaAfetada: item.areaAfetada,
-							tipoConstrucao: item.tipoConstrucao,
-							tipoTalude: item.tipoTalude,
-							vegetacao: item.vegetacao,
-							danosMateriais: item.danosMateriais,
-							dataGeracao: item.dataGeracao,
-							dataAtendimento: item.dataAtendimento,
-							afetados: item.afetados,
-							animais: item.animais,
-							dadosVistoria: {
-								desmoronamento: item.dadosVistoria.desmoronamento,
-								deslizamento: item.dadosVistoria.deslizamento,
-								esgoto_escoamento: item.dadosVistoria.esgoto_escoamento,
-								erosao: item.dadosVistoria.erosao,
-								inundacao: item.dadosVistoria.inundacao,
-								incendio: item.dadosVistoria.incendio,
-								arvores: item.dadosVistoria.arvores,
-								infiltracao_trinca: item.dadosVistoria.infiltracao_trinca,
-								judicial: item.dadosVistoria.judicial,
-								monitoramento: item.dadosVistoria.monitoramento,
-								transito: item.dadosVistoria.transito,
-							},
-							fotos: {
-								url: item.fotos.url,
-							},
-						}}
-					/>
-				))
-			) : (
-				<S.Button onPress={handleCreate}>
-					<S.ButtonText>Criar Relatório</S.ButtonText>
-				</S.Button>
-			)}
+			<S.Button onPress={handleCreate}>
+				<S.ButtonText>Criar Relatório</S.ButtonText>
+			</S.Button>
+			{ocorrencia.relatorios?.map((item, index) => (
+				<RelatorioComponent
+					key={index}
+					index={index}
+					relatorio={{
+						enfermos: item.enfermos,
+						interdicao: item.interdicao,
+						situacaoVitimas: item.situacaoVitimas,
+						gravidade: item.gravidade,
+						relatorio: item.relatorio,
+						encaminhamento: item.encaminhamento,
+						memorando: item.memorando,
+						oficio: item.oficio,
+						processo: item.processo,
+						assunto: item.assunto,
+						observacoes: item.observacoes,
+						areaAfetada: item.areaAfetada,
+						tipoConstrucao: item.tipoConstrucao,
+						tipoTalude: item.tipoTalude,
+						vegetacao: item.vegetacao,
+						danosMateriais: item.danosMateriais,
+						dataGeracao: item.dataGeracao,
+						dataAtendimento: item.dataAtendimento,
+						afetados: item.afetados,
+						animais: item.animais,
+						dadosVistoria: {
+							desmoronamento: item.dadosVistoria.desmoronamento,
+							deslizamento: item.dadosVistoria.deslizamento,
+							esgoto_escoamento: item.dadosVistoria.esgoto_escoamento,
+							erosao: item.dadosVistoria.erosao,
+							inundacao: item.dadosVistoria.inundacao,
+							incendio: item.dadosVistoria.incendio,
+							arvores: item.dadosVistoria.arvores,
+							infiltracao_trinca: item.dadosVistoria.infiltracao_trinca,
+							judicial: item.dadosVistoria.judicial,
+							monitoramento: item.dadosVistoria.monitoramento,
+							transito: item.dadosVistoria.transito,
+						},
+						fotos: {
+							url: item.fotos.url,
+						},
+					}}
+				/>
+			))}
 		</S.Container>
 	);
 };
