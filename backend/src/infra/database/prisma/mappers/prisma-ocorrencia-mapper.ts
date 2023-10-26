@@ -95,7 +95,6 @@ export class PrismaOcorrenciaMapper {
 
   static toPrismaSearch(dataHora: Date, tecnicoId: number) {
     const andStatement: any = [];
-    console.log(dataHora)
 
     if(tecnicoId) {
       andStatement.push(
@@ -192,7 +191,7 @@ export class PrismaOcorrenciaMapper {
       casas.push(new Casa({
         complemento: item.complemento,
         interdicao: item.interdicao,
-      }))
+      }, item.id))
     })
     return casas;
   }
