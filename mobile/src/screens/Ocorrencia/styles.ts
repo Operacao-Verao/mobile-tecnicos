@@ -54,6 +54,11 @@ export const Info = styled.Text`
 	font-size: 13px;
 `;
 
+export const CasasText = styled.View`
+	margin: 15px 0 10px 5px;
+	gap: 5px;
+`;
+
 export const Button = styled.TouchableOpacity`
 	background-color: #0ea5e9;
 	padding: 12px;

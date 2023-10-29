@@ -11,6 +11,7 @@ import RelatorioComponent from '../../components/RelatorioComponent';
 import { Loading } from '../../components/Loading';
 import { useFormattedDate } from '../../utils';
 import * as S from './styles';
+import CasasComponent from '../../components/CasasComponent';
 
 const OcorrenciaScreen = () => {
 	const dispatch = useAppDispatch();
@@ -18,6 +19,9 @@ const OcorrenciaScreen = () => {
 		useNavigation<NativeStackNavigationProp<RootStackParams, 'relatorio'>>();
 	const loading = useAppSelector((state) => state.ocorrencia.loading);
 	const ocorrencia = useAppSelector((state) => state.ocorrencia.ocorrencia);
+	const casas = useAppSelector(
+		(state) => state.ocorrencia.ocorrencia.endereco.casas
+	);
 	const date = useFormattedDate(ocorrencia.data);
 
 	const handleCreate = () => {
@@ -53,14 +57,26 @@ const OcorrenciaScreen = () => {
 					</S.Column>
 				</S.Ocorrencia>
 			</S.OcorrenciaWrapper>
-			<S.Button onPress={handleCreate}>
-				<S.ButtonText>Criar Relatório</S.ButtonText>
-			</S.Button>
+			<S.CasasText>
+				<S.Label>Casas Afetadas</S.Label>
+				<S.Info>(Clique em uma casa para visualizar)</S.Info>
+			</S.CasasText>
+			{casas.map((item, index) => (
+				<CasasComponent
+					key={item.id}
+					id={item.id}
+					index={index}
+					complemento={item.complemento}
+					interdicao={item.interdicao}
+				/>
+			))}
 			{ocorrencia.relatorios?.map((item, index) => (
 				<RelatorioComponent
 					key={index}
 					index={index}
 					relatorio={{
+						casa_id: item.casa_id,
+						ocorrencia_id: item.ocorrencia_id,
 						enfermos: item.enfermos,
 						interdicao: item.interdicao,
 						situacaoVitimas: item.situacaoVitimas,
@@ -94,9 +110,11 @@ const OcorrenciaScreen = () => {
 							monitoramento: item.dadosVistoria.monitoramento,
 							transito: item.dadosVistoria.transito,
 						},
-						fotos: {
-							url: item.fotos.url,
-						},
+						fotos: [
+							{
+								url: item.fotos[0].url,
+							},
+						],
 					}}
 				/>
 			))}

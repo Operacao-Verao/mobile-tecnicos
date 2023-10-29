@@ -11,7 +11,6 @@ type Props = {
 };
 
 const RelatorioComponent = ({ relatorio, index }: Props) => {
-	console.log(relatorio);
 
 	return (
 		<S.Container>
@@ -19,7 +18,6 @@ const RelatorioComponent = ({ relatorio, index }: Props) => {
 				<S.Title>Relatório {index + 1}</S.Title>
 				<GravidadeStatus gravidade={relatorio?.gravidade} />
 			</S.Row>
-			<View>{/* <Image source={relatorio?.fotos.url} /> */}</View>
 			<S.Column>
 				<S.Label>Memorando: </S.Label>
 				<S.Info>{relatorio?.memorando}</S.Info>
@@ -28,7 +26,7 @@ const RelatorioComponent = ({ relatorio, index }: Props) => {
 				<S.Label>Dados da Vistoria:</S.Label>
 
 				<S.CardBadge>
-					{relatorio?.dadosVistoria != undefined ? (
+					{relatorio?.dadosVistoria == undefined ? (
 						<S.Info>Nenhum</S.Info>
 					) : (
 						Object.entries(relatorio.dadosVistoria).map(
@@ -47,15 +45,37 @@ const RelatorioComponent = ({ relatorio, index }: Props) => {
 			<S.Row>
 				<S.Column>
 					<S.Label>Área Afetada:</S.Label>
-					<S.Info>{relatorio?.areaAfetada}</S.Info>
+					<S.Info>
+						{relatorio?.areaAfetada === 0
+							? 'Não Especificado'
+							: relatorio?.areaAfetada === 1
+							? 'Pública'
+							: 'Particular'}
+					</S.Info>
 				</S.Column>
 				<S.Column>
 					<S.Label>Tipo Construção:</S.Label>
-					<S.Info>{relatorio?.tipoConstrucao}</S.Info>
+					<S.Info>
+						{relatorio?.tipoConstrucao === 0
+							? 'Não Especificado'
+							: relatorio?.tipoConstrucao === 1
+							? 'Alvenaria'
+							: relatorio?.tipoConstrucao === 2
+							? 'Madeira'
+							: 'Mista'}
+					</S.Info>
 				</S.Column>
 				<S.Column>
 					<S.Label>Tipo Talude:</S.Label>
-					<S.Info>{relatorio?.tipoTalude}</S.Info>
+					<S.Info>
+						{relatorio?.tipoTalude === 0
+							? 'Não Especificado'
+							: relatorio?.tipoTalude === 1
+							? 'Natural'
+							: relatorio?.tipoTalude === 2
+							? 'De Corte'
+							: 'Aterro'}
+					</S.Info>
 				</S.Column>
 			</S.Row>
 			<S.Column>
@@ -102,7 +122,13 @@ const RelatorioComponent = ({ relatorio, index }: Props) => {
 			</S.RowItem>
 			<S.RowItem>
 				<S.Label>Vegetação: </S.Label>
-				<S.Info>{relatorio?.vegetacao}</S.Info>
+				<S.Info>
+					{relatorio?.tipoConstrucao === 0
+						? 'Nenhuma'
+						: relatorio?.tipoConstrucao === 1
+						? 'Rasteira'
+						: 'Árvores'}
+				</S.Info>
 			</S.RowItem>
 			{relatorio?.observacoes && (
 				<S.RowItem>

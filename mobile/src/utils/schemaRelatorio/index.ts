@@ -1,6 +1,8 @@
 import * as yup from 'yup';
 
 export const schemaRelatorio = yup.object({
+	casa_id: yup.number(),
+	ocorrencia_id: yup.number(),
 	memorando: yup.string().required('Informe o memorando'),
 	enfermos: yup.number(),
 	relatorio: yup.string().required('Informe o relatorio'),

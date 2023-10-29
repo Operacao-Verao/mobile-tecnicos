@@ -9,6 +9,7 @@ import OcorrenciaScreen from '../screens/Ocorrencia';
 import RelatorioScreen from '../screens/Relatorio';
 import Config from '../screens/Config';
 import { useAppSelector } from '../redux/hooks/useApp';
+import CasasScreen from '../screens/Casas';
 
 export type RootStackParams = {
 	bottomBar: any;
@@ -17,6 +18,7 @@ export type RootStackParams = {
 	ocorrencia: any;
 	relatorio: any;
 	config: any;
+	casas: any;
 };
 
 const Tab = createBottomTabNavigator();
@@ -49,7 +51,7 @@ const TabRoutes = () => {
 					),
 				}}
 			/>
-			
+
 			<Tab.Screen
 				name="config"
 				component={Config}
@@ -81,6 +83,7 @@ export function AppRoutes() {
 							/>
 							<Stack.Screen name="ocorrencia" component={OcorrenciaScreen} />
 							<Stack.Screen name="relatorio" component={RelatorioScreen} />
+							<Stack.Screen name="casas" component={CasasScreen} />
 						</>
 					) : (
 						<Stack.Screen name="login" component={Login} />

@@ -1,17 +1,35 @@
 import React, { useEffect } from 'react';
-import { fetchUserData } from '../../redux/reducers/userReducer';
+import { fetchUserData, setToken } from '../../redux/reducers/userReducer';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
 import { setThemeStatus } from '../../redux/reducers/themeReducer';
 import SettingsItem from '../../components/SettingsItem';
 import { Feather } from '@expo/vector-icons';
 import * as S from './styles';
+import { dropAuthDataFromStorage } from '../../utils/useStorage';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParams } from '../../Routes/tab.routes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Config = () => {
 	const dispatch = useAppDispatch();
 	const theme = useAppSelector((state) => state.theme);
 	const user = useAppSelector((state) => state.user);
-	const handleModeToggle = async () => {
+	const navigation =
+		useNavigation<NativeStackNavigationProp<RootStackParams, 'login'>>();
+
+	const handleModeToggle = () => {
 		dispatch(setThemeStatus(theme.status === 'dark' ? 'light' : 'dark'));
+	};
+
+	const handleLoggout = async () => {
+		try {
+			await AsyncStorage.removeItem('userToken');
+			dispatch(setToken(null));
+			console.log('Token: ', AsyncStorage.getItem('userToken'));
+		} catch (error) {
+			console.log('Erro ao fazer logout.', error);
+		}
 	};
 
 	useEffect(() => {
@@ -43,7 +61,7 @@ const Config = () => {
 					IconColor={theme.status === 'dark' ? 'white' : 'black'}
 				/>
 			</S.SettingsAccount>
-			<S.Settings>
+			<S.SettingsButton onPress={handleLoggout}>
 				<SettingsItem
 					hasRight
 					ItemIcon="logout"
@@ -51,7 +69,7 @@ const Config = () => {
 					ItemSubtitle="Desconectar da conta atual"
 					IconColor={theme.status === 'dark' ? 'white' : 'black'}
 				/>
-			</S.Settings>
+			</S.SettingsButton>
 		</S.Container>
 	);
 };

@@ -31,10 +31,12 @@ import { createRelatorio } from '../../redux/reducers/relatorioReducer';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
 import { AndroidMode } from '../../types/AndroidMode';
 import { formatDateToString } from '../../utils/useFormattedDate';
+import { api } from '../../lib/axios';
 
 const RelatorioScreen = () => {
 	const dispatch = useAppDispatch();
 	const token = useAppSelector((state) => state.user.token);
+	const relatorio = useAppSelector((state) => state.relatorio.relatorio);
 	const ocorrenciaId = useAppSelector(
 		(state) => state.ocorrencia.ocorrencia.id
 	);
@@ -144,15 +146,30 @@ const RelatorioScreen = () => {
 		data.dataGeracao = formatDateToString(new Date());
 		data.dataAtendimento = formatDateToString(date);
 		data.ocorrencia_id = ocorrenciaId;
-		data.casa_id = 2;
+		data.casa_id = relatorio.casa_id;
+		data.fotos = [
+			{
+				url: selectedImageUri,
+			},
+		];
 		data.gravidade = 1;
 
-		console.log(JSON.stringify(data, null, 2));
-
 		try {
-			await dispatch(createRelatorio({ token: token, ocorrenciaId: ocorrenciaId, body: data })).unwrap();
-			console.log(ocorrenciaId);
-			console.log('deu certo');
+			// await dispatch(
+			// 	createRelatorio({
+			// 		token: token,
+			// 		body: data,
+			// 	})
+			// ).unwrap();
+			// console.log(ocorrenciaId);
+
+			const response = await api.post(`relatorios/criar/`, data, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+
+			return response.data;
 		} catch (error) {
 			console.log(error);
 		}
@@ -175,7 +192,6 @@ const RelatorioScreen = () => {
 						</S.ButtonImage>
 					)}
 				/>
-				{selectedImageUri && <Image source={{ uri: selectedImageUri }} />}
 				<S.Form>
 					<S.Label>Memorando</S.Label>
 					<Controller

@@ -24,7 +24,7 @@ export const dropAuthDataFromStorage = async () => {
 	try {
 		await AsyncStorage.removeItem('userToken');
 		dispatch(setToken(null));
-		console.log(AsyncStorage.getItem('userToken'));
+		console.log('Token: ', AsyncStorage.getItem('userToken'));
 	} catch (error) {
 		console.log('Erro ao fazer logout.', error);
 	}

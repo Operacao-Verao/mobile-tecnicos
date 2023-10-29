@@ -30,6 +30,8 @@ const initialState: State = {
 		data: null,
 		relatorios: [
 			{
+				ocorrencia_id: 0,
+				casa_id: 0,
 				afetados: {
 					adultos: 0,
 					criancas: 0,
@@ -54,12 +56,14 @@ const initialState: State = {
 				tipoTalude: 0,
 				vegetacao: 0,
 				danosMateriais: false,
-				dataGeracao: null,
-				dataAtendimento: null,
+				dataGeracao: undefined,
+				dataAtendimento: undefined,
 				interdicao: 0,
-				fotos: {
-					url: '',
-				},
+				fotos: [
+					{
+						url: '',
+					},
+				],
 				dadosVistoria: {
 					desmoronamento: false,
 					deslizamento: false,
@@ -89,6 +93,7 @@ const initialState: State = {
 			numero: 0,
 			casas: [
 				{
+					id: 0,
 					interdicao: 0,
 					complemento: '',
 				},

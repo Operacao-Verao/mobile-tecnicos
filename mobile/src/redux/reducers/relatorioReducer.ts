@@ -48,11 +48,13 @@ const initialState: State = {
 		tipoTalude: 0,
 		vegetacao: 0,
 		danosMateriais: false,
-		dataGeracao: null,
-		dataAtendimento: null,
-		fotos: {
-			url: '',
-		},
+		dataGeracao: undefined,
+		dataAtendimento: undefined,
+		fotos: [
+			{
+				url: '',
+			},
+		],
 		animais: {
 			caes: 0,
 			gatos: 0,
@@ -74,6 +76,8 @@ const initialState: State = {
 			monitoramento: false,
 			transito: false,
 		},
+		ocorrencia_id: 0,
+		casa_id: 0,
 	},
 	relatorios: [],
 	loading: false,
@@ -99,7 +103,7 @@ export const fetchRelatorios = createAsyncThunk(
 
 export const createRelatorio = createAsyncThunk(
 	'relatorios/criar',
-	async ({ token, ocorrenciaId, body }: CredentialsTS, thunkAPI) => {
+	async ({ token, body }: CredentialsTS, thunkAPI) => {
 		try {
 			const response = await api.post(`relatorios/criar/`, body, {
 				headers: {
@@ -157,7 +161,12 @@ export const fetchFilterRelatorio = createAsyncThunk(
 export const slice = createSlice({
 	name: 'relatorio',
 	initialState,
-	reducers: {},
+	reducers: {
+		setCasaId: (state, action) => {
+			const casaId = action.payload;
+			state.relatorio.casa_id = casaId;
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchRelatorios.pending, (state) => {
@@ -223,4 +232,5 @@ export const slice = createSlice({
 	},
 });
 
+export const { setCasaId } = slice.actions;
 export default slice.reducer;

@@ -22,7 +22,7 @@ export const ButtonMode = styled.TouchableOpacity`
 	justify-content: center;
 `;
 
-export const Settings = styled.View`
+export const SettingsButton = styled.TouchableOpacity`
 	margin-top: 10px;
 `;
 

@@ -14,7 +14,8 @@ export type OcorrenciaTS = {
 		numero: number;
 		casas: [
 			{
-				interdicao: number;
+				id: number;
+				interdicao: 0 | 1;
 				complemento: string;
 			}
 		];
