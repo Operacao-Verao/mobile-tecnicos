@@ -32,7 +32,11 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                     include: {
                         Residencial: {
                             include: {
-                                Casa: true,
+                                Casa: {
+                                    include: {
+                                        Relatorio: true
+                                    }
+                                },
                                 Endereco: true
                             }
                         }
@@ -83,7 +87,18 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                         Residencial: {
                             include: {
                                 Endereco: true,
-                                Casa: true
+                                Casa: {
+                                    include: {
+                                        Relatorio: {
+                                            include: {
+                                                Afetados: true,
+                                                Animal: true,
+                                                Foto: true,
+                                                DadosDaVistoria: true
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -127,7 +142,19 @@ export class PrismaOcorrenciaRepository implements OcorrenciaRepository {
                     include: {
                         Residencial: {
                             include: {
-                                Endereco: true
+                                Endereco: true,
+                                Casa: {
+                                    include: {
+                                        Relatorio: {
+                                            include: {
+                                                Afetados: true,
+                                                Animal: true,
+                                                Foto: true,
+                                                DadosDaVistoria: true
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

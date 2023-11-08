@@ -36,7 +36,7 @@ export class PrismaTecnicosRepository implements TecnicosRepository {
       }
     });
 
-    if(!funcionario.Tecnico) {
+    if(!funcionario?.Tecnico) {
       return null;
     }
 

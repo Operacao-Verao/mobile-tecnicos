@@ -9,7 +9,7 @@ import { SessionSerializer } from "./session.serialize";
 
 @Module({
   imports: [ DatabaseModule, PassportModule, JwtModule.register({
-    secret: 'test',
+    secret: process.env.SECRET_JWT,
     signOptions: { expiresIn: '1h' }
   })],
   providers: [AuthService, JwtStrategy, LocalStrategy, SessionSerializer],

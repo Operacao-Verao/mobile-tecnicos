@@ -1,3 +1,5 @@
+import { relatorioResponse } from "./RelatorioResponse";
+
 export const enderecoResponse = {
     type: 'object',
     properties: {
@@ -37,7 +39,11 @@ export const enderecoResponse = {
             complemento: {
               type: 'string',
               example: 'próximo de algum lugar'
-            }
+            },
+            relatorios: {
+              type: 'array',
+              items: relatorioResponse
+            },
           }
         }
       }

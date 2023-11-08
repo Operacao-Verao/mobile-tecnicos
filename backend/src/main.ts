@@ -16,7 +16,7 @@ async function bootstrap() {
 
   app.use(
     session({
-      secret: 'nau',
+      secret: process.env.SECRET_SESSION,
       resave: false,
       saveUninitialized: false,
       cookie: { maxAge: 1000 }

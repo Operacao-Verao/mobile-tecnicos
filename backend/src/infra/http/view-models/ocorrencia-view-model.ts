@@ -13,7 +13,7 @@ export class OcorrenciaViewModel {
       status: ocorrencia.status,
       endereco: EnderecoViewModel.toHTTP(ocorrencia.residencial),
       tecnico: TecnicoViewModel.toHTTP(ocorrencia.tecnico),
-      relatorios: ocorrencia.relatorios ? ocorrencia.relatorios.map(RelatorioViewModel.toHTTP) : [],
+
     }
   }
 }

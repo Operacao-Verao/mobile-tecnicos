@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, HttpStatus, Post, Request, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { LoginBody } from "../dtos/LoginBody";
 import { loginResponse } from "../responses/LoginResponse";
@@ -27,7 +27,16 @@ export class TecnicosController {
     }
   })
   async login(@Body() body: LoginBody, @Request() req) {
-    return this.authService.login(req.user)
+    try {
+      return this.authService.login(req.user);
+    } catch (error) {
+      throw new HttpException({
+        status: HttpStatus.PRECONDITION_FAILED,
+        error: error.message,
+      }, HttpStatus.PRECONDITION_FAILED, {
+        cause: error
+      });
+    }
   }
 
   @Get('verDados')
@@ -46,6 +55,16 @@ export class TecnicosController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   async verDados(@Request() req) {
-    return TecnicoViewModel.toHTTP(req.user)
+    try {
+      return TecnicoViewModel.toHTTP(req.user);  
+    } catch (error) {
+      throw new HttpException({
+        status: HttpStatus.PRECONDITION_FAILED,
+        error: error.message,
+      }, HttpStatus.PRECONDITION_FAILED, {
+        cause: error
+      });
+    }
+    
   } 
 }

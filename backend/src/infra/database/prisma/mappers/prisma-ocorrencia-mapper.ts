@@ -9,9 +9,20 @@ import { Residencial } from '@application/entities/residencial'
 import { Tecnico } from '@application/entities/tecnico'
 import { Ocorrencia as RawOcorrencia, Relatorio as RawRelatorio, Tecnico as RawTecnico, Funcionario as RawFuncionario, Animal as RawAnimal, Afetados as RawAfetados, Civil as RawCivil, Endereco as RawEndereco, Foto as RawFoto, DadosDaVistoria as RawDadosVistoria, Residencial as RawResidencial, Casa as RawCasa } from '@prisma/client'
 
+interface RawRelatorioWithJoins extends RawRelatorio {
+  Animal: RawAnimal,
+  Afetados: RawAfetados, 
+  DadosDaVistoria: RawDadosVistoria,
+  Foto: RawFoto[]
+}
+
+interface RawCasaWithJoins extends RawCasa {
+  Relatorio: RawRelatorioWithJoins[]
+}
+
 interface ResidencialWithJoins extends RawResidencial {
   Endereco: RawEndereco,
-  Casa: RawCasa[]
+  Casa: RawCasaWithJoins[]
 }
 
 interface RawCivilWithJoins extends RawCivil {
@@ -22,13 +33,6 @@ interface RawTecnicoWithJoins extends RawTecnico {
   Funcionario: RawFuncionario
 }
 
-interface RawRelatorioWithJoins extends RawRelatorio {
-  Animal: RawAnimal,
-  Afetados: RawAfetados, 
-  DadosDaVistoria: RawDadosVistoria,
-  Foto: RawFoto[]
-}
-
 interface RawOcorrenciasWithJoins extends RawOcorrencia {
   Tecnico: RawTecnicoWithJoins,
   Relatorio: RawRelatorioWithJoins[],
@@ -37,42 +41,6 @@ interface RawOcorrenciasWithJoins extends RawOcorrencia {
 
 export class PrismaOcorrenciaMapper {
   static toDomain(rawOcorrencia: RawOcorrenciasWithJoins) {
-    let relatorios: Relatorio[] = [];
-
-    rawOcorrencia.Relatorio.map((item) => {
-      const fotos = item.Foto ? PrismaOcorrenciaMapper.toHTTPFotos(item.Foto) : [];
-      const afetados = item.Afetados ? PrismaOcorrenciaMapper.toHTTPAfetados(item.Afetados) : null;
-      const animais = item.Animal ? PrismaOcorrenciaMapper.toHTTPAnimais(item.Animal) : null;
-      const dadosVistoria = item.DadosDaVistoria ? PrismaOcorrenciaMapper.toHTTPDadosVistoria(item.DadosDaVistoria) : null;
-
-      const relatorio = new Relatorio({
-        areaAfetada: item.area_afetada,
-        interdicao: item.interdicao,
-        casaId: item.id_casa,
-        assunto: item.assunto,
-        situacaoVitimas: item.situacao_vitimas,
-        danosMateriais: item.danos_materiais,
-        dataAtendimento: item.data_atendimento,
-        dataGeracao: item.data_geracao,
-        encaminhamento: item.encaminhamento,
-        gravidade: item.gravidade,
-        memorando: item.memorando,
-        observacoes: item.observacoes,
-        oficio: item.oficio,
-        processo: item.processo,
-        relatorio: item.relatorio,
-        tipoConstrucao: item.tipo_construcao,
-        tipoTalude: item.tipo_talude,
-        vegetacao: item.vegetacao,
-        fotos,
-        animais,
-        afetados,
-        dadosVistoria
-      }, item.id);
-
-      relatorios.push(relatorio);
-    })
-    
     const tecnico = PrismaOcorrenciaMapper.toHTTPTecnico(rawOcorrencia.Tecnico);
 
     const endereco = PrismaOcorrenciaMapper.toHTTPEndereco(rawOcorrencia.Civil.Residencial.Endereco);
@@ -88,14 +56,13 @@ export class PrismaOcorrenciaMapper {
       relato: rawOcorrencia.relato_civil,
       status: rawOcorrencia.aprovado,
       tecnico,
-      residencial,
-      relatorios
+      residencial
     }, rawOcorrencia.id)
   }
 
   static toPrismaSearch(dataHora: Date, tecnicoId: number) {
     const andStatement: any = [];
-
+    
     if(tecnicoId) {
       andStatement.push(
         {
@@ -108,7 +75,7 @@ export class PrismaOcorrenciaMapper {
       andStatement.push(
         {
           data_ocorrencia: {
-              lte: dataHora
+              lte: dataHora.toISOString()
           }
         }
       );
@@ -184,15 +151,53 @@ export class PrismaOcorrenciaMapper {
     });
   }
 
-  static toHTTPCasas(rawCasa: RawCasa[]) {
+  static toHTTPCasas(rawCasa: RawCasaWithJoins[]) {
     let casas: Casa[] = [];
 
     rawCasa.map((item) => {
-      casas.push(new Casa({
-        complemento: item.complemento,
-        interdicao: item.interdicao,
-      }, item.id))
-    })
+      let relatorios: Relatorio[] = [];
+
+      item.Relatorio.map((casa) => {
+        const fotos = casa.Foto ? PrismaOcorrenciaMapper.toHTTPFotos(casa.Foto) : [];
+        const afetados = casa.Afetados ? PrismaOcorrenciaMapper.toHTTPAfetados(casa.Afetados) : null;
+        const animais = casa.Animal ? PrismaOcorrenciaMapper.toHTTPAnimais(casa.Animal) : null;
+        const dadosVistoria = casa.DadosDaVistoria ? PrismaOcorrenciaMapper.toHTTPDadosVistoria(casa.DadosDaVistoria) : null;
+
+        const relatorio = new Relatorio({
+          areaAfetada: casa.area_afetada,
+          interdicao: casa.interdicao,
+          casaId: casa.id_casa,
+          assunto: casa.assunto,
+          situacaoVitimas: casa.situacao_vitimas,
+          danosMateriais: casa.danos_materiais,
+          dataAtendimento: casa.data_atendimento,
+          dataGeracao: casa.data_geracao,
+          encaminhamento: casa.encaminhamento,
+          gravidade: casa.gravidade,
+          memorando: casa.memorando,
+          observacoes: casa.observacoes,
+          oficio: casa.oficio,
+          processo: casa.processo,
+          relatorio: casa.relatorio,
+          tipoConstrucao: casa.tipo_construcao,
+          tipoTalude: casa.tipo_talude,
+          vegetacao: casa.vegetacao,
+          fotos,
+          animais,
+          afetados,
+          dadosVistoria
+        }, casa.id);
+
+        relatorios.push(relatorio);
+        });
+      
+        casas.push(new Casa({
+          complemento: item.complemento,
+          interdicao: item.interdicao,
+          relatorios
+        }, item.id))
+    });
+
     return casas;
   }
 

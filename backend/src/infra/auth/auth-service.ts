@@ -14,9 +14,13 @@ export class AuthService {
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.tecnicosRepository.findByEmail(username);
 
-    const isPasswordCorrect = await compare(password, user.senha);
+    if(!user) {
+      return null;
+    }
 
-    if(user && isPasswordCorrect) {
+    const isPasswordCorrect = await compare(password, user.senha.replace('$2y$', '$2a$'));
+
+    if(isPasswordCorrect) {
       return user;
     }
 
@@ -27,7 +31,7 @@ export class AuthService {
     const payload = { nome: user.nome, sub: user.id };
     
     return {
-      access_token: this.jwtService.sign(payload, {secret: 'test', expiresIn: '1h'})
+      access_token: this.jwtService.sign(payload, {secret: process.env.SECRET_JWT, expiresIn: '1h'})
     };
   }
 }

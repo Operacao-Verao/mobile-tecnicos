@@ -30,7 +30,6 @@ export const ocorrenciaResponse = {
         example: '2023-08-25 14:00:00',
         format: 'yyyy-mm-dd hh:ss:mm'
       },
-      relatorio: relatorioResponse,
       endereco: enderecoResponse
     }  
   }

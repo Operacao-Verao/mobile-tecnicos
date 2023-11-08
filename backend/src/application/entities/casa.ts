@@ -1,6 +1,9 @@
+import { Relatorio } from "./relatorio";
+
 interface CasaProps {
   interdicao: number,
   complemento: string,
+  relatorios?: Relatorio[],
 }
 
 export class Casa {
@@ -36,5 +39,13 @@ export class Casa {
 
   public set complemento(complemento: string) {
     this.props.complemento = complemento;
+  }
+
+  public set relatorios(relatorio: Relatorio[]) {
+    this.props.relatorios = relatorio;
+  }
+
+  public get relatorios(): Relatorio[] {
+    return this.props.relatorios;
   }
 }

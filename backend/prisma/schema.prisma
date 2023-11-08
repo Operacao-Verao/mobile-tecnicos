@@ -142,12 +142,13 @@ model Foto {
 }
 
 model Funcionario {
-  id           Int        @id @default(autoincrement())
-  nome         String     @db.VarChar(100)
-  email        String?    @unique(map: "email") @db.VarChar(100)
-  senha        String     @db.VarChar(70)
+  id           Int          @id @default(autoincrement())
+  nome         String       @db.VarChar(100)
+  email        String       @unique(map: "email") @db.VarChar(100)
+  senha        String       @db.VarChar(70)
   tipo_usuario Int
   Gestor       Gestor?
+  Ocorrencia   Ocorrencia[]
   Registro     Registro[]
   Tecnico      Tecnico?
 }
@@ -176,6 +177,7 @@ model Memo {
   id_secretaria Int
   data_memo     DateTime   @db.DateTime(0)
   status_memo   String     @db.VarChar(355)
+  setor         String     @db.VarChar(75)
   processo      String?    @db.Char(10)
   Relatorio     Relatorio  @relation(fields: [id_relatorio], references: [id], onUpdate: Restrict, map: "Memo_ibfk_1")
   Secretaria    Secretaria @relation(fields: [id_secretaria], references: [id], onUpdate: Restrict, map: "Memo_ibfk_2")
@@ -204,24 +206,27 @@ model NivelRio {
 }
 
 model Ocorrencia {
-  id              Int         @id @default(autoincrement())
+  id              Int          @id @default(autoincrement())
   id_tecnico      Int?
+  id_atendente    Int?
   id_civil        Int
   id_residencial  Int
-  acionamento     String      @db.VarChar(100)
-  relato_civil    String      @db.VarChar(1024)
+  acionamento     String       @db.VarChar(100)
+  relato_civil    String       @db.VarChar(2047)
   num_casas       Int
   aprovado        Boolean
   encerrado       Boolean
-  data_ocorrencia DateTime    @db.DateTime(0)
-  Tecnico         Tecnico?    @relation(fields: [id_tecnico], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Ocorrencia_ibfk_1")
-  Civil           Civil       @relation(fields: [id_civil], references: [id], onUpdate: Restrict, map: "Ocorrencia_ibfk_2")
-  Residencial     Residencial @relation(fields: [id_residencial], references: [id], onUpdate: Restrict, map: "Ocorrencia_ibfk_3")
+  data_ocorrencia DateTime     @db.DateTime(0)
+  Tecnico         Tecnico?     @relation(fields: [id_tecnico], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Ocorrencia_ibfk_1")
+  Funcionario     Funcionario? @relation(fields: [id_atendente], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Ocorrencia_ibfk_2")
+  Civil           Civil        @relation(fields: [id_civil], references: [id], onUpdate: Restrict, map: "Ocorrencia_ibfk_3")
+  Residencial     Residencial  @relation(fields: [id_residencial], references: [id], onUpdate: Restrict, map: "Ocorrencia_ibfk_4")
   Relatorio       Relatorio[]
 
   @@index([id_civil], map: "id_civil")
   @@index([id_tecnico], map: "id_tecnico")
   @@index([id_residencial], map: "id_residencial")
+  @@index([id_atendente], map: "id_atendente")
 }
 
 model Pluviometro {
@@ -240,7 +245,7 @@ model Registro {
   id             Int         @id @default(autoincrement())
   id_funcionario Int
   acao           Int
-  descricao      String      @db.VarChar(127)
+  descricao      String      @db.VarChar(355)
   momento        DateTime    @db.DateTime(0)
   Funcionario    Funcionario @relation(fields: [id_funcionario], references: [id], onUpdate: Restrict, map: "Registro_ibfk_1")
 
@@ -252,19 +257,19 @@ model Relatorio {
   id_ocorrencia    Int
   id_casa          Int
   gravidade        Int
-  relatorio        String           @db.VarChar(1024)
-  interdicao       Int
+  relatorio        String           @db.VarChar(2047)
   encaminhamento   String           @db.VarChar(155)
   memorando        String           @db.VarChar(100)
   oficio           String           @db.VarChar(100)
   processo         String           @db.VarChar(100)
   assunto          String           @db.VarChar(200)
-  observacoes      String           @db.VarChar(1024)
+  observacoes      String           @db.VarChar(2047)
   area_afetada     Int
   tipo_construcao  Int
   tipo_talude      Int
   vegetacao        Int
   situacao_vitimas Int
+  interdicao       Int
   danos_materiais  Boolean
   data_geracao     DateTime         @db.DateTime(0)
   data_atendimento DateTime         @db.DateTime(0)
@@ -321,7 +326,7 @@ model ServiceWorkerData {
 model Residencial {
   id         Int          @id @default(autoincrement())
   cep        String       @db.Char(8)
-  numero     String?      @db.VarChar(10)
+  numero     String       @unique(map: "numero") @db.VarChar(10)
   Casa       Casa[]
   Civil      Civil[]
   Ocorrencia Ocorrencia[]
