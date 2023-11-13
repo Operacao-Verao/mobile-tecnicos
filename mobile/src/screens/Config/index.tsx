@@ -3,20 +3,17 @@ import { fetchUserData, setToken } from '../../redux/reducers/userReducer';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
 import { setThemeStatus } from '../../redux/reducers/themeReducer';
 import SettingsItem from '../../components/SettingsItem';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 import * as S from './styles';
 import { dropAuthDataFromStorage } from '../../utils/useStorage';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../Routes/tab.routes';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Config = () => {
 	const dispatch = useAppDispatch();
 	const theme = useAppSelector((state) => state.theme);
 	const user = useAppSelector((state) => state.user);
-	const navigation =
-		useNavigation<NativeStackNavigationProp<RootStackParams, 'login'>>();
 
 	const handleModeToggle = () => {
 		dispatch(setThemeStatus(theme.status === 'dark' ? 'light' : 'dark'));
@@ -24,9 +21,8 @@ const Config = () => {
 
 	const handleLoggout = async () => {
 		try {
-			await AsyncStorage.removeItem('userToken');
-			dispatch(setToken(null));
-			console.log('Token: ', AsyncStorage.getItem('userToken'));
+			dispatch(setToken(''));
+			console.log(user.token);
 		} catch (error) {
 			console.log('Erro ao fazer logout.', error);
 		}
@@ -61,15 +57,26 @@ const Config = () => {
 					IconColor={theme.status === 'dark' ? 'white' : 'black'}
 				/>
 			</S.SettingsAccount>
-			<S.SettingsButton onPress={handleLoggout}>
-				<SettingsItem
-					hasRight
-					ItemIcon="logout"
-					ItemTitle="Sair"
-					ItemSubtitle="Desconectar da conta atual"
-					IconColor={theme.status === 'dark' ? 'white' : 'black'}
-				/>
-			</S.SettingsButton>
+			<S.Button onPress={handleLoggout}>
+				<S.Icon>
+					<MaterialIcons
+						name={'logout'}
+						size={24}
+						color={theme.status === 'dark' ? 'white' : 'black'}
+					/>
+				</S.Icon>
+				<S.Content>
+					<S.TextContent>
+						<S.ItemTitle>{'Sair'}</S.ItemTitle>
+						<S.ItemSubtitle>{'Desconectar da conta atual'}</S.ItemSubtitle>
+					</S.TextContent>
+					<MaterialIcons
+						name="chevron-right"
+						size={24}
+						color={theme.status === 'dark' ? 'white' : 'black'}
+					/>
+				</S.Content>
+			</S.Button>
 		</S.Container>
 	);
 };

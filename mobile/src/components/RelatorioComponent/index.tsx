@@ -2,8 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { GravidadeStatus } from '../Status';
 import { RelatorioTS } from '../../types/Relatorio';
-import { Image } from 'expo-image';
 import * as S from './styles';
+import { useFormattedDate } from '../../utils';
 
 type Props = {
 	index: number;
@@ -11,6 +11,19 @@ type Props = {
 };
 
 const RelatorioComponent = ({ relatorio, index }: Props) => {
+	const dataGeracao =
+		typeof relatorio.dataGeracao === 'string'
+			? useFormattedDate(new Date(relatorio.dataGeracao))
+			: relatorio.dataGeracao !== undefined
+			? useFormattedDate(relatorio.dataGeracao)
+			: null;
+
+	const dataAtendimento =
+		typeof relatorio.dataAtendimento === 'string'
+			? useFormattedDate(new Date(relatorio.dataAtendimento))
+			: relatorio.dataAtendimento !== undefined
+			? useFormattedDate(relatorio.dataAtendimento)
+			: null;
 
 	return (
 		<S.Container>
@@ -130,12 +143,20 @@ const RelatorioComponent = ({ relatorio, index }: Props) => {
 						: 'Árvores'}
 				</S.Info>
 			</S.RowItem>
-			{relatorio?.observacoes && (
-				<S.RowItem>
-					<S.Label>Observação: </S.Label>
-					<S.Info>{relatorio?.observacoes}</S.Info>
-				</S.RowItem>
-			)}
+			<S.RowItem>
+				<S.Label>Observação: </S.Label>
+				<S.Info>
+					{relatorio?.observacoes ? relatorio?.observacoes : 'Não informado'}
+				</S.Info>
+			</S.RowItem>
+			<S.RowItem>
+				<S.Label>Data Geração: </S.Label>
+				<S.Info>{dataGeracao}</S.Info>
+			</S.RowItem>
+			<S.RowItem>
+				<S.Label>Data Atendimento: </S.Label>
+				<S.Info>{dataAtendimento}</S.Info>
+			</S.RowItem>
 		</S.Container>
 	);
 };

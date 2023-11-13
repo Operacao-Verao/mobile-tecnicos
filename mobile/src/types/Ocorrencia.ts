@@ -12,18 +12,16 @@ export type OcorrenciaTS = {
 		cidade: string;
 		rua: string;
 		numero: number;
-		casas: [
-			{
-				id: number;
-				interdicao: 0 | 1;
-				complemento: string;
-			}
-		];
+		casas: {
+			id: number;
+			interdicao: 0 | 1;
+			complemento: string;
+			relatorios?: [RelatorioTS];
+		}[];
 	};
 	tecnico: {
 		id: number;
 		email: string;
 		nome: string;
 	};
-	relatorios?: [RelatorioTS];
 };

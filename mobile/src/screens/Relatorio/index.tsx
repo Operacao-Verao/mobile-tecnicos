@@ -31,11 +31,11 @@ import { createRelatorio } from '../../redux/reducers/relatorioReducer';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
 import { AndroidMode } from '../../types/AndroidMode';
 import { formatDateToString } from '../../utils/useFormattedDate';
-import { api } from '../../lib/axios';
 
 const RelatorioScreen = () => {
 	const dispatch = useAppDispatch();
 	const token = useAppSelector((state) => state.user.token);
+	const casaId = useAppSelector((state) => state.ocorrencia.casaAberta);
 	const relatorio = useAppSelector((state) => state.relatorio.relatorio);
 	const ocorrenciaId = useAppSelector(
 		(state) => state.ocorrencia.ocorrencia.id
@@ -146,7 +146,7 @@ const RelatorioScreen = () => {
 		data.dataGeracao = formatDateToString(new Date());
 		data.dataAtendimento = formatDateToString(date);
 		data.ocorrencia_id = ocorrenciaId;
-		data.casa_id = relatorio.casa_id;
+		data.casa_id = casaId;
 		data.fotos = [
 			{
 				url: selectedImageUri,
@@ -155,21 +155,14 @@ const RelatorioScreen = () => {
 		data.gravidade = 1;
 
 		try {
-			// await dispatch(
-			// 	createRelatorio({
-			// 		token: token,
-			// 		body: data,
-			// 	})
-			// ).unwrap();
-			// console.log(ocorrenciaId);
-
-			const response = await api.post(`relatorios/criar/`, data, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
-
-			return response.data;
+			await dispatch(
+				createRelatorio({
+					token: token,
+					body: data,
+				})
+			).unwrap();
+			Alert.alert('Relatório criado!');
+			console.log(ocorrenciaId);
 		} catch (error) {
 			console.log(error);
 		}

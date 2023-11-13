@@ -26,9 +26,7 @@ export type RelatorioTS = {
 	afetados?: AfetadosTS;
 	animais?: AnimaisTS;
 	dadosVistoria: dadosVistoriaTS;
-	fotos: [
-		{
-			url: string;
-		}
-	];
+	fotos: {
+		url: string;
+	}[];
 };

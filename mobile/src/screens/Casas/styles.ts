@@ -32,6 +32,7 @@ export const RowWTBetween = styled.View`
 
 export const Button = styled.TouchableOpacity`
 	padding: 20px;
+	margin-top: 20px;
 	margin-bottom: 50px;
 	background-color: #0ea5e9;
 	border-radius: 8px;

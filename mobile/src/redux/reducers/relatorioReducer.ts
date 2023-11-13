@@ -11,6 +11,7 @@ import { RelatorioTS } from '../../types/Relatorio';
 type CredentialsTS = {
 	token: string | null;
 	id?: FormData;
+	casaId?: number;
 	status?: string;
 	ocorrenciaId?: number;
 	body?: RelatorioTS;
@@ -120,9 +121,9 @@ export const createRelatorio = createAsyncThunk(
 
 export const fetchOneRelatorio = createAsyncThunk(
 	'relatorios/ver/{id}',
-	async ({ id, token }: CredentialsTS, thunkAPI) => {
+	async ({ casaId, token }: CredentialsTS, thunkAPI) => {
 		try {
-			const response = await api.get(`relatorios/ver/${id}`, {
+			const response = await api.get(`relatorios/ver/${casaId}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -203,10 +204,10 @@ export const slice = createSlice({
 			})
 			.addCase(
 				fetchOneRelatorio.fulfilled,
-				(state, action: PayloadAction<RelatorioTS>) => {
+				(state, action: PayloadAction<RelatorioTS[]>) => {
 					state.error = null;
 					state.loading = false;
-					state.relatorio = action.payload;
+					state.relatorios = action.payload;
 				}
 			)
 			.addCase(fetchOneRelatorio.rejected, (state, action) => {

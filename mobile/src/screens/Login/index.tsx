@@ -25,7 +25,6 @@ const Login = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({ resolver: yupResolver(schemaLogin) });
-
 	const onSubmit: SubmitHandler<LoginTS> = async (data: LoginTS) => {
 		try {
 			await dispatch(
@@ -58,7 +57,7 @@ const Login = () => {
 						render={({ field: { onChange } }) => (
 							<Input.Root>
 								<Input.Input
-									placeholderText="gabrielsoares@google.com"
+									placeholderText="tonin@gmail.com"
 									onChange={onChange}
 								/>
 								<Input.ErrorText ErrorText={errors.username?.message} />
@@ -72,7 +71,7 @@ const Login = () => {
 						render={({ field: { onChange } }) => (
 							<Input.Root>
 								<Input.Input
-									placeholderText="123456"
+									placeholderText="1234"
 									hasSecureTextEntry
 									onChange={onChange}
 								/>

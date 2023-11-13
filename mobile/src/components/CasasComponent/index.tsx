@@ -3,8 +3,12 @@ import * as S from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../Routes/tab.routes';
-import { useAppDispatch } from '../../redux/hooks/useApp';
-import { setCasaId } from '../../redux/reducers/relatorioReducer';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
+import {
+	fetchOneRelatorio,
+	setCasaId,
+} from '../../redux/reducers/relatorioReducer';
+import { setCasaAberta } from '../../redux/reducers/ocorrenciaReducer';
 
 type Props = {
 	id: number;
@@ -15,11 +19,12 @@ type Props = {
 
 const CasasComponent = ({ id, complemento, interdicao, index }: Props) => {
 	const dispatch = useAppDispatch();
+	const token = useAppSelector((state) => state.user.token);
 	const navigation =
 		useNavigation<NativeStackNavigationProp<RootStackParams, 'casas'>>();
 
 	const handleOpenCasa = () => {
-		dispatch(setCasaId(id));
+		dispatch(setCasaAberta({ id: id }));
 		navigation.navigate('casas');
 	};
 
@@ -29,7 +34,7 @@ const CasasComponent = ({ id, complemento, interdicao, index }: Props) => {
 
 			<S.Row>
 				<S.Label>Complemento: </S.Label>
-				<S.Info>{complemento}</S.Info>
+				<S.Info>{complemento ? complemento : 'Não informado'}</S.Info>
 			</S.Row>
 			<S.Row>
 				<S.Label>Interdição: </S.Label>

@@ -8,13 +8,10 @@ import * as S from './styles';
 const Home = () => {
 	const dispatch = useAppDispatch();
 	const token = useAppSelector((state) => state.user.token);
-	const state = useAppSelector((state) => state.ocorrencia);
+	const state = useAppSelector((state) => state.ocorrencia) || [];
 
 	useEffect(() => {
-		const getOcorrencias = () => {
-			dispatch(fetchOcorrencias({ token: token }));
-		};
-		getOcorrencias();
+		dispatch(fetchOcorrencias({ token: token }));
 	}, []);
 
 	return (
@@ -37,6 +34,12 @@ const Home = () => {
 							bairro: item.endereco.bairro,
 							cidade: item.endereco.cidade,
 							rua: item.endereco.rua,
+							numero: item.endereco.numero,
+							casas: item.endereco.casas.map((casa) => ({
+								id: casa.id,
+								interdicao: casa.interdicao,
+								complemento: casa.complemento,
+							})),
 						}}
 						tecnico={{
 							id: item.tecnico.id,

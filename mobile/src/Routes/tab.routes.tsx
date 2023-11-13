@@ -10,6 +10,8 @@ import RelatorioScreen from '../screens/Relatorio';
 import Config from '../screens/Config';
 import { useAppSelector } from '../redux/hooks/useApp';
 import CasasScreen from '../screens/Casas';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAuthDataFromStorage } from '../utils';
 
 export type RootStackParams = {
 	bottomBar: any;

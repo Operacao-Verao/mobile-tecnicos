@@ -1,27 +1,34 @@
-import React from 'react';
-import { useAppSelector } from '../../redux/hooks/useApp';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/useApp';
 import * as S from './styles';
 import BackButton from '../../components/BackButton';
 import RelatorioComponent from '../../components/RelatorioComponent';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../Routes/tab.routes';
+import { fetchOneRelatorio } from '../../redux/reducers/relatorioReducer';
+import { Loading } from '../../components/Loading';
 
 type Props = {
 	idCasa: number;
 };
 
 const CasasScreen = () => {
+	const dispatch = useAppDispatch();
+	const token = useAppSelector((state) => state.user.token);
+	const casaId = useAppSelector((state) => state.ocorrencia.casaAberta);
+	const relatorios = useAppSelector((state) => state.relatorio.relatorios);
 	const navigation =
 		useNavigation<NativeStackNavigationProp<RootStackParams, 'relatorio'>>();
-	const relatorios = useAppSelector(
-		(state) => state.ocorrencia.ocorrencia.relatorios
-	);
+
+	useEffect(() => {
+		dispatch(fetchOneRelatorio({ token: token, casaId: casaId }));
+	}, []);
 
 	const handleRelatorio = () => {
 		navigation.navigate('relatorio');
 	};
-
+	
 	return (
 		<S.Container>
 			<S.RowWTBetween>
@@ -53,8 +60,21 @@ const CasasScreen = () => {
 						danosMateriais: item.danosMateriais,
 						dataGeracao: item.dataGeracao,
 						dataAtendimento: item.dataAtendimento,
-						afetados: item.afetados,
-						animais: item.animais,
+						afetados: {
+							adultos: item.afetados?.adultos,
+							criancas: item.afetados?.criancas,
+							enfermos: item.afetados?.enfermos,
+							especiais: item.afetados?.especiais,
+							feridos: item.afetados?.feridos,
+							idosos: item.afetados?.idosos,
+							mortos: item.afetados?.mortos,
+						},
+						animais: {
+							aves: item.animais?.aves,
+							caes: item.animais?.caes,
+							equinos: item.animais?.equinos,
+							gatos: item.animais?.gatos,
+						},
 						dadosVistoria: {
 							desmoronamento: item.dadosVistoria.desmoronamento,
 							deslizamento: item.dadosVistoria.deslizamento,
@@ -68,11 +88,9 @@ const CasasScreen = () => {
 							monitoramento: item.dadosVistoria.monitoramento,
 							transito: item.dadosVistoria.transito,
 						},
-						fotos: [
-							{
-								url: item.fotos[0].url,
-							},
-						],
+						fotos: item.fotos.map((foto) => ({
+							url: foto.url,
+						})),
 					}}
 				/>
 			))}

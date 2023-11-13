@@ -17,6 +17,7 @@ type CredentialsTS = {
 type State = {
 	ocorrencia: OcorrenciaTS;
 	ocorrencias: OcorrenciaTS[];
+	casaAberta: number;
 	loading: boolean;
 	error: SerializedError | null;
 };
@@ -28,63 +29,6 @@ const initialState: State = {
 		num_casas: 3,
 		status: true,
 		data: null,
-		relatorios: [
-			{
-				ocorrencia_id: 0,
-				casa_id: 0,
-				afetados: {
-					adultos: 0,
-					criancas: 0,
-					idosos: 0,
-					especiais: 0,
-					mortos: 0,
-					feridos: 0,
-					enfermos: 0,
-				},
-				situacaoVitimas: 0,
-				enfermos: 0,
-				gravidade: 0,
-				relatorio: '',
-				encaminhamento: '',
-				memorando: '',
-				oficio: '',
-				processo: '',
-				assunto: '',
-				observacoes: '',
-				areaAfetada: 0,
-				tipoConstrucao: 0,
-				tipoTalude: 0,
-				vegetacao: 0,
-				danosMateriais: false,
-				dataGeracao: undefined,
-				dataAtendimento: undefined,
-				interdicao: 0,
-				fotos: [
-					{
-						url: '',
-					},
-				],
-				dadosVistoria: {
-					desmoronamento: false,
-					deslizamento: false,
-					esgoto_escoamento: false,
-					erosao: false,
-					inundacao: false,
-					incendio: false,
-					arvores: false,
-					infiltracao_trinca: false,
-					judicial: false,
-					monitoramento: false,
-					transito: false,
-				},
-				animais: {
-					caes: 0,
-					gatos: 0,
-					aves: 0,
-					equinos: 0,
-				},
-			},
-		],
 		endereco: {
 			cep: '',
 			bairro: '',
@@ -96,6 +40,63 @@ const initialState: State = {
 					id: 0,
 					interdicao: 0,
 					complemento: '',
+					relatorios: [
+						{
+							ocorrencia_id: 0,
+							casa_id: 0,
+							afetados: {
+								adultos: 0,
+								criancas: 0,
+								idosos: 0,
+								especiais: 0,
+								mortos: 0,
+								feridos: 0,
+								enfermos: 0,
+							},
+							situacaoVitimas: 0,
+							enfermos: 0,
+							gravidade: 0,
+							relatorio: '',
+							encaminhamento: '',
+							memorando: '',
+							oficio: '',
+							processo: '',
+							assunto: '',
+							observacoes: '',
+							areaAfetada: 0,
+							tipoConstrucao: 0,
+							tipoTalude: 0,
+							vegetacao: 0,
+							danosMateriais: false,
+							dataGeracao: undefined,
+							dataAtendimento: undefined,
+							interdicao: 0,
+							fotos: [
+								{
+									url: '',
+								},
+							],
+							dadosVistoria: {
+								desmoronamento: false,
+								deslizamento: false,
+								esgoto_escoamento: false,
+								erosao: false,
+								inundacao: false,
+								incendio: false,
+								arvores: false,
+								infiltracao_trinca: false,
+								judicial: false,
+								monitoramento: false,
+								transito: false,
+							},
+							animais: {
+								caes: 0,
+								gatos: 0,
+								aves: 0,
+								equinos: 0,
+							},
+						},
+					],
 				},
 			],
 		},
@@ -106,6 +107,7 @@ const initialState: State = {
 		},
 	},
 	ocorrencias: [],
+	casaAberta: 0,
 	loading: false,
 	error: null,
 };
@@ -169,7 +171,12 @@ export const fetchFilterOcorrencia = createAsyncThunk(
 export const slice = createSlice({
 	name: 'ocorrencia',
 	initialState,
-	reducers: {},
+	reducers: {
+		setCasaAberta: (state, action) => {
+			const { id } = action.payload;
+			state.casaAberta = id;
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchOcorrencias.pending, (state) => {
@@ -223,4 +230,5 @@ export const slice = createSlice({
 	},
 });
 
+export const { setCasaAberta } = slice.actions;
 export default slice.reducer;
