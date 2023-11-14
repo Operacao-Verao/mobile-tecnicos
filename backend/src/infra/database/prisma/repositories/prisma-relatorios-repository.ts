@@ -109,6 +109,14 @@ export class PrismaRelatoriosRepository implements RelatoriosRepository {
             }
           }
         ]
+      },
+      include: {
+        Afetados: true,
+        Animal: true,
+        Casa: true,
+        DadosDaVistoria: true,
+        Foto: true,
+        Memo: true
       }
     });
 
