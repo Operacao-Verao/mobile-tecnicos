@@ -15,6 +15,7 @@ import { AdicionarFoto } from "@application/use-cases/adicionar-foto";
 import { ApagarFoto } from "@application/use-cases/apagar-foto";
 import { CriarCasa } from "@application/use-cases/criar-casa";
 import { CasasController } from "./controllers/casas.controller";
+import { RegistrarToken } from "@application/use-cases/registrar-token";
 
 @Module({
   imports: [DatabaseModule],
@@ -30,7 +31,8 @@ import { CasasController } from "./controllers/casas.controller";
     VerRelatoriosOcorrencia,
     AdicionarFoto,
     ApagarFoto,
-    CriarCasa
+    CriarCasa,
+    RegistrarToken
   ]
 })
 export class HttpModule {}

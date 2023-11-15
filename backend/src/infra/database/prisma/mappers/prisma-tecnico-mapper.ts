@@ -8,11 +8,12 @@ interface RawTecnicoAndFuncionario extends RawTecnico {
 export class PrismaTecnicoMapper {
   static toDomain(rawTecnico: RawTecnicoAndFuncionario) {
     return new Tecnico({
-      email: rawTecnico.Funcionario.email,
-      nome: rawTecnico.Funcionario.nome,
-      senha: rawTecnico.Funcionario.senha
-    },
-    rawTecnico.id
+        email: rawTecnico.Funcionario.email,
+        nome: rawTecnico.Funcionario.nome,
+        senha: rawTecnico.Funcionario.senha,
+        token: rawTecnico.token
+      },
+      rawTecnico.id
     )
   }
 }

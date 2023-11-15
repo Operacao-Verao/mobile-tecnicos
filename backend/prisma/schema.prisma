@@ -121,13 +121,15 @@ model Endereco {
 }
 
 model Fluviometro {
-  id        Int         @id @default(autoincrement())
-  cep       String?     @db.Char(8)
-  latitude  Decimal?    @db.Decimal(8, 3)
-  longitude Decimal?    @db.Decimal(8, 3)
-  AlertaRio AlertaRio[]
-  Endereco  Endereco?   @relation(fields: [cep], references: [cep], onDelete: Restrict, onUpdate: Restrict, map: "Fluviometro_ibfk_1")
-  NivelRio  NivelRio[]
+  id         Int         @id @default(autoincrement())
+  cep        String?     @db.Char(8)
+  auth_key   String      @db.VarChar(64)
+  auth_token String      @db.VarChar(64)
+  latitude   Decimal?    @db.Decimal(8, 3)
+  longitude  Decimal?    @db.Decimal(8, 3)
+  AlertaRio  AlertaRio[]
+  Endereco   Endereco?   @relation(fields: [cep], references: [cep], onDelete: Restrict, onUpdate: Restrict, map: "Fluviometro_ibfk_1")
+  NivelRio   NivelRio[]
 
   @@index([cep], map: "cep")
 }
@@ -232,6 +234,8 @@ model Ocorrencia {
 model Pluviometro {
   id          Int           @id @default(autoincrement())
   cep         String        @db.Char(8)
+  auth_key    String        @db.VarChar(64)
+  auth_token  String        @db.VarChar(64)
   latitude    Decimal       @db.Decimal(8, 3)
   longitude   Decimal?      @db.Decimal(8, 3)
   AlertaChuva AlertaChuva[]
@@ -308,6 +312,7 @@ model Tecnico {
   id             Int          @id @default(autoincrement())
   id_funcionario Int          @unique(map: "id_funcionario")
   ativo          Boolean
+  token          String?      @db.VarChar(255)
   Ocorrencia     Ocorrencia[]
   Funcionario    Funcionario  @relation(fields: [id_funcionario], references: [id], onUpdate: Restrict, map: "Tecnico_ibfk_1")
 }

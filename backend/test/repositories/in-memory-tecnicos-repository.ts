@@ -1,5 +1,6 @@
 import { Tecnico } from "@application/entities/tecnico";
 import { TecnicosRepository } from "@application/repositories/tecnicos-repository";
+import { TecnicoNotFound } from "@application/use-cases/errors/TecnicoNotFound";
 import { makeTecnico } from "@test/factories/tecnicos-factory";
 
 export class InMemoryTecnicosRepository implements TecnicosRepository {
@@ -10,6 +11,25 @@ export class InMemoryTecnicosRepository implements TecnicosRepository {
 
     this.tecnicos.push(tecnico);
     return tecnico;
+  }
+
+  async registrarToken(id: number, token: string): Promise<string> {
+    const criarTecnico = await this.criarTecnico();
+
+    const tecnico = this.tecnicos.find((item) => item.id === criarTecnico.id);
+    
+    if(!tecnico) {
+      throw new TecnicoNotFound();
+    }
+
+    for(let i = 0; i < this.tecnicos.length; i++) {
+      if(this.tecnicos[i].id === criarTecnico.id) {
+        criarTecnico.token = token;
+        this.tecnicos[i] = criarTecnico;
+      }
+    }
+
+    return "Token cadastrado com sucesso.";
   }
 
   async findByEmail(email: string): Promise<Tecnico> {

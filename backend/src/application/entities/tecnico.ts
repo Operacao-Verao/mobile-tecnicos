@@ -1,7 +1,8 @@
 interface TecnicoProps {
   nome: string,
   email: string,
-  senha: string 
+  senha: string,
+  token?: string 
 }
 
 export class Tecnico {
@@ -45,5 +46,13 @@ export class Tecnico {
 
   public get senha(): string {
     return this.props.senha;
+  }
+
+  public set token(token: string) {
+    this.props.token = token
+  }
+
+  public get token(): string {
+    return this.props.token;
   }
 }
