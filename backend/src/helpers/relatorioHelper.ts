@@ -8,7 +8,7 @@ export class RelatorioHelper {
         const afetados = this.AfetadosToNumber(relatorio.afetados);
         const dataAtendimentoToDate = new Date(relatorio.dataAtendimento);
         const dataGeracaoToDate = new Date(relatorio.dataGeracao);
-        const { enfermos, interdicao, situacaoVitimas, gravidade, areaAfetada, tipoConstrucao, dataAtendimento, dataGeracao, tipoTalude, vegetacao, ...rest } = relatorio;
+        const { enfermos, interdicao, situacaoVitimas, gravidade, areaAfetada, tipoConstrucao, dataAtendimento, dataGeracao, tipoTalude, vegetacao, assinaturaCivil, assinaturaTecnico, ...rest } = relatorio;
 
         const resposta = {
             animais,
@@ -21,6 +21,8 @@ export class RelatorioHelper {
             gravidade: gravidade,
             areaAfetada: areaAfetada,
             tipoConstrucao: tipoConstrucao,
+            assinaturaCivil,
+            assinaturaTecnico,
             tipoTalude: tipoTalude,
             vegetacao: vegetacao,
             ...rest

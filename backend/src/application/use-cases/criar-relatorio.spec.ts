@@ -27,12 +27,10 @@ describe('Criar relatório', () => {
             ocorrenciaId: ocorrencia.id,
             gravidade: 1,
             relatorio: "",
-            encaminhamento: "",
-            memorando: "",
-            oficio: "",
-            processo: "",
             observacoes: "",
             tipoConstrucao: 2,
+            assinaturaCivil: "",
+            assinaturaTecnico: "",
             tipoTalude: 1,
             fotos: [
                 {

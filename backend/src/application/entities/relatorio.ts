@@ -44,10 +44,6 @@ interface RelatorioProps {
   casaId: number;
   gravidade: number,
   relatorio: string,
-  encaminhamento: string,
-  memorando: string,
-  oficio: string,
-  processo: string,
   assunto: string,
   observacoes: string,
   interdicao: number,
@@ -57,6 +53,8 @@ interface RelatorioProps {
   vegetacao: number,
   danosMateriais: boolean,
   situacaoVitimas: number,
+  assinaturaTecnico: string,
+  assinaturaCivil: string,
   dataGeracao: Date,
   dataAtendimento: Date
   fotos?: {
@@ -118,44 +116,28 @@ export class Relatorio {
     return this.props.relatorio;
   }
 
-  public set encaminhamento(encaminhamento: string) {
-    this.props.encaminhamento = encaminhamento;
-  }
-
-  public get encaminhamento(): string {
-    return this.props.encaminhamento;
-  }
-
-  public set memorando(memorando: string) {
-    this.props.memorando = memorando;
-  }
-
-  public get memorando(): string {
-    return this.props.memorando;
-  }
-
-  public set oficio(oficio: string) {
-    this.props.oficio = oficio;
-  }
-
-  public get oficio(): string {
-    return this.props.oficio;
-  }
-
-  public set processo(processo: string) {
-    this.props.processo = processo;
-  }
-
-  public get processo(): string {
-    return this.props.processo;
-  }
-
   public set assunto(assunto: string) {
     this.props.assunto = assunto;
   }
 
   public get assunto(): string {
     return this.props.assunto;
+  }
+
+  public set assinaturaTecnico(assinaturaTecnico: string) {
+    this.props.assinaturaTecnico = assinaturaTecnico;
+  }
+
+  public get assinaturaTecnico(): string {
+    return this.props.assinaturaTecnico;
+  }
+
+  public set assinaturaCivil(assinaturaCivil: string) {
+    this.props.assinaturaCivil = assinaturaCivil;
+  }
+
+  public get assinaturaCivil(): string {
+    return this.props.assinaturaCivil;
   }
 
   public set observacoes(observacoes: string) {

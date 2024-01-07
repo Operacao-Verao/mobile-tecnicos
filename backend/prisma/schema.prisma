@@ -175,16 +175,19 @@ model LocalAjuda {
 
 model Memo {
   id            Int        @id @default(autoincrement())
-  id_relatorio  Int        @unique(map: "id_relatorio")
+  id_relatorio  Int
   id_secretaria Int
   data_memo     DateTime   @db.DateTime(0)
   status_memo   String     @db.VarChar(355)
   setor         String     @db.VarChar(75)
-  processo      String?    @db.Char(10)
+  memorando     String     @db.VarChar(355)
+  oficio        String     @db.VarChar(127)
+  processo      String     @db.VarChar(355)
   Relatorio     Relatorio  @relation(fields: [id_relatorio], references: [id], onUpdate: Restrict, map: "Memo_ibfk_1")
   Secretaria    Secretaria @relation(fields: [id_secretaria], references: [id], onUpdate: Restrict, map: "Memo_ibfk_2")
 
   @@index([id_secretaria], map: "id_secretaria")
+  @@index([id_relatorio], map: "id_relatorio")
 }
 
 model NivelChuva {
@@ -257,33 +260,32 @@ model Registro {
 }
 
 model Relatorio {
-  id               Int              @id @default(autoincrement())
-  id_ocorrencia    Int
-  id_casa          Int
-  gravidade        Int
-  relatorio        String           @db.VarChar(2047)
-  encaminhamento   String           @db.VarChar(155)
-  memorando        String           @db.VarChar(100)
-  oficio           String           @db.VarChar(100)
-  processo         String           @db.VarChar(100)
-  assunto          String           @db.VarChar(200)
-  observacoes      String           @db.VarChar(2047)
-  area_afetada     Int
-  tipo_construcao  Int
-  tipo_talude      Int
-  vegetacao        Int
-  situacao_vitimas Int
-  interdicao       Int
-  danos_materiais  Boolean
-  data_geracao     DateTime         @db.DateTime(0)
-  data_atendimento DateTime         @db.DateTime(0)
-  Afetados         Afetados?
-  Animal           Animal?
-  DadosDaVistoria  DadosDaVistoria?
-  Foto             Foto[]
-  Memo             Memo?
-  Ocorrencia       Ocorrencia       @relation(fields: [id_ocorrencia], references: [id], onUpdate: Restrict, map: "Relatorio_ibfk_1")
-  Casa             Casa             @relation(fields: [id_casa], references: [id], onUpdate: Restrict, map: "Relatorio_ibfk_2")
+  id                 Int              @id @default(autoincrement())
+  id_ocorrencia      Int
+  id_casa            Int
+  gravidade          Int
+  relatorio          String           @db.VarChar(2047)
+  encaminhamento     String?          @db.VarChar(155)
+  assunto            String           @db.VarChar(2047)
+  observacoes        String           @db.VarChar(2047)
+  area_afetada       Int
+  tipo_construcao    Int
+  tipo_talude        Int
+  vegetacao          Int
+  situacao_vitimas   Int
+  interdicao         Int
+  danos_materiais    Boolean
+  data_geracao       DateTime         @db.DateTime(0)
+  data_atendimento   DateTime         @db.DateTime(0)
+  assinatura_tecnico String           @db.Text
+  assinatura_civil   String           @db.Text
+  Afetados           Afetados?
+  Animal             Animal?
+  DadosDaVistoria    DadosDaVistoria?
+  Foto               Foto[]
+  Memo               Memo[]
+  Ocorrencia         Ocorrencia       @relation(fields: [id_ocorrencia], references: [id], onUpdate: Restrict, map: "Relatorio_ibfk_1")
+  Casa               Casa             @relation(fields: [id_casa], references: [id], onUpdate: Restrict, map: "Relatorio_ibfk_2")
 
   @@index([id_ocorrencia], map: "id_ocorrencia")
   @@index([id_casa], map: "id_casa")

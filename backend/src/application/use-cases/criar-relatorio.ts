@@ -48,12 +48,10 @@ interface CriarRelatorioRequest {
   assunto: string
   gravidade: number
   relatorio: string
-  encaminhamento: string
-  memorando: string
-  oficio: string
-  processo: string
   observacoes: string
   areaAfetada: number
+  assinaturaCivil: string
+  assinaturaTecnico: string
   tipoConstrucao: number
   tipoTalude: number
   vegetacao: number

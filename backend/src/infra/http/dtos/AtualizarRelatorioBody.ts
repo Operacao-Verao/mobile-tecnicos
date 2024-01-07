@@ -1,10 +1,8 @@
-import { base64example } from "@helpers/base64"
-import { ApiProperty } from "@nestjs/swagger"
-import { IsDateString, IsNotEmpty, IsNumber, IsString, IsUUID, Max, MaxLength, Min, MinLength } from "class-validator"
-import { AfetadosBody } from "./AfetadosBody"
-import { AnimaisBody } from "./AnimaisBody"
-import { FotosBody } from "./FotosBody"
-import { DadosVistoriaBody } from "./DadosVistoriaBody"
+import { ApiProperty } from "@nestjs/swagger";
+import { IsDateString, IsNotEmpty, IsNumber, IsString, Max, MaxLength, Min, MinLength } from "class-validator";
+import { AfetadosBody } from "./AfetadosBody";
+import { AnimaisBody } from "./AnimaisBody";
+import { DadosVistoriaBody } from "./DadosVistoriaBody";
 
 export class AtualizarRelatorioBody {
   @IsNotEmpty()
@@ -78,47 +76,7 @@ export class AtualizarRelatorioBody {
     example: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque viverra et dolor ac commodo. Etiam non commodo ex. Duis maximus justo in rutrum pulvinar. In hac habitasse platea dictumst. Nulla placerat nisi ornare, sollicitudin diam sagittis, iaculis nulla. Etiam ullamcorper velit in magna luctus laoreet."
   })
   relatorio: string
-
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(155)
-  @ApiProperty({
-    description: "Encaminhamento do ocorrido",
-    example: "Secretaria"
-  })
-  encaminhamento: string
-
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(100)
-  @ApiProperty({
-    description: "Memorando do ocorrido",
-    example: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque viverra et dolor ac commodo. Etiam non commodo ex. Duis maximus justo in rutrum pulvinar. In hac habitasse platea dictumst. Nulla placerat nisi ornare, sollicitudin diam sagittis, iaculis nulla. Etiam ullamcorper velit in magna luctus laoreet."
-  })
-  memorando: string
-
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(100)
-  @ApiProperty({
-    description: "Ofício do ocorrido",
-    example: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque viverra et dolor ac commodo. Etiam non commodo ex. Duis maximus justo in rutrum pulvinar. In hac habitasse platea dictumst. Nulla placerat nisi ornare, sollicitudin diam sagittis, iaculis nulla. Etiam ullamcorper velit in magna luctus laoreet."
-  })
-  oficio: string
-
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(100)
-  @ApiProperty({
-    description: "Processo do ocorrido",
-    example: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque viverra et dolor ac commodo. Etiam non commodo ex. Duis maximus justo in rutrum pulvinar. In hac habitasse platea dictumst. Nulla placerat nisi ornare, sollicitudin diam sagittis, iaculis nulla. Etiam ullamcorper velit in magna luctus laoreet."
-  })
-  processo: string
-
+  
   @IsNotEmpty()
   @IsString()
   @MinLength(1)
@@ -128,6 +86,26 @@ export class AtualizarRelatorioBody {
     example: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque viverra et dolor ac commodo. Etiam non commodo ex. Duis maximus justo in rutrum pulvinar. In hac habitasse platea dictumst. Nulla placerat nisi ornare, sollicitudin diam sagittis, iaculis nulla. Etiam ullamcorper velit in magna luctus laoreet."
   })
   assunto: string
+
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(200)
+  @ApiProperty({
+    description: "Assinatura do civil em svg",
+    example: "data:image/svg........."
+  })
+  assinaturaCivil: string
+
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(200)
+  @ApiProperty({
+    description: "Assinatura do técnico em svg",
+    example: "data:image/svg........."
+  })
+  assinaturaTecnico: string
 
   @IsNotEmpty()
   @IsString()

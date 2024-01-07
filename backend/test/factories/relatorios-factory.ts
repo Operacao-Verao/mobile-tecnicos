@@ -12,10 +12,7 @@ export function makeRelatorios() {
         interdicao: 1,
         assunto: "Assunto desse relatório",
         danosMateriais: true,
-        encaminhamento: "Foi para alguma secretaria",
         gravidade: 1,
-        memorando: "56489",
-        oficio: "Ofício de teste",
         vegetacao: 1,
         casaId: 1,
         tipoTalude: 2,
@@ -23,7 +20,8 @@ export function makeRelatorios() {
         tipoConstrucao: 1,
         situacaoVitimas: 2,
         relatorio: "Enchente na vilinha com queda e deslizamento",
-        processo: "Dados do processo",
+        assinaturaCivil: "svg",
+        assinaturaTecnico: "svg",
         dadosVistoria,
         fotos: [
             {
