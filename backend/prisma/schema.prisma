@@ -276,8 +276,8 @@ model Relatorio {
   danos_materiais    Boolean
   data_geracao       DateTime         @db.DateTime(0)
   data_atendimento   DateTime         @db.DateTime(0)
-  assinatura_tecnico String           @db.Text
-  assinatura_civil   String           @db.Text
+  assinatura_tecnico String           @db.LongText
+  assinatura_civil   String           @db.LongText
   Afetados           Afetados?
   Animal             Animal?
   DadosDaVistoria    DadosDaVistoria?
