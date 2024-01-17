@@ -265,7 +265,6 @@ model Relatorio {
   id_casa            Int
   gravidade          Int
   relatorio          String           @db.VarChar(2047)
-  encaminhamento     String?          @db.VarChar(155)
   assunto            String           @db.VarChar(2047)
   observacoes        String           @db.VarChar(2047)
   area_afetada       Int
