@@ -84,7 +84,6 @@ export class RelatorioBody {
   @IsNotEmpty()
   @IsString()
   @MinLength(1)
-  @MaxLength(200)
   @ApiProperty({
     description: "Assinatura do civil em svg",
     example: "data:image/svg........."
@@ -94,7 +93,6 @@ export class RelatorioBody {
   @IsNotEmpty()
   @IsString()
   @MinLength(1)
-  @MaxLength(200)
   @ApiProperty({
     description: "Assinatura do técnico em svg",
     example: "data:image/svg........."
